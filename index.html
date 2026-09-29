@@ -64,10 +64,12 @@
     /* PROGRESS BAR */
     .progress-bar { position: fixed; top: 0; left: 0; height: 2px; width: 100%; background: linear-gradient(90deg,var(--clr-accent),var(--clr-accent2)); z-index: 200; transform-origin: left; transform: scaleX(0); }
 
-    /* CURSOR */
-    .cursor { position: fixed; width: 8px; height: 8px; background: var(--clr-accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
-    .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1.5px solid rgba(99,179,237,.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .25s, height .25s, border-color .25s; }
-    @media (hover:none) { .cursor,.cursor-ring { display:none; } }
+    /* CURSOR (Apenas Desktop) */
+    .cursor { position: fixed; width: 8px; height: 8px; background: var(--clr-accent); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); opacity: 0; transition: opacity .2s ease; }
+    .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1.5px solid rgba(99,179,237,.4); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); opacity: 0; transition: width .25s, height .25s, border-color .25s, opacity .2s ease; }
+    @media (max-width: 1024px), (hover: none), (pointer: coarse) {
+      .cursor, .cursor-ring { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+    }
 
     /* NAV */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.25rem 0; transition: background var(--tm), padding var(--tm); }
@@ -817,25 +819,49 @@ window.addEventListener('scroll', onScroll, {passive:true});
 onScroll();
 
 /* ====================================================================
-   3. CURSOR PERSONALIZADO & MICROINTERAÇÕES
+   3. CURSOR PERSONALIZADO & MICROINTERAÇÕES (Apenas Desktop)
 ==================================================================== */
 let mx=-100,my=-100,rx=-100,ry=-100;
 function animCursor(){
   rx+=(mx-rx)*.14; ry+=(my-ry)*.14;
-  cur.style.left=mx+'px'; cur.style.top=my+'px';
-  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  if (cur) { cur.style.left=mx+'px'; cur.style.top=my+'px'; }
+  if (ring) { ring.style.left=rx+'px'; ring.style.top=ry+'px'; }
   requestAnimationFrame(animCursor);
 }
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-animCursor();
 
 function setupCursorHover() {
   document.querySelectorAll('a,button,.p-card,.service-item,.prompt-chip,.contact-chip').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{ring.style.width='48px';ring.style.height='48px';ring.style.borderColor='rgba(99,179,237,.7)';});
-    el.addEventListener('mouseleave',()=>{ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(99,179,237,.4)';});
+    el.addEventListener('mouseenter',()=>{ if (ring) { ring.style.width='48px'; ring.style.height='48px'; ring.style.borderColor='rgba(99,179,237,.7)'; } });
+    el.addEventListener('mouseleave',()=>{ if (ring) { ring.style.width='32px'; ring.style.height='32px'; ring.style.borderColor='rgba(99,179,237,.4)'; } });
   });
 }
-setupCursorHover();
+
+// Desativa completamente o cursor customizado em celulares e telas de toque
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024;
+
+if (isTouchDevice) {
+  if (cur) cur.style.display = 'none';
+  if (ring) ring.style.display = 'none';
+} else {
+  let mouseStarted = false;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    if (!mouseStarted) {
+      mouseStarted = true;
+      if (cur) cur.style.opacity = '1';
+      if (ring) ring.style.opacity = '1';
+    }
+  });
+
+  window.addEventListener('touchstart', () => {
+    if (cur) cur.style.display = 'none';
+    if (ring) ring.style.display = 'none';
+  }, { passive: true, once: true });
+
+  animCursor();
+  setupCursorHover();
+}
 
 // Hamburger
 hbg.addEventListener('click',()=>nav.classList.toggle('open'));
