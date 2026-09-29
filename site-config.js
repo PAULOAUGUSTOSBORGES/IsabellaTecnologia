@@ -108,7 +108,7 @@ const SITE_CONFIG = {
         tamanho: "wide",
         mostrarBarrasPreview: true,
         // Link direto para a tela de login / acesso do sistema:
-        linkAcesso: "https://lojafc-a31f9.web.app/sistema/index.html",
+        linkAcesso: "acesso.html",
         textoBotaoAcesso: "Acessar Sistema"
       },
       {

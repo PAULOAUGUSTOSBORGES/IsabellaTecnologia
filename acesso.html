@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acessar Sistema · Isabella Tecnologia</title>
+  <style>
+    /* ============================================================
+       RESET E BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --azul-escuro:  #0a0e1a;
+      --azul-medio:   #0f1629;
+      --azul-card:    #131c35;
+      --azul-borda:   #1e2d55;
+      --azul-vivo:    #3b82f6;
+      --azul-hover:   #2563eb;
+      --roxo-vivo:    #8b5cf6;
+      --verde-vivo:   #10b981;
+      --texto-branco: #f0f6ff;
+      --texto-cinza:  #94a3b8;
+      --destaque-tag: #1e3a5f;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--azul-escuro);
+      color: var(--texto-branco);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ============================================================
+       CABEÇALHO
+    ============================================================ */
+    .logo-topo {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .logo-topo span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .logo-topo p {
+      color: var(--texto-cinza);
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+    }
+
+    /* ============================================================
+       CARTÃO PRINCIPAL DE TRIAGEM
+    ============================================================ */
+    .triagem-card {
+      background: var(--azul-card);
+      border: 1px solid var(--azul-borda);
+      border-radius: 1.2rem;
+      padding: 2.5rem 2rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+      /* Animação suave de entrada */
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .triagem-card h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .triagem-card p.subtitulo {
+      color: var(--texto-cinza);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* Divisor de opções */
+    .opcoes-triagem {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Botão "Já sou usuário → Login" */
+    .btn-login {
+      flex: 1;
+      min-width: 180px;
+      padding: 1rem 1.5rem;
+      border-radius: 0.8rem;
+      border: 2px solid var(--azul-vivo);
+      background: transparent;
+      color: var(--azul-vivo);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-login:hover {
+      background: var(--azul-vivo);
+      color: #fff;
+    }
+
+    /* Botão "Ainda não tenho conta → ver planos" */
+    .btn-planos {
+      flex: 1;
+      min-width: 180px;
+      padding: 1rem 1.5rem;
+      border-radius: 0.8rem;
+      border: none;
+      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-planos:hover { opacity: 0.88; }
+
+    /* ============================================================
+       SEPARADOR VISUAL
+    ============================================================ */
+    .separador {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2rem 0;
+      color: var(--texto-cinza);
+      font-size: 0.85rem;
+    }
+    .separador::before,
+    .separador::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--azul-borda);
+    }
+
+    /* ============================================================
+       SECÇÃO DE PLANOS (oculta por defeito)
+    ============================================================ */
+    #secao-planos {
+      display: none;
+      max-width: 820px;
+      width: 100%;
+      margin-top: 1.5rem;
+      animation: fadeUp 0.4s ease both;
+    }
+    #secao-planos.visivel { display: block; }
+
+    #secao-planos h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    #secao-planos .planos-subtitulo {
+      text-align: center;
+      color: var(--texto-cinza);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Grade de planos */
+    .grade-planos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    /* Cartão de plano individual */
+    .plano-card {
+      background: var(--azul-card);
+      border: 1px solid var(--azul-borda);
+      border-radius: 1rem;
+      padding: 2rem 1.5rem;
+      position: relative;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .plano-card:hover {
+      border-color: var(--azul-vivo);
+      transform: translateY(-4px);
+    }
+
+    /* Badge de destaque no plano PRO */
+    .plano-card.destaque {
+      border-color: var(--roxo-vivo);
+    }
+    .badge-destaque {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 999px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .plano-nome {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .plano-preco {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--azul-vivo);
+    }
+    .plano-preco span {
+      font-size: 1rem;
+      color: var(--texto-cinza);
+      font-weight: 400;
+    }
+    .plano-descricao {
+      color: var(--texto-cinza);
+      font-size: 0.85rem;
+      margin: 0.7rem 0 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* Lista de funcionalidades */
+    .plano-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    .plano-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.87rem;
+      color: var(--texto-cinza);
+      margin-bottom: 0.5rem;
+    }
+    .plano-features li::before {
+      content: '✓';
+      color: var(--verde-vivo);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Botão contratar */
+    .btn-contratar {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 0.7rem;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-contratar.basico {
+      background: var(--azul-borda);
+      color: var(--texto-branco);
+    }
+    .btn-contratar.pro {
+      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
+      color: #fff;
+    }
+    .btn-contratar:hover { opacity: 0.85; }
+
+    /* ============================================================
+       MODAL DE CHECKOUT (oculto por defeito)
+    ============================================================ */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.aberto { display: flex; }
+
+    .modal-box {
+      background: var(--azul-card);
+      border: 1px solid var(--azul-borda);
+      border-radius: 1.2rem;
+      padding: 2rem;
+      max-width: 440px;
+      width: 100%;
+      position: relative;
+      animation: fadeUp 0.3s ease both;
+    }
+    .modal-box h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .modal-box .plano-escolhido-label {
+      color: var(--texto-cinza);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Abas PIX / Cartão */
+    .abas-pagamento {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--azul-borda);
+      padding-bottom: 0.5rem;
+    }
+    .aba-btn {
+      flex: 1;
+      padding: 0.55rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: transparent;
+      color: var(--texto-cinza);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .aba-btn.ativa {
+      background: var(--azul-vivo);
+      color: #fff;
+    }
+
+    /* Painéis de pagamento */
+    .painel-pagamento { display: none; }
+    .painel-pagamento.ativo { display: block; }
+
+    /* Formulário de cartão */
+    .campo {
+      margin-bottom: 1rem;
+    }
+    .campo label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--texto-cinza);
+      margin-bottom: 0.35rem;
+    }
+    .campo input {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      background: var(--azul-medio);
+      border: 1px solid var(--azul-borda);
+      border-radius: 0.55rem;
+      color: var(--texto-branco);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .campo input:focus { border-color: var(--azul-vivo); }
+    .campo-duo { display: flex; gap: 0.8rem; }
+    .campo-duo .campo { flex: 1; }
+
+    /* QR Code de PIX (simulado) */
+    .pix-box {
+      background: var(--azul-medio);
+      border: 1px solid var(--azul-borda);
+      border-radius: 0.8rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .pix-box .pix-icone { font-size: 3rem; margin-bottom: 0.8rem; }
+    .pix-box p { color: var(--texto-cinza); font-size: 0.85rem; line-height: 1.6; }
+    .pix-box .pix-chave {
+      margin-top: 0.8rem;
+      background: var(--azul-borda);
+      border-radius: 0.4rem;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.78rem;
+      color: var(--texto-cinza);
+      word-break: break-all;
+      font-family: monospace;
+    }
+
+    /* Botão de confirmar pagamento */
+    .btn-confirmar {
+      width: 100%;
+      padding: 0.9rem;
+      margin-top: 1.2rem;
+      border-radius: 0.7rem;
+      border: none;
+      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-confirmar:hover { opacity: 0.85; }
+    .btn-confirmar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Fechar modal */
+    .btn-fechar-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--texto-cinza);
+      font-size: 1.3rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* Mensagem de status */
+    .status-msg {
+      margin-top: 0.8rem;
+      padding: 0.7rem 1rem;
+      border-radius: 0.55rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
+    }
+    .status-msg.sucesso {
+      background: rgba(16,185,129,0.15);
+      color: var(--verde-vivo);
+      border: 1px solid var(--verde-vivo);
+      display: block;
+    }
+    .status-msg.erro {
+      background: rgba(239,68,68,0.12);
+      color: #f87171;
+      border: 1px solid #f87171;
+      display: block;
+    }
+    .status-msg.carregando {
+      background: rgba(59,130,246,0.12);
+      color: var(--azul-vivo);
+      border: 1px solid var(--azul-vivo);
+      display: block;
+    }
+
+    /* ============================================================
+       RODAPÉ DISCRETO
+    ============================================================ */
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: var(--texto-cinza);
+      font-size: 0.78rem;
+    }
+    footer a {
+      color: var(--azul-vivo);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── LOGO / CABEÇALHO ── -->
+  <div class="logo-topo">
+    <span>Isabella Tecnologia</span>
+    <p>Sistemas de Gestão Inteligente</p>
+  </div>
+
+  <!-- ── CARTÃO DE TRIAGEM: JÁ É USUÁRIO? ── -->
+  <div class="triagem-card">
+    <h1>Como deseja continuar?</h1>
+    <p class="subtitulo">
+      Se já tem uma conta, clique em <strong>Entrar</strong>.<br>
+      Se é novo por aqui, escolha um plano e comece agora.
+    </p>
+
+    <div class="opcoes-triagem">
+      <!-- Botão de Login: redireciona para a página de login do sistema -->
+      <a class="btn-login" href="/login" id="btn-ir-login">
+        🔑 Já sou usuário — Entrar
+      </a>
+
+      <!-- Botão que exibe os planos abaixo -->
+      <button class="btn-planos" onclick="mostrarPlanos()">
+        🚀 Quero me cadastrar
+      </button>
+    </div>
+
+    <div class="separador">ou</div>
+
+    <p style="color: var(--texto-cinza); font-size:0.82rem;">
+      Dúvidas? Fale conosco pelo
+      <a href="https://wa.me/5500000000000" target="_blank"
+         style="color:var(--azul-vivo); text-decoration:none;">
+        WhatsApp
+      </a>
+    </p>
+  </div>
+
+  <!-- ── SECÇÃO DE PLANOS (aparece ao clicar em "Quero me cadastrar") ── -->
+  <div id="secao-planos">
+    <h2>Escolha o seu plano</h2>
+    <p class="planos-subtitulo">Sem fidelidade. Cancele quando quiser.</p>
+
+    <div class="grade-planos">
+
+      <!-- PLANO BÁSICO -->
+      <div class="plano-card">
+        <div class="plano-nome">Básico</div>
+        <div class="plano-preco">R$ 97 <span>/ mês</span></div>
+        <p class="plano-descricao">Ideal para pequenos negócios que estão começando.</p>
+        <ul class="plano-features">
+          <li>1 usuário administrador</li>
+          <li>Gestão de estoque básica</li>
+          <li>Emissão de orçamentos</li>
+          <li>Relatórios essenciais</li>
+          <li>Suporte via WhatsApp</li>
+        </ul>
+        <button class="btn-contratar basico"
+                onclick="abrirCheckout('Básico', 'R$ 97/mês', 9700)">
+          Contratar Básico
+        </button>
+      </div>
+
+      <!-- PLANO PRO (destaque) -->
+      <div class="plano-card destaque">
+        <div class="badge-destaque">⭐ Mais Popular</div>
+        <div class="plano-nome">Pro</div>
+        <div class="plano-preco">R$ 197 <span>/ mês</span></div>
+        <p class="plano-descricao">Para negócios em crescimento que precisam de mais controle.</p>
+        <ul class="plano-features">
+          <li>Usuários ilimitados</li>
+          <li>Gestão completa de estoque</li>
+          <li>Emissão de NF-e (integração)</li>
+          <li>Dashboard com gráficos</li>
+          <li>Relatórios avançados</li>
+          <li>Suporte prioritário</li>
+          <li>Backup diário automático</li>
+        </ul>
+        <button class="btn-contratar pro"
+                onclick="abrirCheckout('Pro', 'R$ 197/mês', 19700)">
+          Contratar Pro
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MODAL DE CHECKOUT
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal-checkout">
+    <div class="modal-box">
+
+      <button class="btn-fechar-modal" onclick="fecharCheckout()" title="Fechar">✕</button>
+
+      <h3>Finalizar Assinatura</h3>
+      <p class="plano-escolhido-label" id="modal-plano-label">Plano Pro — R$ 197/mês</p>
+
+      <!-- Abas PIX e Cartão -->
+      <div class="abas-pagamento">
+        <button class="aba-btn ativa" onclick="trocarAba('pix', this)">📱 PIX</button>
+        <button class="aba-btn" onclick="trocarAba('cartao', this)">💳 Cartão de Crédito</button>
+      </div>
+
+      <!-- PAINEL PIX -->
+      <div class="painel-pagamento ativo" id="painel-pix">
+        <div class="pix-box">
+          <div class="pix-icone">📲</div>
+          <p>Use o seu banco ou app de pagamento para pagar via PIX.<br>
+             Após o pagamento, o acesso é liberado <strong>automaticamente</strong> em até 2 minutos.</p>
+          <div class="pix-chave" id="pix-chave-display">
+            <!-- Chave PIX gerada dinamicamente pelo checkout.js -->
+            Carregando chave PIX...
+          </div>
+        </div>
+        <button class="btn-confirmar" id="btn-confirmar-pix" onclick="confirmarPagamentoPix()">
+          ✅ Já fiz o pagamento via PIX
+        </button>
+        <div class="status-msg" id="status-pix"></div>
+      </div>
+
+      <!-- PAINEL CARTÃO -->
+      <div class="painel-pagamento" id="painel-cartao">
+        <div class="campo">
+          <label>Nome no cartão</label>
+          <input type="text" id="nome-cartao" placeholder="Ex: JOAO A SILVA" maxlength="40" />
+        </div>
+        <div class="campo">
+          <label>Número do cartão</label>
+          <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000"
+                 maxlength="19" oninput="formatarCartao(this)" />
+        </div>
+        <div class="campo-duo">
+          <div class="campo">
+            <label>Validade</label>
+            <input type="text" id="validade-cartao" placeholder="MM/AA"
+                   maxlength="5" oninput="formatarValidade(this)" />
+          </div>
+          <div class="campo">
+            <label>CVV</label>
+            <input type="text" id="cvv-cartao" placeholder="123" maxlength="4" />
+          </div>
+        </div>
+        <div class="campo">
+          <label>E-mail (para criar sua conta)</label>
+          <input type="email" id="email-cartao" placeholder="seuemail@exemplo.com" />
+        </div>
+        <button class="btn-confirmar" id="btn-confirmar-cartao" onclick="confirmarPagamentoCartao()">
+          🔒 Pagar com Segurança
+        </button>
+        <div class="status-msg" id="status-cartao"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── RODAPÉ ── -->
+  <footer>
+    <p>© 2025 Isabella Tecnologia · <a href="index.html">Voltar ao site</a></p>
+  </footer>
+
+  <!-- Carrega a lógica de checkout (tokens e chamadas API ficam aqui) -->
+  <script src="checkout.js"></script>
+
+  <script>
+    // ================================================================
+    // ESTADO GLOBAL DA PÁGINA
+    // ================================================================
+    let planoAtual = { nome: '', descricao: '', valorCentavos: 0 };
+
+    // ── 1. Mostrar/ocultar a secção de planos ──────────────────────
+    function mostrarPlanos() {
+      const secao = document.getElementById('secao-planos');
+      secao.classList.add('visivel');
+      // Scroll suave até os planos
+      setTimeout(() => secao.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+
+    // ── 2. Abrir modal de checkout com dados do plano escolhido ────
+    function abrirCheckout(nome, descricao, valorCentavos) {
+      planoAtual = { nome, descricao, valorCentavos };
+      document.getElementById('modal-plano-label').textContent =
+        `Plano ${nome} — ${descricao}`;
+
+      // Gera a chave PIX via checkout.js (função exportada)
+      if (typeof gerarChavePix === 'function') {
+        gerarChavePix(valorCentavos).then(chave => {
+          document.getElementById('pix-chave-display').textContent = chave;
+        });
+      } else {
+        // Fallback: exibe chave estática enquanto checkout.js não estiver configurado
+        document.getElementById('pix-chave-display').textContent =
+          '⚠️ Configure o token em checkout.js para gerar a chave PIX real.';
+      }
+
+      document.getElementById('modal-checkout').classList.add('aberto');
+      // Reseta abas para PIX
+      trocarAba('pix', document.querySelectorAll('.aba-btn')[0]);
+    }
+
+    // ── 3. Fechar modal ───────────────────────────────────────────
+    function fecharCheckout() {
+      document.getElementById('modal-checkout').classList.remove('aberto');
+      limparStatus();
+    }
+    // Fechar clicando fora do modal
+    document.getElementById('modal-checkout').addEventListener('click', function(e) {
+      if (e.target === this) fecharCheckout();
+    });
+
+    // ── 4. Trocar aba PIX / Cartão ───────────────────────────────
+    function trocarAba(aba, btn) {
+      document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
+      document.querySelectorAll('.painel-pagamento').forEach(p => p.classList.remove('ativo'));
+      btn.classList.add('ativa');
+      document.getElementById('painel-' + aba).classList.add('ativo');
+      limparStatus();
+    }
+
+    // ── 5. Limpar mensagens de status ─────────────────────────────
+    function limparStatus() {
+      ['status-pix', 'status-cartao'].forEach(id => {
+        const el = document.getElementById(id);
+        el.className = 'status-msg';
+        el.textContent = '';
+      });
+    }
+
+    // ── 6. Formatar número do cartão (grupos de 4) ───────────────
+    function formatarCartao(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      input.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    // ── 7. Formatar validade MM/AA ────────────────────────────────
+    function formatarValidade(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2);
+      input.value = v;
+    }
+
+    // ── 8. Confirmar pagamento PIX ────────────────────────────────
+    async function confirmarPagamentoPix() {
+      const statusEl = document.getElementById('status-pix');
+      const btnEl    = document.getElementById('btn-confirmar-pix');
+
+      statusEl.className = 'status-msg carregando';
+      statusEl.textContent = '⏳ Aguardando confirmação do pagamento...';
+      btnEl.disabled = true;
+
+      try {
+        // Chama a função do checkout.js que verifica o status do PIX
+        // e aciona o backend (Cloud Function) para criar o usuário.
+        const resultado = await verificarStatusPix(planoAtual);
+
+        if (resultado.aprovado) {
+          statusEl.className = 'status-msg sucesso';
+          statusEl.textContent =
+            '✅ Pagamento confirmado! Seu acesso foi criado. Verifique o e-mail cadastrado.';
+          btnEl.textContent = '✅ Acesso Liberado!';
+        } else {
+          statusEl.className = 'status-msg erro';
+          statusEl.textContent =
+            '❌ Pagamento ainda não identificado. Tente novamente em instantes.';
+          btnEl.disabled = false;
+        }
+      } catch (err) {
+        statusEl.className = 'status-msg erro';
+        statusEl.textContent = '❌ Erro ao verificar pagamento: ' + err.message;
+        btnEl.disabled = false;
+      }
+    }
+
+    // ── 9. Confirmar pagamento com Cartão ─────────────────────────
+    async function confirmarPagamentoCartao() {
+      const nome   = document.getElementById('nome-cartao').value.trim();
+      const numero = document.getElementById('numero-cartao').value.replace(/\s/g, '');
+      const val    = document.getElementById('validade-cartao').value.trim();
+      const cvv    = document.getElementById('cvv-cartao').value.trim();
+      const email  = document.getElementById('email-cartao').value.trim();
+
+      const statusEl = document.getElementById('status-cartao');
+      const btnEl    = document.getElementById('btn-confirmar-cartao');
+
+      // Validações básicas no frontend
+      if (!nome || numero.length < 13 || val.length < 5 || cvv.length < 3 || !email) {
+        statusEl.className = 'status-msg erro';
+        statusEl.textContent = '❌ Preencha todos os campos corretamente.';
+        return;
+      }
+
+      statusEl.className = 'status-msg carregando';
+      statusEl.textContent = '⏳ Processando pagamento...';
+      btnEl.disabled = true;
+
+      try {
+        // Chama a função do checkout.js que tokeniza o cartão
+        // e envia para a API de pagamento (Mercado Pago / Stripe).
+        const resultado = await processarPagamentoCartao({
+          nome, numero, val, cvv, email,
+          plano: planoAtual
+        });
+
+        if (resultado.aprovado) {
+          statusEl.className = 'status-msg sucesso';
+          statusEl.textContent =
+            '✅ Pagamento aprovado! Acesso criado. Verifique o e-mail ' + email;
+          btnEl.textContent = '✅ Acesso Liberado!';
+        } else {
+          statusEl.className = 'status-msg erro';
+          statusEl.textContent = '❌ ' + (resultado.mensagem || 'Pagamento recusado. Tente outro cartão.');
+          btnEl.disabled = false;
+        }
+      } catch (err) {
+        statusEl.className = 'status-msg erro';
+        statusEl.textContent = '❌ Erro ao processar: ' + err.message;
+        btnEl.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
