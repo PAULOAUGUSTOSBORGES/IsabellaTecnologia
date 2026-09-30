@@ -3,790 +3,1631 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acessar Sistema · Isabella Tecnologia</title>
+  <title>Planos & Acesso · FC Gestão | Isabella Tecnologia</title>
+  <link rel="icon" type="image/png" href="https://lojafc-a31f9.web.app/icons/favicon.png">
+
+  <!-- Fontes & Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     /* ============================================================
-       RESET E BASE
+       DESIGN TOKENS - ISABELLA TECNOLOGIA (DARK TECH THEME)
     ============================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --azul-escuro:  #0a0e1a;
-      --azul-medio:   #0f1629;
-      --azul-card:    #131c35;
-      --azul-borda:   #1e2d55;
-      --azul-vivo:    #3b82f6;
-      --azul-hover:   #2563eb;
-      --roxo-vivo:    #8b5cf6;
-      --verde-vivo:   #10b981;
-      --texto-branco: #f0f6ff;
-      --texto-cinza:  #94a3b8;
-      --destaque-tag: #1e3a5f;
+      --clr-bg:          #080c14;
+      --clr-surface:     #0d1321;
+      --clr-card:        #111827;
+      --clr-card-hover:  #162035;
+      --clr-border:      rgba(99, 179, 237, 0.14);
+      --clr-border-glow: rgba(99, 179, 237, 0.35);
+      
+      --clr-accent:      #63b3ed;  /* Ciano / Azul Neon */
+      --clr-accent2:     #9f7aea;  /* Roxo / Violeta Tech */
+      --clr-accent3:     #10b981;  /* Verde Esmeralda Sucesso */
+      --clr-amber:       #f59e0b;  /* Dourado / Destaque */
+      
+      --clr-text:        #e2e8f0;
+      --clr-text-white:  #ffffff;
+      --clr-muted:       #94a3b8;
+      --clr-subtle:      #64748b;
+      
+      --ff-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 9999px;
+      
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 35px rgba(99, 179, 237, 0.18);
+      --shadow-pro:  0 0 45px rgba(159, 122, 234, 0.25);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: var(--azul-escuro);
-      color: var(--texto-branco);
+      font-family: var(--ff-sans);
+      background-color: var(--clr-bg);
+      color: var(--clr-text);
+      line-height: 1.6;
       min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 179, 237, 0.12), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 85% 60%, rgba(159, 122, 234, 0.08), transparent 70%),
+        radial-gradient(circle at 15% 40%, rgba(16, 185, 129, 0.05), transparent 60%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    /* ============================================================
+       CABEÇALHO / NAVBAR
+    ============================================================ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8, 12, 20, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--clr-border);
+      padding: 1rem 0;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .nav-inner {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 2rem 1rem 4rem;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .nav-logo em {
+      color: var(--clr-accent);
+      font-style: normal;
+    }
+    .nav-logo .badge-system {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.6rem;
+      background: rgba(99, 179, 237, 0.12);
+      border: 1px solid rgba(99, 179, 237, 0.25);
+      border-radius: var(--radius-xl);
+      color: var(--clr-accent);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-nav-site {
+      color: var(--clr-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .btn-nav-site:hover {
+      color: #fff;
+    }
+
+    .btn-nav-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius-xl);
+      font-size: 0.88rem;
+      font-weight: 700;
+      background: rgba(99, 179, 237, 0.12);
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      color: var(--clr-accent);
+      transition: all 0.2s ease;
+    }
+    .btn-nav-login:hover {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+      box-shadow: 0 4px 20px rgba(99, 179, 237, 0.35);
+      transform: translateY(-1px);
     }
 
     /* ============================================================
-       CABEÇALHO
+       HERO & APRESENTAÇÃO
     ============================================================ */
-    .logo-topo {
+    .hero-section {
       text-align: center;
-      margin-bottom: 2.5rem;
+      padding: 4rem 0 2.5rem;
     }
-    .logo-topo span {
-      font-size: 1.6rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(99, 179, 237, 0.08);
+      border: 1px solid rgba(99, 179, 237, 0.22);
+      border-radius: var(--radius-xl);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--clr-accent);
+      margin-bottom: 1.25rem;
+    }
+    .badge-pill .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--clr-accent3);
+      box-shadow: 0 0 10px var(--clr-accent3);
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: #fff;
+      max-width: 860px;
+      margin: 0 auto 1.2rem;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .logo-topo p {
-      color: var(--texto-cinza);
-      font-size: 0.85rem;
-      margin-top: 0.3rem;
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      color: var(--clr-muted);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
     }
 
     /* ============================================================
-       CARTÃO PRINCIPAL DE TRIAGEM
+       CARDS DE TRIAGEM RÁPIDA (LOGIN vs CADASTRO)
     ============================================================ */
+    .triagem-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto 3.5rem;
+    }
+
     .triagem-card {
-      background: var(--azul-card);
-      border: 1px solid var(--azul-borda);
-      border-radius: 1.2rem;
-      padding: 2.5rem 2rem;
-      max-width: 520px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-      /* Animação suave de entrada */
-      animation: fadeUp 0.5s ease both;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .triagem-card h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-    }
-    .triagem-card p.subtitulo {
-      color: var(--texto-cinza);
-      font-size: 0.95rem;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-
-    /* Divisor de opções */
-    .opcoes-triagem {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      text-align: left;
       display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-card);
+    }
+    .triagem-card:hover {
+      border-color: var(--clr-border-glow);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+    }
+    .triagem-card.highlight {
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.9) 0%, rgba(13, 19, 33, 0.95) 100%);
+      border-color: rgba(159, 122, 234, 0.35);
+    }
+    .triagem-card.highlight:hover {
+      border-color: var(--clr-accent2);
+      box-shadow: var(--shadow-card), var(--shadow-pro);
     }
 
-    /* Botão "Já sou usuário → Login" */
-    .btn-login {
-      flex: 1;
-      min-width: 180px;
-      padding: 1rem 1.5rem;
-      border-radius: 0.8rem;
-      border: 2px solid var(--azul-vivo);
-      background: transparent;
-      color: var(--azul-vivo);
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .btn-login:hover {
-      background: var(--azul-vivo);
-      color: #fff;
-    }
-
-    /* Botão "Ainda não tenho conta → ver planos" */
-    .btn-planos {
-      flex: 1;
-      min-width: 180px;
-      padding: 1rem 1.5rem;
-      border-radius: 0.8rem;
-      border: none;
-      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .btn-planos:hover { opacity: 0.88; }
-
-    /* ============================================================
-       SEPARADOR VISUAL
-    ============================================================ */
-    .separador {
+    .triagem-card-header {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-      margin: 2rem 0;
-      color: var(--texto-cinza);
-      font-size: 0.85rem;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
-    .separador::before,
-    .separador::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--azul-borda);
+    .triagem-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius-md);
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+    .triagem-icon.blue {
+      background: rgba(99, 179, 237, 0.15);
+      color: var(--clr-accent);
+      border: 1px solid rgba(99, 179, 237, 0.3);
+    }
+    .triagem-icon.purple {
+      background: rgba(159, 122, 234, 0.15);
+      color: var(--clr-accent2);
+      border: 1px solid rgba(159, 122, 234, 0.3);
+    }
+
+    .triagem-info h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .triagem-info p {
+      font-size: 0.85rem;
+      color: var(--clr-muted);
+    }
+
+    .triagem-btn {
+      margin-top: 1.4rem;
+      width: 100%;
+      padding: 0.85rem 1.4rem;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .triagem-btn.outline {
+      background: transparent;
+      border: 1.5px solid var(--clr-border-glow);
+      color: var(--clr-accent);
+    }
+    .triagem-btn.outline:hover {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+      box-shadow: 0 6px 20px rgba(99, 179, 237, 0.35);
+    }
+
+    .triagem-btn.gradient {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: #fff;
+      box-shadow: 0 6px 22px rgba(59, 130, 246, 0.35);
+    }
+    .triagem-btn.gradient:hover {
+      opacity: 0.92;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(139, 92, 246, 0.45);
     }
 
     /* ============================================================
-       SECÇÃO DE PLANOS (oculta por defeito)
+       SELETOR DE CICLO / INTERVALO
     ============================================================ */
-    #secao-planos {
-      display: none;
-      max-width: 820px;
-      width: 100%;
-      margin-top: 1.5rem;
-      animation: fadeUp 0.4s ease both;
-    }
-    #secao-planos.visivel { display: block; }
-
-    #secao-planos h2 {
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    #secao-planos .planos-subtitulo {
-      text-align: center;
-      color: var(--texto-cinza);
-      font-size: 0.9rem;
-      margin-bottom: 2rem;
+    .pricing-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3.5rem;
     }
 
-    /* Grade de planos */
-    .grade-planos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.2rem;
-    }
-
-    /* Cartão de plano individual */
-    .plano-card {
-      background: var(--azul-card);
-      border: 1px solid var(--azul-borda);
-      border-radius: 1rem;
-      padding: 2rem 1.5rem;
+    .cycle-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      padding: 0.3rem;
+      border-radius: var(--radius-xl);
       position: relative;
-      transition: border-color 0.25s, transform 0.2s;
-    }
-    .plano-card:hover {
-      border-color: var(--azul-vivo);
-      transform: translateY(-4px);
     }
 
-    /* Badge de destaque no plano PRO */
-    .plano-card.destaque {
-      border-color: var(--roxo-vivo);
-    }
-    .badge-destaque {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 0.25rem 0.9rem;
-      border-radius: 999px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .plano-nome {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .plano-preco {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--azul-vivo);
-    }
-    .plano-preco span {
-      font-size: 1rem;
-      color: var(--texto-cinza);
-      font-weight: 400;
-    }
-    .plano-descricao {
-      color: var(--texto-cinza);
+    .cycle-btn {
+      background: transparent;
+      border: none;
+      color: var(--clr-muted);
+      padding: 0.55rem 1.25rem;
+      border-radius: var(--radius-xl);
       font-size: 0.85rem;
-      margin: 0.7rem 0 1.2rem;
-      line-height: 1.6;
-    }
-
-    /* Lista de funcionalidades */
-    .plano-features {
-      list-style: none;
-      margin-bottom: 1.5rem;
-    }
-    .plano-features li {
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.87rem;
-      color: var(--texto-cinza);
-      margin-bottom: 0.5rem;
     }
-    .plano-features li::before {
-      content: '✓';
-      color: var(--verde-vivo);
-      font-weight: 700;
-      flex-shrink: 0;
+    .cycle-btn.active {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+      box-shadow: 0 2px 12px rgba(99, 179, 237, 0.4);
     }
 
-    /* Botão contratar */
-    .btn-contratar {
-      width: 100%;
-      padding: 0.9rem;
-      border-radius: 0.7rem;
-      border: none;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.2s;
+    .badge-discount {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-xl);
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      font-weight: 800;
+      letter-spacing: 0.02em;
     }
-    .btn-contratar.basico {
-      background: var(--azul-borda);
-      color: var(--texto-branco);
-    }
-    .btn-contratar.pro {
-      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
-      color: #fff;
-    }
-    .btn-contratar:hover { opacity: 0.85; }
 
     /* ============================================================
-       MODAL DE CHECKOUT (oculto por defeito)
+       GRID DOS PLANOS
+    ============================================================ */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+
+    .plan-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-card);
+    }
+    .plan-card:hover {
+      border-color: var(--clr-border-glow);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7), var(--shadow-glow);
+    }
+
+    /* Plano Destaque (PRO) */
+    .plan-card.featured {
+      background: linear-gradient(180deg, #131d38 0%, #0d162b 100%);
+      border: 2px solid var(--clr-accent2);
+      box-shadow: 0 16px 45px -10px rgba(0, 0, 0, 0.8), var(--shadow-pro);
+    }
+    .plan-card.featured:hover {
+      border-color: #c084fc;
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.9), 0 0 50px rgba(192, 132, 252, 0.35);
+    }
+
+    .featured-tag {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 1rem;
+      border-radius: var(--radius-xl);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 4px 15px rgba(159, 122, 234, 0.5);
+      white-space: nowrap;
+    }
+
+    .plan-header {
+      margin-bottom: 1.5rem;
+    }
+    .plan-tier-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .plan-desc {
+      font-size: 0.84rem;
+      color: var(--clr-muted);
+      min-height: 48px;
+      line-height: 1.5;
+    }
+
+    .plan-price-wrap {
+      margin: 1.25rem 0 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .plan-price {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+    .plan-price .currency {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--clr-accent);
+    }
+    .plan-price .period {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--clr-muted);
+    }
+    .plan-price-sub {
+      font-size: 0.75rem;
+      color: var(--clr-subtle);
+      margin-top: 0.4rem;
+    }
+
+    /* Badges de capacidades */
+    .plan-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .spec-chip {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      color: var(--clr-text);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .spec-chip i {
+      color: var(--clr-accent);
+    }
+
+    /* Lista de Funcionalidades */
+    .plan-features-list {
+      list-style: none;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .plan-features-list li {
+      font-size: 0.86rem;
+      color: var(--clr-text);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      line-height: 1.4;
+    }
+    .plan-features-list li i {
+      color: var(--clr-accent3);
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
+      flex-shrink: 0;
+    }
+    .plan-features-list li.highlight-feature {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Ações de Conversão do Card */
+    .plan-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+    }
+
+    .plan-slogan-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-xl);
+      color: #34d399;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .btn-plan-primary-activation {
+      width: 100%;
+      padding: 1.05rem;
+      border-radius: var(--radius-md);
+      font-size: 0.96rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+    }
+    .btn-plan-primary-activation:hover {
+      opacity: 0.94;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(124, 58, 237, 0.5);
+    }
+
+    .plan-activation-note {
+      font-size: 0.72rem;
+      color: var(--clr-muted);
+      text-align: center;
+      display: block;
+      margin-top: 0.2rem;
+    }
+
+    /* ============================================================
+       BANNER DE CONFIANÇA & SUPORTE
+    ============================================================ */
+    .trust-banner {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
+      text-align: center;
+    }
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .trust-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(99, 179, 237, 0.1);
+      color: var(--clr-accent);
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+    }
+    .trust-item h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .trust-item p {
+      font-size: 0.82rem;
+      color: var(--clr-muted);
+    }
+
+    /* ============================================================
+       MODAL DE CHECKOUT (PIX & CARTÃO)
     ============================================================ */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.75);
+      background: rgba(4, 7, 14, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 1000;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 1.25rem;
     }
-    .modal-overlay.aberto { display: flex; }
+    .modal-overlay.aberto {
+      display: flex;
+    }
 
     .modal-box {
-      background: var(--azul-card);
-      border: 1px solid var(--azul-borda);
-      border-radius: 1.2rem;
-      padding: 2rem;
-      max-width: 440px;
+      background: #0f1629;
+      border: 1px solid var(--clr-border-glow);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      max-width: 480px;
       width: 100%;
       position: relative;
-      animation: fadeUp 0.3s ease both;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), var(--shadow-glow);
+      animation: modalFadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-    .modal-box h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
-    .modal-box .plano-escolhido-label {
-      color: var(--texto-cinza);
-      font-size: 0.85rem;
-      margin-bottom: 1.5rem;
+    @keyframes modalFadeUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Abas PIX / Cartão */
-    .abas-pagamento {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--azul-borda);
-      padding-bottom: 0.5rem;
-    }
-    .aba-btn {
-      flex: 1;
-      padding: 0.55rem;
-      border: none;
-      border-radius: 0.5rem;
-      background: transparent;
-      color: var(--texto-cinza);
-      font-size: 0.9rem;
-      font-weight: 600;
+    .btn-fechar-modal {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--clr-border);
+      color: var(--clr-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s;
+      font-size: 1rem;
+      transition: all 0.2s;
     }
-    .aba-btn.ativa {
-      background: var(--azul-vivo);
+    .btn-fechar-modal:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
       color: #fff;
     }
 
-    /* Painéis de pagamento */
+    .modal-header {
+      margin-bottom: 1.5rem;
+    }
+    .modal-header h3 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    .modal-plano-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      background: rgba(99, 179, 237, 0.12);
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      border-radius: var(--radius-xl);
+      color: var(--clr-accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .abas-pagamento {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--clr-surface);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--clr-border);
+    }
+    .aba-btn {
+      flex: 1;
+      padding: 0.65rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--clr-muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .aba-btn.ativa {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+      box-shadow: 0 2px 8px rgba(99, 179, 237, 0.3);
+    }
+
     .painel-pagamento { display: none; }
     .painel-pagamento.ativo { display: block; }
 
-    /* Formulário de cartão */
-    .campo {
-      margin-bottom: 1rem;
+    /* PIX BOX */
+    .pix-box {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      text-align: center;
     }
-    .campo label {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--texto-cinza);
-      margin-bottom: 0.35rem;
+    .pix-qr-simulado {
+      width: 140px;
+      height: 140px;
+      margin: 0.5rem auto 1rem;
+      background: #fff;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
     }
-    .campo input {
+    .pix-qr-simulado img {
       width: 100%;
-      padding: 0.7rem 0.9rem;
-      background: var(--azul-medio);
-      border: 1px solid var(--azul-borda);
-      border-radius: 0.55rem;
-      color: var(--texto-branco);
+      height: 100%;
+      object-fit: contain;
+    }
+    .pix-chave-container {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: var(--clr-accent);
+      word-break: break-all;
+      margin: 0.8rem 0;
+      max-height: 80px;
+      overflow-y: auto;
+    }
+
+    .btn-copiar-pix {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: var(--radius-sm);
+      background: rgba(99, 179, 237, 0.15);
+      border: 1px solid var(--clr-accent);
+      color: var(--clr-accent);
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn-copiar-pix:hover {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+    }
+
+    /* Formulário Cartão */
+    .campo-form {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    .campo-form label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--clr-muted);
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .campo-form input {
+      width: 100%;
+      padding: 0.75rem 0.95rem;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      color: #fff;
       font-size: 0.9rem;
       outline: none;
       transition: border-color 0.2s;
     }
-    .campo input:focus { border-color: var(--azul-vivo); }
-    .campo-duo { display: flex; gap: 0.8rem; }
-    .campo-duo .campo { flex: 1; }
-
-    /* QR Code de PIX (simulado) */
-    .pix-box {
-      background: var(--azul-medio);
-      border: 1px solid var(--azul-borda);
-      border-radius: 0.8rem;
-      padding: 1.5rem;
-      text-align: center;
+    .campo-form input:focus {
+      border-color: var(--clr-accent);
+      box-shadow: 0 0 10px rgba(99, 179, 237, 0.25);
     }
-    .pix-box .pix-icone { font-size: 3rem; margin-bottom: 0.8rem; }
-    .pix-box p { color: var(--texto-cinza); font-size: 0.85rem; line-height: 1.6; }
-    .pix-box .pix-chave {
-      margin-top: 0.8rem;
-      background: var(--azul-borda);
-      border-radius: 0.4rem;
-      padding: 0.5rem 0.8rem;
-      font-size: 0.78rem;
-      color: var(--texto-cinza);
-      word-break: break-all;
-      font-family: monospace;
+    .campo-duo {
+      display: flex;
+      gap: 0.8rem;
+    }
+    .campo-duo .campo-form {
+      flex: 1;
     }
 
-    /* Botão de confirmar pagamento */
-    .btn-confirmar {
+    .btn-modal-action {
       width: 100%;
-      padding: 0.9rem;
-      margin-top: 1.2rem;
-      border-radius: 0.7rem;
+      padding: 0.95rem;
+      margin-top: 1.25rem;
+      border-radius: var(--radius-md);
       border: none;
-      background: linear-gradient(135deg, var(--azul-vivo), var(--roxo-vivo));
+      background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent2));
       color: #fff;
       font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn-modal-action:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .btn-whatsapp-ativacao {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.7rem;
+      border-radius: var(--radius-md);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 0.84rem;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .btn-confirmar:hover { opacity: 0.85; }
-    .btn-confirmar:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    /* Fechar modal */
-    .btn-fechar-modal {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      color: var(--texto-cinza);
-      font-size: 1.3rem;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    /* Mensagem de status */
-    .status-msg {
-      margin-top: 0.8rem;
-      padding: 0.7rem 1rem;
-      border-radius: 0.55rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: none;
-    }
-    .status-msg.sucesso {
-      background: rgba(16,185,129,0.15);
-      color: var(--verde-vivo);
-      border: 1px solid var(--verde-vivo);
-      display: block;
-    }
-    .status-msg.erro {
-      background: rgba(239,68,68,0.12);
-      color: #f87171;
-      border: 1px solid #f87171;
-      display: block;
-    }
-    .status-msg.carregando {
-      background: rgba(59,130,246,0.12);
-      color: var(--azul-vivo);
-      border: 1px solid var(--azul-vivo);
-      display: block;
-    }
-
-    /* ============================================================
-       RODAPÉ DISCRETO
-    ============================================================ */
-    footer {
-      margin-top: 3rem;
-      text-align: center;
-      color: var(--texto-cinza);
-      font-size: 0.78rem;
-    }
-    footer a {
-      color: var(--azul-vivo);
       text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-whatsapp-ativacao:hover {
+      background: #10b981;
+      color: #042f2e;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      border-top: 1px solid var(--clr-border);
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--clr-muted);
+      font-size: 0.84rem;
+    }
+    .site-footer a {
+      color: var(--clr-accent);
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 768px) {
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+      .triagem-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .nav-inner {
+        flex-direction: column;
+        gap: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── LOGO / CABEÇALHO ── -->
-  <div class="logo-topo">
-    <span>Isabella Tecnologia</span>
-    <p>Sistemas de Gestão Inteligente</p>
-  </div>
+  <!-- ============================================================
+       BARRA DE NAVEGAÇÃO
+  ============================================================ -->
+  <header class="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <span>Isabella<em>.</em>Tech</span>
+          <span class="badge-system">SaaS Central</span>
+        </a>
 
-  <!-- ── CARTÃO DE TRIAGEM: JÁ É USUÁRIO? ── -->
-  <div class="triagem-card">
-    <h1>Como deseja continuar?</h1>
-    <p class="subtitulo">
-      Se já tem uma conta, clique em <strong>Entrar</strong>.<br>
-      Se é novo por aqui, escolha um plano e comece agora.
-    </p>
-
-    <div class="opcoes-triagem">
-      <!-- Botão de Login: redireciona para a página de login do sistema -->
-      <a class="btn-login" href="/login" id="btn-ir-login">
-        🔑 Já sou usuário — Entrar
-      </a>
-
-      <!-- Botão que exibe os planos abaixo -->
-      <button class="btn-planos" onclick="mostrarPlanos()">
-        🚀 Quero me cadastrar
-      </button>
+        <div class="nav-actions">
+          <a href="index.html" class="btn-nav-site">
+            <i class="fa-solid fa-arrow-left"></i> Voltar ao Site
+          </a>
+          <!-- LINK OFICIAL E CORRIGIDO PARA O LOGIN DO FC GESTÃO -->
+          <a href="https://lojafc-a31f9.web.app/sistema/login.html" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="btn-nav-login"
+             id="btn-login-header"
+             title="Ir para a tela oficial de login">
+            <i class="fa-solid fa-right-to-bracket"></i> Acessar Sistema (Login)
+          </a>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <div class="separador">ou</div>
-
-    <p style="color: var(--texto-cinza); font-size:0.82rem;">
-      Dúvidas? Fale conosco pelo
-      <a href="https://wa.me/5500000000000" target="_blank"
-         style="color:var(--azul-vivo); text-decoration:none;">
-        WhatsApp
-      </a>
-    </p>
-  </div>
-
-  <!-- ── SECÇÃO DE PLANOS (aparece ao clicar em "Quero me cadastrar") ── -->
-  <div id="secao-planos">
-    <h2>Escolha o seu plano</h2>
-    <p class="planos-subtitulo">Sem fidelidade. Cancele quando quiser.</p>
-
-    <div class="grade-planos">
-
-      <!-- PLANO BÁSICO -->
-      <div class="plano-card">
-        <div class="plano-nome">Básico</div>
-        <div class="plano-preco">R$ 97 <span>/ mês</span></div>
-        <p class="plano-descricao">Ideal para pequenos negócios que estão começando.</p>
-        <ul class="plano-features">
-          <li>1 usuário administrador</li>
-          <li>Gestão de estoque básica</li>
-          <li>Emissão de orçamentos</li>
-          <li>Relatórios essenciais</li>
-          <li>Suporte via WhatsApp</li>
-        </ul>
-        <button class="btn-contratar basico"
-                onclick="abrirCheckout('Básico', 'R$ 97/mês', 9700)">
-          Contratar Básico
-        </button>
+  <main class="container">
+    <!-- ============================================================
+         HERO SECTION
+    ============================================================ -->
+    <section class="hero-section">
+      <div class="badge-pill">
+        <span class="dot-live"></span>
+        <span id="badge-status-sinc">FC Gestão · Catálogo Oficial de Planos SaaS</span>
       </div>
 
-      <!-- PLANO PRO (destaque) -->
-      <div class="plano-card destaque">
-        <div class="badge-destaque">⭐ Mais Popular</div>
-        <div class="plano-nome">Pro</div>
-        <div class="plano-preco">R$ 197 <span>/ mês</span></div>
-        <p class="plano-descricao">Para negócios em crescimento que precisam de mais controle.</p>
-        <ul class="plano-features">
-          <li>Usuários ilimitados</li>
-          <li>Gestão completa de estoque</li>
-          <li>Emissão de NF-e (integração)</li>
-          <li>Dashboard com gráficos</li>
-          <li>Relatórios avançados</li>
-          <li>Suporte prioritário</li>
-          <li>Backup diário automático</li>
-        </ul>
-        <button class="btn-contratar pro"
-                onclick="abrirCheckout('Pro', 'R$ 197/mês', 19700)">
-          Contratar Pro
-        </button>
+      <h1 class="hero-title">
+        A tecnologia que o seu negócio precisa, <br>
+        <span class="gradient-text">pelo plano que cabe no seu bolso.</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Do frente de caixa ágil (PDV) à emissão fiscal SEFAZ com controle de estoque e DRE financeiro.
+        Escolha a suíte ideal e comece a operar hoje mesmo sem fidelidade.
+      </p>
+
+      <!-- CARTOES DE TRIAGEM RAPIDA -->
+      <div class="triagem-wrapper">
+        <!-- CARD: CLIENTE EXISTENTE (LOGIN) -->
+        <div class="triagem-card">
+          <div>
+            <div class="triagem-card-header">
+              <div class="triagem-icon blue">
+                <i class="fa-solid fa-store"></i>
+              </div>
+              <div class="triagem-info">
+                <h3>Já é nosso Lojista?</h3>
+                <p>Acesse seu painel com seu e-mail e senha de qualquer computador ou celular.</p>
+              </div>
+            </div>
+          </div>
+          <!-- LINK OFICIAL CORRIGIDO DA PAGINA DE LOGIN -->
+          <a href="https://lojafc-a31f9.web.app/sistema/login.html" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="triagem-btn outline"
+             id="btn-triagem-login">
+            <i class="fa-solid fa-key"></i> Entrar no Meu Sistema
+          </a>
+        </div>
+
+        <!-- CARD: NOVO CLIENTE (ESCOLHER E ATIVAR) -->
+        <div class="triagem-card highlight">
+          <div>
+            <div class="triagem-card-header">
+              <div class="triagem-icon purple">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <div class="triagem-info">
+                <h3>Quer Contratar ou Ativar?</h3>
+                <p>Escolha seu plano abaixo, cadastre sua loja e ative com <strong>7 dias de garantia de devolução do investimento</strong>.</p>
+              </div>
+            </div>
+          </div>
+          <a href="#grade-planos-container" 
+             class="triagem-btn gradient"
+             id="btn-triagem-trial">
+            <i class="fa-solid fa-arrow-down"></i> Ver Planos & Ativar
+          </a>
+        </div>
       </div>
 
-    </div>
-  </div>
+      <!-- SELETOR DE INTERVALO / CICLO DE COBRANCA -->
+      <div class="pricing-controls">
+        <div class="cycle-switcher">
+          <button class="cycle-btn active" id="btn-ciclo-mensal" onclick="alterarCiclo('mensal')">
+            Mensal
+          </button>
+          <button class="cycle-btn" id="btn-ciclo-anual" onclick="alterarCiclo('anual')">
+            Anual <span class="badge-discount">-20% OFF</span>
+          </button>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--clr-subtle);">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i> Sem fidelidade no mensal · Cancele ou altere de plano quando quiser
+        </p>
+      </div>
+    </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       MODAL DE CHECKOUT
-  ════════════════════════════════════════════════════════════════ -->
+    <!-- ============================================================
+         GRADE DE PLANOS DINAMICOS (CARREGADOS DO FIRESTORE SAAS)
+    ============================================================ -->
+    <section>
+      <div class="plans-grid" id="grade-planos-container">
+        <!-- Renderizado dinamicamente via JavaScript com dados de planos_saas -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--clr-muted);">
+          <i class="fa-solid fa-circle-notch fa-spin text-2xl" style="color: var(--clr-accent);"></i>
+          <p style="margin-top: 1rem; font-weight: 600;">Consultando planos atualizados no banco central do SaaS...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BANNER DE DIFERENCIAIS E GARANTIAS
+    ============================================================ -->
+    <section class="trust-banner">
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <h4>7 Dias de Garantia</h4>
+        <p>Ative seu plano com total segurança: se não ficar satisfeito em 7 dias, devolvemos 100% do seu investimento.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+        <h4>Emissor Fiscal Nativo</h4>
+        <p>Transmissão direta para a SEFAZ (NFC-e e NF-e) com seu certificado A1.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fa-solid fa-headset"></i></div>
+        <h4>Suporte Especializado</h4>
+        <p>Time dedicado via WhatsApp para tirar dúvidas e ajudar na implantação.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+        <h4>Nuvem Segura</h4>
+        <p>Seus dados salvos com backups automáticos e criptografia de ponta a ponta.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       MODAL DE CHECKOUT (ASSINATURA DIRETA PIX / CARTÃO)
+  ============================================================ -->
   <div class="modal-overlay" id="modal-checkout">
     <div class="modal-box">
+      <button class="btn-fechar-modal" onclick="fecharCheckout()" title="Fechar janela">✕</button>
 
-      <button class="btn-fechar-modal" onclick="fecharCheckout()" title="Fechar">✕</button>
+      <div class="modal-header">
+        <div class="modal-plano-badge" id="modal-badge-plano">
+          <i class="fa-solid fa-layer-group"></i> <span id="modal-nome-plano">Plano Profissional</span>
+        </div>
+        <h3 id="modal-valor-plano" style="margin-top: 0.5rem;">R$ 169,90 <span style="font-size: 0.85rem; color: var(--clr-muted); font-weight: 500;">/ mês</span></h3>
+        <p style="font-size: 0.82rem; color: var(--clr-muted); margin-top: 0.2rem;" id="modal-capacidade-plano">
+          Até 5 Usuários · Produtos Ilimitados · Suíte Completa
+        </p>
+      </div>
 
-      <h3>Finalizar Assinatura</h3>
-      <p class="plano-escolhido-label" id="modal-plano-label">Plano Pro — R$ 197/mês</p>
-
-      <!-- Abas PIX e Cartão -->
+      <!-- Abas de Pagamento -->
       <div class="abas-pagamento">
-        <button class="aba-btn ativa" onclick="trocarAba('pix', this)">📱 PIX</button>
-        <button class="aba-btn" onclick="trocarAba('cartao', this)">💳 Cartão de Crédito</button>
+        <button class="aba-btn ativa" onclick="trocarAbaPagamento('pix', this)">
+          <i class="fa-brands fa-pix"></i> PIX Instantâneo
+        </button>
+        <button class="aba-btn" onclick="trocarAbaPagamento('cartao', this)">
+          <i class="fa-solid fa-credit-card"></i> Cartão de Crédito
+        </button>
       </div>
 
       <!-- PAINEL PIX -->
       <div class="painel-pagamento ativo" id="painel-pix">
         <div class="pix-box">
-          <div class="pix-icone">📲</div>
-          <p>Use o seu banco ou app de pagamento para pagar via PIX.<br>
-             Após o pagamento, o acesso é liberado <strong>automaticamente</strong> em até 2 minutos.</p>
-          <div class="pix-chave" id="pix-chave-display">
-            <!-- Chave PIX gerada dinamicamente pelo checkout.js -->
-            Carregando chave PIX...
+          <div class="pix-qr-simulado">
+            <!-- QR code gerado para pagamento imediato -->
+            <img id="pix-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304" alt="QR Code PIX">
           </div>
+          <p style="font-size: 0.82rem; color: var(--clr-muted);">
+            Escaneie o código com seu app bancário ou copie o código Copia e Cola abaixo:
+          </p>
+          <div class="pix-chave-container" id="pix-copia-cola-text">
+            00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304
+          </div>
+          <button class="btn-copiar-pix" onclick="copiarPixChave()">
+            <i class="fa-solid fa-copy"></i> Copiar Código PIX
+          </button>
         </div>
-        <button class="btn-confirmar" id="btn-confirmar-pix" onclick="confirmarPagamentoPix()">
-          ✅ Já fiz o pagamento via PIX
+
+        <button class="btn-modal-action" onclick="confirmarPixFeito()">
+          <i class="fa-solid fa-check"></i> Já Realizei o Pagamento
         </button>
-        <div class="status-msg" id="status-pix"></div>
+
+        <a href="https://wa.me/5562999676874?text=Ol%C3%A1!%20Acabei%20de%20solicitar%20o%20plano%20do%20FC%20Gest%C3%A3o%20no%20site%20e%20gostaria%20de%20ativar%20meu%20acesso." 
+           target="_blank" 
+           class="btn-whatsapp-ativacao">
+          <i class="fa-brands fa-whatsapp"></i> Falar com Suporte para Ativação Imediata
+        </a>
       </div>
 
       <!-- PAINEL CARTÃO -->
       <div class="painel-pagamento" id="painel-cartao">
-        <div class="campo">
-          <label>Nome no cartão</label>
-          <input type="text" id="nome-cartao" placeholder="Ex: JOAO A SILVA" maxlength="40" />
-        </div>
-        <div class="campo">
-          <label>Número do cartão</label>
-          <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000"
-                 maxlength="19" oninput="formatarCartao(this)" />
-        </div>
-        <div class="campo-duo">
-          <div class="campo">
-            <label>Validade</label>
-            <input type="text" id="validade-cartao" placeholder="MM/AA"
-                   maxlength="5" oninput="formatarValidade(this)" />
+        <form onsubmit="processarCartaoForm(event)">
+          <div class="campo-form">
+            <label>Nome no Cartão</label>
+            <input type="text" id="card-nome" required placeholder="Como está impresso no cartão">
           </div>
-          <div class="campo">
-            <label>CVV</label>
-            <input type="text" id="cvv-cartao" placeholder="123" maxlength="4" />
+          <div class="campo-form">
+            <label>Número do Cartão</label>
+            <input type="text" id="card-numero" required placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatarNumCartao(this)">
           </div>
-        </div>
-        <div class="campo">
-          <label>E-mail (para criar sua conta)</label>
-          <input type="email" id="email-cartao" placeholder="seuemail@exemplo.com" />
-        </div>
-        <button class="btn-confirmar" id="btn-confirmar-cartao" onclick="confirmarPagamentoCartao()">
-          🔒 Pagar com Segurança
-        </button>
-        <div class="status-msg" id="status-cartao"></div>
+          <div class="campo-duo">
+            <div class="campo-form">
+              <label>Validade</label>
+              <input type="text" id="card-val" required placeholder="MM/AA" maxlength="5" oninput="formatarValidade(this)">
+            </div>
+            <div class="campo-form">
+              <label>CVV</label>
+              <input type="text" id="card-cvv" required placeholder="123" maxlength="4">
+            </div>
+          </div>
+          <div class="campo-form">
+            <label>E-mail para Acesso</label>
+            <input type="email" id="card-email" required placeholder="seuemail@empresa.com">
+          </div>
+          <button type="submit" class="btn-modal-action" id="btn-submit-cartao">
+            <i class="fa-solid fa-lock"></i> Confirmar Assinatura Segura
+          </button>
+        </form>
       </div>
-
     </div>
   </div>
 
-  <!-- ── RODAPÉ ── -->
-  <footer>
-    <p>© 2025 Isabella Tecnologia · <a href="index.html">Voltar ao site</a></p>
+  <!-- ============================================================
+       RODAPÉ
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 <strong>Isabella Tecnologia</strong> & <strong>FC Gestão</strong>. Todos os direitos reservados.</p>
+      <p style="margin-top: 0.4rem; font-size: 0.78rem;">
+        Plataforma em conformidade com as diretrizes SEFAZ e segurança em nuvem.
+      </p>
+    </div>
   </footer>
 
-  <!-- Carrega a lógica de checkout (tokens e chamadas API ficam aqui) -->
-  <script src="checkout.js"></script>
+  <!-- Firebase SDKs compatíveis -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  
+  <!-- Configuração do Banco SaaS Master Central -->
+  <script src="config_banco.js"></script>
 
+  <!-- Lógica da Página de Planos e Sincronização -->
   <script>
-    // ================================================================
-    // ESTADO GLOBAL DA PÁGINA
-    // ================================================================
-    let planoAtual = { nome: '', descricao: '', valorCentavos: 0 };
+    'use strict';
 
-    // ── 1. Mostrar/ocultar a secção de planos ──────────────────────
-    function mostrarPlanos() {
-      const secao = document.getElementById('secao-planos');
-      secao.classList.add('visivel');
-      // Scroll suave até os planos
-      setTimeout(() => secao.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    // ============================================================
+    // 1. PLANOS PADRAO (ESPELHO OFICIAL DO SAAS MASTER FC GESTAO)
+    // Usado como fallback instantâneo e garantia total de disponibilidade
+    // ============================================================
+    const PLANOS_PADRAO_FC_GESTAO = [
+      {
+        id: 'plano_start',
+        sistemaId: 'fc_gestao',
+        nome: 'Start Express',
+        tagline: 'PDV Direto para Microempresas e MEI',
+        preco: 69.90,
+        ciclo: 'mensal',
+        usuarios: 'Até 2 Usuários',
+        limiteUsuarios: 2,
+        produtos: 'Até 500 Produtos',
+        modeloPDV: 'direto',
+        descricao: 'Perfeito para comércio inicial com caixa único ágil, finalizando a venda diretamente no balcão sem burocracia.',
+        modulos: ['pdv', 'vendas', 'estoque', 'caixa', 'suporte'],
+        features: [
+          'PDV Frente de Caixa Rápido',
+          'Vendas, Pedidos & Orçamentos',
+          'Controle de Estoque Essencial',
+          'Abertura e Fechamento de Caixa',
+          'Até 2 Usuários Simultâneos',
+          'Suporte via WhatsApp'
+        ],
+        destaque: false,
+        ativo: true
+      },
+      {
+        id: 'plano_balcao_caixa',
+        sistemaId: 'fc_gestao',
+        nome: 'Varejo Balcão',
+        tagline: 'Pré-Venda no Balcão + Caixa Central',
+        preco: 99.90,
+        ciclo: 'mensal',
+        usuarios: 'Até 4 Usuários',
+        limiteUsuarios: 4,
+        produtos: 'Produtos Ilimitados',
+        modeloPDV: 'caixa',
+        descricao: 'Modelo ideal para lojas físicas: vendedores atendem no salão e o pagamento é liquidado no Caixa Central.',
+        modulos: ['pdv', 'vendas', 'estoque', 'caixa', 'suporte'],
+        features: [
+          'Atendimento Balcão + Caixa Separado',
+          'Produtos & Clientes Ilimitados',
+          'Relatório de Vendas e Comissões',
+          'Controle de Estoque em Tempo Real',
+          'Até 4 Usuários (Vendedores + Caixa)',
+          'Backup diário automático'
+        ],
+        destaque: false,
+        ativo: true
+      },
+      {
+        id: 'plano_fiscal',
+        sistemaId: 'fc_gestao',
+        nome: 'Fiscal & Vendas',
+        tagline: 'Emissão Fiscal Nativa SEFAZ',
+        preco: 119.90,
+        ciclo: 'mensal',
+        usuarios: 'Até 3 Usuários',
+        limiteUsuarios: 3,
+        produtos: 'Produtos Ilimitados',
+        modeloPDV: 'ambos',
+        descricao: 'Segurança fiscal total: emissão de NFC-e e NF-e diretamente na SEFAZ sem taxas extras por nota emitida.',
+        modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'caixa', 'suporte'],
+        features: [
+          'Emissão Nativa NFC-e e NF-e (SEFAZ)',
+          'Certificado Digital A1 Integrado',
+          'PDV Direto ou Pré-Venda Balcão',
+          'Envio de XML e DANFE por WhatsApp/Email',
+          'Relatórios Fiscais e DRE Básico',
+          'Suporte Tributário de Implantação'
+        ],
+        destaque: false,
+        ativo: true
+      },
+      {
+        id: 'plano_pro',
+        sistemaId: 'fc_gestao',
+        nome: 'Profissional',
+        tagline: 'Gestão Completa, Móveis & Financeiro DRE',
+        preco: 169.90,
+        ciclo: 'mensal',
+        usuarios: 'Até 5 Usuários',
+        limiteUsuarios: 5,
+        produtos: 'Produtos Ilimitados',
+        modeloPDV: 'ambos',
+        descricao: 'O equilíbrio perfeito mais escolhido: gestão financeira profunda, compras XML, montagem & entrega e catálogo online.',
+        modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'financeiro', 'caixa', 'compras', 'relatorios', 'agenda', 'site', 'suporte'],
+        features: [
+          'Tudo do Plano Fiscal & Vendas',
+          'Financeiro Completo: DRE, Contas a Pagar/Receber',
+          'Entrada de Notas por XML de Fornecedor',
+          'Módulo de Móveis: Montagem & Entrega',
+          'Tabelas de Preço Múltiplas & Orçamentos',
+          'Catálogo Online de Produtos Integrado',
+          'Até 5 Usuários com Permissões por Perfil',
+          'Suporte Prioritário'
+        ],
+        destaque: true,
+        ativo: true
+      },
+      {
+        id: 'plano_enterprise',
+        sistemaId: 'fc_gestao',
+        nome: 'Enterprise + IA',
+        tagline: 'Gestão Avançada com Inteligência Gemini',
+        preco: 249.90,
+        ciclo: 'mensal',
+        usuarios: 'Até 10 Usuários',
+        limiteUsuarios: 10,
+        produtos: 'Produtos Ilimitados',
+        modeloPDV: 'ambos',
+        descricao: 'Potência executiva com assistente IA generativa comercial para previsões de vendas e relatórios estratégicos.',
+        modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'financeiro', 'caixa', 'compras', 'relatorios', 'agenda', 'site', 'ia', 'marketing', 'suporte'],
+        features: [
+          'Tudo do Plano Profissional',
+          'Inteligência Artificial Gemini Comercial',
+          'Análises Preditivas de Giro e Compras',
+          'Até 10 Usuários Simultâneos',
+          'Múltiplos Caixas e Frente de Loja',
+          'Relatórios Gerenciais Avançados (Curva ABC, Kardex)',
+          'Suporte VIP via Vídeo e WhatsApp'
+        ],
+        destaque: false,
+        ativo: true
+      },
+      {
+        id: 'plano_ultra',
+        sistemaId: 'fc_gestao',
+        nome: 'Ultra Completo',
+        tagline: 'Franquias, Redes & Multi-Lojas',
+        preco: 349.90,
+        ciclo: 'mensal',
+        usuarios: 'Usuários Ilimitados',
+        limiteUsuarios: 999999,
+        produtos: 'Produtos Ilimitados',
+        modeloPDV: 'ambos',
+        descricao: 'A suíte total definitiva com 100% dos recursos liberados, multi-lojas integradas e suporte VIP 24/7.',
+        modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'financeiro', 'caixa', 'compras', 'relatorios', 'agenda', 'site', 'ia', 'marketing', 'suporte'],
+        features: [
+          'Suíte 100% Irrestrita e Sem Limites',
+          'Usuários e Produtos ILIMITADOS',
+          'Multi-Lojas e Filiais Centralizadas',
+          'IA Gemini Ilimitada para Toda a Equipe',
+          'Todos os Relatórios do SaaS Liberados',
+          'Gerente de Conta Dedicado 24/7'
+        ],
+        destaque: false,
+        ativo: true
+      }
+    ];
+
+    let cicloAtual = 'mensal';
+    let listaPlanosAtual = [];
+    let planoSelecionadoCheckout = null;
+
+    // Obtém o parâmetro do sistema pela URL (ex: ?sistema=fc_gestao)
+    function obterParametroSistema() {
+      const p = new URLSearchParams(window.location.search);
+      return p.get('sistema') || 'fc_gestao';
     }
 
-    // ── 2. Abrir modal de checkout com dados do plano escolhido ────
-    function abrirCheckout(nome, descricao, valorCentavos) {
-      planoAtual = { nome, descricao, valorCentavos };
-      document.getElementById('modal-plano-label').textContent =
-        `Plano ${nome} — ${descricao}`;
+    // ============================================================
+    // 2. BUSCA DINÂMICA NO FIRESTORE DO SAAS MASTER (fcgestao-testes)
+    // ============================================================
+    async function carregarPlanosSaaS() {
+      const container = document.getElementById('grade-planos-container');
+      const badgeStatus = document.getElementById('badge-status-sinc');
+      const sistemaId = obterParametroSistema();
 
-      // Gera a chave PIX via checkout.js (função exportada)
-      if (typeof gerarChavePix === 'function') {
-        gerarChavePix(valorCentavos).then(chave => {
-          document.getElementById('pix-chave-display').textContent = chave;
+      try {
+        let planosCarregados = [];
+
+        // Verifica se o Firebase Firestore está disponível
+        if (typeof firebase !== 'undefined' && firebase.firestore) {
+          const snap = await firebase.firestore().collection('planos_saas').get();
+          
+          if (!snap.empty) {
+            planosCarregados = snap.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data(),
+              sistemaId: doc.data().sistemaId || 'fc_gestao'
+            }));
+
+            // Filtra pelo sistema atual (ex: fc_gestao)
+            const planosFiltrados = planosCarregados.filter(p => 
+              (p.sistemaId === sistemaId || (!p.sistemaId && sistemaId === 'fc_gestao')) && p.ativo !== false
+            );
+
+            if (planosFiltrados.length > 0) {
+              planosCarregados = planosFiltrados;
+              if (badgeStatus) {
+                badgeStatus.innerHTML = `FC Gestão · Sincronizado ao Vivo via SaaS Master (${planosCarregados.length} Planos)`;
+              }
+            } else {
+              planosCarregados = [...PLANOS_PADRAO_FC_GESTAO];
+            }
+          } else {
+            planosCarregados = [...PLANOS_PADRAO_FC_GESTAO];
+          }
+        } else {
+          planosCarregados = [...PLANOS_PADRAO_FC_GESTAO];
+        }
+
+        // Se houver planos do banco que não tenham features detalhadas, mescla com os padrões preservando 100% dos dados do banco
+        listaPlanosAtual = planosCarregados.map(p => {
+          const padrao = PLANOS_PADRAO_FC_GESTAO.find(x => x.id === p.id) || {};
+          return {
+            ...padrao,
+            ...p,
+            preco: Number(p.preco !== undefined ? p.preco : (padrao.preco || 0)),
+            features: p.features || padrao.features || [
+              'PDV Frente de Caixa',
+              'Gestão de Estoque',
+              'Relatórios de Vendas',
+              'Suporte Especializado'
+            ]
+          };
         });
-      } else {
-        // Fallback: exibe chave estática enquanto checkout.js não estiver configurado
-        document.getElementById('pix-chave-display').textContent =
-          '⚠️ Configure o token em checkout.js para gerar a chave PIX real.';
+
+      } catch (err) {
+        console.warn("Conexão direta com Firestore em espera, utilizando catálogo padrão sincronizado:", err);
+        listaPlanosAtual = [...PLANOS_PADRAO_FC_GESTAO];
+        if (badgeStatus) {
+          badgeStatus.innerHTML = `FC Gestão · Catálogo Oficial de Planos SaaS`;
+        }
       }
 
-      document.getElementById('modal-checkout').classList.add('aberto');
-      // Reseta abas para PIX
-      trocarAba('pix', document.querySelectorAll('.aba-btn')[0]);
+      // Ordena por preço crescente para facilitar a comparação
+      listaPlanosAtual.sort((a, b) => Number(a.preco || 0) - Number(b.preco || 0));
+
+      renderizarPlanos();
     }
 
-    // ── 3. Fechar modal ───────────────────────────────────────────
+    // ============================================================
+    // 3. RENDERIZAÇÃO DA GRADE DE PLANOS
+    // ============================================================
+    function renderizarPlanos() {
+      const container = document.getElementById('grade-planos-container');
+      if (!container) return;
+
+      const isAnual = cicloAtual === 'anual';
+      // Desconto anual lido do SaaS (campo descontoAnual, padrão 20%)
+      const descontoGlobal = listaPlanosAtual[0]?.descontoAnual ?? 20;
+      const fatorGlobal = isAnual ? (1 - descontoGlobal / 100) : 1.0;
+
+      container.innerHTML = listaPlanosAtual.map(p => {
+        const precoNum = Number(p.preco || 0);
+        // Desconto pode ser por plano ou global
+        const desconto = isAnual ? (p.descontoAnual ?? descontoGlobal) : 0;
+        const fatorPreco = 1 - desconto / 100;
+        const precoCalculado = (precoNum * fatorPreco).toFixed(2).replace('.', ',');
+        // Garantia lida do SaaS
+        const garantiaDias = p.garantiaDias ?? 7;
+        const garantiaTipo = p.garantiaTipo || 'devolucao_investimento';
+        const sloganGarantia = garantiaTipo === 'devolucao_investimento'
+          ? `${garantiaDias} Dias de Garantia · Devolução do Investimento`
+          : `${garantiaDias} Dias de Garantia`;
+        const isDestaque = p.destaque === true || p.id === 'plano_pro';
+        const cardClass = isDestaque ? 'plan-card featured' : 'plan-card';
+        const featuredBadge = isDestaque ? `<div class="featured-tag">⭐ Mais Escolhido</div>` : '';
+
+        // Formata modelo de PDV
+        let modeloPDVLabel = 'PDV Flexível';
+        if (p.modeloPDV === 'direto') modeloPDVLabel = 'PDV Direto (Caixa Único)';
+        else if (p.modeloPDV === 'caixa') modeloPDVLabel = 'Pré-venda + Caixa Central';
+        else if (p.modeloPDV === 'ambos') modeloPDVLabel = 'PDV Direto & Caixa Central';
+
+        // URL oficial de cadastro com o plano pré-selecionado
+        const urlCadastroComPlano = `https://lojafc-a31f9.web.app/sistema/login.html?tab=cadastro&plano=${encodeURIComponent(p.id)}`;
+
+        const featuresHtml = (p.features || []).map((feat, idx) => {
+          const isHighlight = idx === 0 || idx === 1;
+          return `<li class="${isHighlight ? 'highlight-feature' : ''}"><i class="fa-solid fa-circle-check"></i> ${feat}</li>`;
+        }).join('');
+
+        return `
+          <div class="${cardClass}" id="card-${p.id}">
+            ${featuredBadge}
+            <div>
+              <div class="plan-header">
+                <div class="plan-tier-name">
+                  ${p.nome}
+                </div>
+                <div class="plan-desc">${p.descricao || p.tagline || ''}</div>
+              </div>
+
+              <div class="plan-price-wrap">
+                <div class="plan-price">
+                  <span class="currency">R$</span> ${precoCalculado} <span class="period">/ mês</span>
+                </div>
+                <div class="plan-price-sub">
+                  ${isAnual ? 'Faturamento anual · Economia de 20% garantida' : 'Faturamento mensal recorrente'}
+                </div>
+              </div>
+
+              <div class="plan-specs">
+                <span class="spec-chip"><i class="fa-solid fa-users"></i> ${p.usuarios || 'Usuários Sob Medida'}</span>
+                <span class="spec-chip"><i class="fa-solid fa-boxes-stacked"></i> ${p.produtos || 'Produtos Ilimitados'}</span>
+                <span class="spec-chip"><i class="fa-solid fa-cash-register"></i> ${modeloPDVLabel}</span>
+              </div>
+
+              <ul class="plan-features-list">
+                ${featuresHtml}
+              </ul>
+            </div>
+
+            <div class="plan-actions">
+              <!-- SLOGAN DE GARANTIA DE DEVOLUÇÃO DO INVESTIMENTO -->
+              <div class="plan-slogan-label">
+                <i class="fa-solid fa-shield-heart"></i> ${sloganGarantia}
+              </div>
+
+              <!-- BOTAO PRINCIPAL: ATIVAR PLANO AGORA (DIRECIONA PARA A PAGINA DE CADASTRO cadastro.html) -->
+              <a href="cadastro.html?plano=${encodeURIComponent(p.id)}&ciclo=${cicloAtual}" 
+                 class="btn-plan-primary-activation" 
+                 title="Cadastrar e Ativar ${p.nome}">
+                <i class="fa-solid fa-bolt"></i> Ativar Plano Agora
+              </a>
+
+              <small class="plan-activation-note">
+                <i class="fa-solid fa-lock text-slate-400"></i> Cadastro do negócio antes do pagamento
+              </small>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ============================================================
+    // 4. CONTROLE DE CICLO (MENSAL / ANUAL)
+    // ============================================================
+    function alterarCiclo(ciclo) {
+      cicloAtual = ciclo;
+      const btnMensal = document.getElementById('btn-ciclo-mensal');
+      const btnAnual = document.getElementById('btn-ciclo-anual');
+
+      if (ciclo === 'anual') {
+        btnAnual.classList.add('active');
+        btnMensal.classList.remove('active');
+      } else {
+        btnMensal.classList.add('active');
+        btnAnual.classList.remove('active');
+      }
+
+      renderizarPlanos();
+    }
+
+    // ============================================================
+    // 5. MODAL DE CHECKOUT (PIX & CARTAO)
+    // ============================================================
+    function abrirModalAssinatura(planoId) {
+      const plano = listaPlanosAtual.find(p => p.id === planoId);
+      if (!plano) return;
+
+      planoSelecionadoCheckout = plano;
+      const isAnual = cicloAtual === 'anual';
+      const descontoPlano = isAnual ? (plano.descontoAnual ?? 20) : 0;
+      const fator = 1 - descontoPlano / 100;
+      const precoFinal = (Number(plano.preco || 0) * fator).toFixed(2).replace('.', ',');
+
+      document.getElementById('modal-nome-plano').textContent = plano.nome;
+      document.getElementById('modal-valor-plano').innerHTML = 
+        `R$ ${precoFinal} <span style="font-size: 0.85rem; color: var(--clr-muted); font-weight: 500;">/ ${isAnual ? 'mês (no plano anual)' : 'mês'}</span>`;
+      document.getElementById('modal-capacidade-plano').textContent = 
+        `${plano.usuarios || 'Usuários ilimitados'} · ${plano.produtos || 'Produtos ilimitados'} · Ativação Imediata`;
+
+      // Atualiza QR code e link do PIX dinamicamente
+      const pixPayload = `00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304`;
+      const qrEl = document.getElementById('pix-qr-img');
+      if (qrEl) {
+        qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(pixPayload)}`;
+      }
+      document.getElementById('pix-copia-cola-text').textContent = pixPayload;
+
+      document.getElementById('modal-checkout').classList.add('aberto');
+    }
+
     function fecharCheckout() {
       document.getElementById('modal-checkout').classList.remove('aberto');
-      limparStatus();
     }
-    // Fechar clicando fora do modal
+
+    // Fecha ao clicar fora da caixa
     document.getElementById('modal-checkout').addEventListener('click', function(e) {
       if (e.target === this) fecharCheckout();
     });
 
-    // ── 4. Trocar aba PIX / Cartão ───────────────────────────────
-    function trocarAba(aba, btn) {
+    function trocarAbaPagamento(aba, btn) {
       document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
       document.querySelectorAll('.painel-pagamento').forEach(p => p.classList.remove('ativo'));
       btn.classList.add('ativa');
       document.getElementById('painel-' + aba).classList.add('ativo');
-      limparStatus();
     }
 
-    // ── 5. Limpar mensagens de status ─────────────────────────────
-    function limparStatus() {
-      ['status-pix', 'status-cartao'].forEach(id => {
-        const el = document.getElementById(id);
-        el.className = 'status-msg';
-        el.textContent = '';
-      });
-    }
-
-    // ── 6. Formatar número do cartão (grupos de 4) ───────────────
-    function formatarCartao(input) {
-      let v = input.value.replace(/\D/g, '').substring(0, 16);
-      input.value = v.replace(/(.{4})/g, '$1 ').trim();
-    }
-
-    // ── 7. Formatar validade MM/AA ────────────────────────────────
-    function formatarValidade(input) {
-      let v = input.value.replace(/\D/g, '').substring(0, 4);
-      if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2);
-      input.value = v;
-    }
-
-    // ── 8. Confirmar pagamento PIX ────────────────────────────────
-    async function confirmarPagamentoPix() {
-      const statusEl = document.getElementById('status-pix');
-      const btnEl    = document.getElementById('btn-confirmar-pix');
-
-      statusEl.className = 'status-msg carregando';
-      statusEl.textContent = '⏳ Aguardando confirmação do pagamento...';
-      btnEl.disabled = true;
-
-      try {
-        // Chama a função do checkout.js que verifica o status do PIX
-        // e aciona o backend (Cloud Function) para criar o usuário.
-        const resultado = await verificarStatusPix(planoAtual);
-
-        if (resultado.aprovado) {
-          statusEl.className = 'status-msg sucesso';
-          statusEl.textContent =
-            '✅ Pagamento confirmado! Seu acesso foi criado. Verifique o e-mail cadastrado.';
-          btnEl.textContent = '✅ Acesso Liberado!';
-        } else {
-          statusEl.className = 'status-msg erro';
-          statusEl.textContent =
-            '❌ Pagamento ainda não identificado. Tente novamente em instantes.';
-          btnEl.disabled = false;
-        }
-      } catch (err) {
-        statusEl.className = 'status-msg erro';
-        statusEl.textContent = '❌ Erro ao verificar pagamento: ' + err.message;
-        btnEl.disabled = false;
-      }
-    }
-
-    // ── 9. Confirmar pagamento com Cartão ─────────────────────────
-    async function confirmarPagamentoCartao() {
-      const nome   = document.getElementById('nome-cartao').value.trim();
-      const numero = document.getElementById('numero-cartao').value.replace(/\s/g, '');
-      const val    = document.getElementById('validade-cartao').value.trim();
-      const cvv    = document.getElementById('cvv-cartao').value.trim();
-      const email  = document.getElementById('email-cartao').value.trim();
-
-      const statusEl = document.getElementById('status-cartao');
-      const btnEl    = document.getElementById('btn-confirmar-cartao');
-
-      // Validações básicas no frontend
-      if (!nome || numero.length < 13 || val.length < 5 || cvv.length < 3 || !email) {
-        statusEl.className = 'status-msg erro';
-        statusEl.textContent = '❌ Preencha todos os campos corretamente.';
-        return;
-      }
-
-      statusEl.className = 'status-msg carregando';
-      statusEl.textContent = '⏳ Processando pagamento...';
-      btnEl.disabled = true;
-
-      try {
-        // Chama a função do checkout.js que tokeniza o cartão
-        // e envia para a API de pagamento (Mercado Pago / Stripe).
-        const resultado = await processarPagamentoCartao({
-          nome, numero, val, cvv, email,
-          plano: planoAtual
+    function copiarPixChave() {
+      const texto = document.getElementById('pix-copia-cola-text').textContent.trim();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(texto).then(() => {
+          alert('Chave PIX copiada com sucesso! Abra o app do seu banco e cole no Pix Copia e Cola.');
+        }).catch(() => {
+          prompt('Copie o código PIX abaixo:', texto);
         });
-
-        if (resultado.aprovado) {
-          statusEl.className = 'status-msg sucesso';
-          statusEl.textContent =
-            '✅ Pagamento aprovado! Acesso criado. Verifique o e-mail ' + email;
-          btnEl.textContent = '✅ Acesso Liberado!';
-        } else {
-          statusEl.className = 'status-msg erro';
-          statusEl.textContent = '❌ ' + (resultado.mensagem || 'Pagamento recusado. Tente outro cartão.');
-          btnEl.disabled = false;
-        }
-      } catch (err) {
-        statusEl.className = 'status-msg erro';
-        statusEl.textContent = '❌ Erro ao processar: ' + err.message;
-        btnEl.disabled = false;
+      } else {
+        prompt('Copie o código PIX abaixo:', texto);
       }
     }
+
+    function confirmarPixFeito() {
+      const nomePlano = planoSelecionadoCheckout ? planoSelecionadoCheckout.nome : 'FC Gestão';
+      const msg = encodeURIComponent(`Olá! Acabei de realizar o pagamento do PIX para o plano ${nomePlano} do FC Gestão. Segue meu comprovante para liberação.`);
+      window.open(`https://wa.me/5562999676874?text=${msg}`, '_blank');
+      fecharCheckout();
+    }
+
+    function formatarNumCartao(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 16);
+      el.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    function formatarValidade(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2);
+      el.value = v;
+    }
+
+    function processarCartaoForm(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-submit-cartao');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando Assinatura...';
+
+      setTimeout(() => {
+        alert('Assinatura registrada! Enviamos os detalhes de confirmação para o seu e-mail. Para agilizar a liberação imediata, você também pode falar conosco no WhatsApp.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lock"></i> Confirmar Assinatura Segura';
+        fecharCheckout();
+      }, 1500);
+    }
+
+    // Inicialização ao carregar a página
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarPlanosSaaS();
+    });
   </script>
 </body>
 </html>

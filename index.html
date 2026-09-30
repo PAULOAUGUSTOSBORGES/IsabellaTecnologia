@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Isabella Tecnologia · Sistemas &amp; Marketing</title>
 
-  <!-- ARQUIVO DE CONFIGURAÇÃO EXTERNO (Altere textos, email, whatsapp e portfólio aqui) -->
+  <!-- ARQUIVO DE CONFIGURAÇÃO EXTERNO E BANCO SAAS -->
   <script src="site-config.js?v=2"></script>
+  <script src="config_banco.js"></script>
 
   <style>
     /* ==============================
@@ -295,6 +296,7 @@
       <a href="#hero" class="nav__logo" id="navLogo">Isabella<em>.</em>Tech</a>
       <ul class="nav__links" id="navLinks">
         <li><a href="#sistemas">Sistemas</a></li>
+        <li><a href="acesso.html?sistema=fc_gestao">Planos SaaS</a></li>
         <li><a href="#marketing">Marketing</a></li>
         <li><a href="#contato" class="nav__cta" id="navCta">Fale Connosco &#8599;</a></li>
       </ul>
@@ -492,6 +494,7 @@
       <div class="footer__copy" id="footerCopy">&copy; 2025 Isabella Tecnologia. Todos os direitos reservados.</div>
       <ul class="footer__links" id="footerLinks">
         <li><a href="#sistemas">Sistemas</a></li>
+        <li><a href="acesso.html?sistema=fc_gestao">Planos FC Gestão</a></li>
         <li><a href="#marketing">Marketing</a></li>
         <li><a href="#contato">Contacto</a></li>
       </ul>
@@ -521,6 +524,23 @@ function applySiteConfig() {
     const footerCopy = document.getElementById('footerCopy');
     if (footerCopy) {
       footerCopy.innerHTML = `&copy; ${cfg.empresa.anoFundacao || new Date().getFullYear()} ${cfg.empresa.nome} Tecnologia. ${(cfg.rodape && cfg.rodape.textoCopyright) || 'Todos os direitos reservados.'}`;
+    }
+  }
+
+  // Links Dinâmicos de Navegação
+  if (cfg.navegacao && Array.isArray(cfg.navegacao.links)) {
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) {
+      const ctaBtn = cfg.navegacao.botaoCta ? `<li><a href="${cfg.navegacao.botaoCta.link}" class="nav__cta" id="navCta">${cfg.navegacao.botaoCta.texto}</a></li>` : '';
+      navLinks.innerHTML = cfg.navegacao.links.map(l => `<li><a href="${l.link}">${l.texto}</a></li>`).join('') + ctaBtn;
+    }
+  }
+
+  // Links Dinâmicos do Rodapé
+  if (cfg.rodape && Array.isArray(cfg.rodape.links)) {
+    const footerLinks = document.getElementById('footerLinks');
+    if (footerLinks) {
+      footerLinks.innerHTML = cfg.rodape.links.map(l => `<li><a href="${l.link}">${l.texto}</a></li>`).join('');
     }
   }
 

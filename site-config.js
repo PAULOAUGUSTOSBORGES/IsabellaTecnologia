@@ -100,16 +100,16 @@ const SITE_CONFIG = {
     //   'third' -> Cartão padrão de 1/3 (ocupa 4 colunas)
     projetos: [
       {
-        tag: "🛋️ Gestão Moveleira",
-        icone: "🛋️",
-        titulo: "Sistema de Gestão para Loja de Móveis",
-        descricao: "Solução completa para lojas e fábricas de móveis: controle de showroom e estoque, pedidos sob medida, fluxo de montagem e entrega, comissões de vendedores e emissão fiscal integrada.",
-        tecnologias: ["Controle de Estoque", "Montagem & Entrega", "PDV", "Multi-lojas", "Emissão NF-e"],
+        tag: "⚡ ERP & PDV Comercial",
+        icone: "🏪",
+        titulo: "FC Gestão · ERP, PDV & Emissor Fiscal",
+        descricao: "A solução completa para varejo, comércio e lojas de móveis: frente de caixa PDV ágil, controle de showroom e estoque, pedidos sob medida, fluxo de montagem e entrega, comissões de vendedores e emissão fiscal nativa SEFAZ (NFC-e/NF-e). Planos flexíveis do MEI à grande rede.",
+        tecnologias: ["PDV Frente de Caixa", "Emissão Fiscal SEFAZ", "Showroom & Móveis", "Financeiro DRE", "Multi-lojas", "IA Gemini"],
         tamanho: "wide",
         mostrarBarrasPreview: true,
-        // Link direto para a tela de login / acesso do sistema:
-        linkAcesso: "acesso.html",
-        textoBotaoAcesso: "Acessar Sistema"
+        // Link direto para a página de planos e acesso do sistema:
+        linkAcesso: "acesso.html?sistema=fc_gestao",
+        textoBotaoAcesso: "Ver Planos & Acessar"
       },
       {
         tag: "📊 Analytics",
@@ -253,6 +253,7 @@ const SITE_CONFIG = {
   navegacao: {
     links: [
       { texto: "Sistemas", link: "#sistemas" },
+      { texto: "Planos SaaS", link: "acesso.html?sistema=fc_gestao" },
       { texto: "Marketing", link: "#marketing" }
     ],
     botaoCta: { texto: "Fale Connosco ↗", link: "#contato" }
@@ -262,6 +263,7 @@ const SITE_CONFIG = {
     textoCopyright: "Todos os direitos reservados.",
     links: [
       { texto: "Sistemas", link: "#sistemas" },
+      { texto: "Planos FC Gestão", link: "acesso.html?sistema=fc_gestao" },
       { texto: "Marketing", link: "#marketing" },
       { texto: "Contacto", link: "#contato" }
     ]

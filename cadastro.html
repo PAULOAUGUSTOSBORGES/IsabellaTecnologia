@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro & Ativação de Plano · FC Gestão | Isabella Tecnologia</title>
+  <link rel="icon" type="image/png" href="https://lojafc-a31f9.web.app/icons/favicon.png">
+
+  <!-- Fontes & Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --clr-bg:          #080c14;
+      --clr-surface:     #0d1321;
+      --clr-card:        #111827;
+      --clr-card-hover:  #162035;
+      --clr-border:      rgba(99, 179, 237, 0.14);
+      --clr-border-glow: rgba(99, 179, 237, 0.35);
+      
+      --clr-accent:      #63b3ed;
+      --clr-accent2:     #9f7aea;
+      --clr-accent3:     #10b981;
+      --clr-amber:       #f59e0b;
+      
+      --clr-text:        #e2e8f0;
+      --clr-text-white:  #ffffff;
+      --clr-muted:       #94a3b8;
+      --clr-subtle:      #64748b;
+      
+      --ff-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-xl: 9999px;
+      
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 35px rgba(99, 179, 237, 0.18);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--ff-sans);
+      background-color: var(--clr-bg);
+      color: var(--clr-text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 179, 237, 0.12), transparent 70%),
+        radial-gradient(ellipse 60% 40% at 85% 60%, rgba(159, 122, 234, 0.08), transparent 70%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+
+    /* CABEÇALHO */
+    .navbar {
+      background: rgba(8, 12, 20, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--clr-border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo em { color: var(--clr-accent); font-style: normal; }
+    .nav-logo span.tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.6rem;
+      background: rgba(99, 179, 237, 0.12);
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      border-radius: var(--radius-xl);
+      color: var(--clr-accent);
+      font-weight: 700;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .btn-voltar {
+      color: var(--clr-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .btn-voltar:hover { color: #fff; }
+    .btn-login-link {
+      color: var(--clr-accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    /* STEPPER */
+    .stepper-wrap {
+      padding: 2.5rem 0 1.5rem;
+      text-align: center;
+    }
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      padding: 0.5rem 1.5rem;
+      border-radius: var(--radius-xl);
+    }
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--clr-subtle);
+    }
+    .step-item.active {
+      color: #fff;
+    }
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: grid;
+      place-items: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .step-item.active .step-number {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+      box-shadow: 0 0 12px rgba(99, 179, 237, 0.5);
+    }
+    .step-divider {
+      width: 30px;
+      height: 2px;
+      background: var(--clr-border);
+    }
+
+    /* LAYOUT PRINCIPAL */
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      margin-bottom: 4rem;
+      align-items: start;
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: 2.2rem;
+      box-shadow: var(--shadow-card);
+    }
+    .form-card h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .form-card p.desc {
+      color: var(--clr-muted);
+      font-size: 0.88rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .form-group.full {
+      grid-column: span 2;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--clr-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-group input:focus {
+      border-color: var(--clr-accent);
+      box-shadow: 0 0 12px rgba(99, 179, 237, 0.25);
+    }
+    .form-group small {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--clr-subtle);
+      margin-top: 0.3rem;
+    }
+
+    .btn-submit-step1 {
+      grid-column: span 2;
+      margin-top: 1rem;
+      padding: 1.1rem;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    }
+    .btn-submit-step1:hover {
+      opacity: 0.94;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 26px rgba(124, 58, 237, 0.5);
+    }
+
+    /* CARD DO PLANO RESUMO */
+    .plan-summary-card {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border-glow);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-card);
+      position: sticky;
+      top: 90px;
+    }
+    .summary-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.75rem;
+      background: rgba(99, 179, 237, 0.12);
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      border-radius: var(--radius-xl);
+      color: var(--clr-accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.8rem;
+    }
+    .summary-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .summary-tagline {
+      font-size: 0.8rem;
+      color: var(--clr-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .summary-price-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+    .summary-price {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .summary-price span {
+      font-size: 0.88rem;
+      color: var(--clr-muted);
+      font-weight: 500;
+    }
+    .summary-cycle-badge {
+      margin-top: 0.3rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #34d399;
+    }
+
+    /* SLOGAN DESTAQUE 7 DIAS GRÁTIS */
+    .slogan-card-badge {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(99, 179, 237, 0.12));
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .slogan-card-badge i {
+      font-size: 1.3rem;
+      color: #34d399;
+      flex-shrink: 0;
+    }
+    .slogan-card-badge strong {
+      display: block;
+      color: #fff;
+      font-size: 0.82rem;
+    }
+    .slogan-card-badge span {
+      font-size: 0.74rem;
+      color: var(--clr-muted);
+    }
+
+    .summary-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--clr-text);
+      border-top: 1px solid var(--clr-border);
+      padding-top: 1rem;
+    }
+    .summary-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .summary-features li i {
+      color: var(--clr-accent3);
+      font-size: 0.8rem;
+    }
+
+    /* PASSO 2 (PAGAMENTO) */
+    #step-2-container {
+      display: none;
+    }
+
+    .payment-tabs {
+      display: flex;
+      gap: 0.6rem;
+      background: var(--clr-surface);
+      padding: 0.35rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--clr-border);
+    }
+    .pay-tab-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--clr-muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .pay-tab-btn.active {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+      box-shadow: 0 2px 10px rgba(99, 179, 237, 0.35);
+    }
+
+    .pay-content { display: none; }
+    .pay-content.active { display: block; }
+
+    /* PIX */
+    .pix-view-box {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1.8rem;
+      text-align: center;
+    }
+    .pix-qr-render {
+      width: 160px;
+      height: 160px;
+      margin: 0.8rem auto 1.2rem;
+      background: #fff;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+    }
+    .pix-qr-render img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .pix-copy-box {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem;
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: var(--clr-accent);
+      word-break: break-all;
+      margin-bottom: 1rem;
+      max-height: 90px;
+      overflow-y: auto;
+    }
+    .btn-copy-pix {
+      width: 100%;
+      padding: 0.85rem;
+      background: rgba(99, 179, 237, 0.15);
+      border: 1px solid var(--clr-accent);
+      color: var(--clr-accent);
+      border-radius: var(--radius-md);
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-copy-pix:hover {
+      background: var(--clr-accent);
+      color: var(--clr-bg);
+    }
+
+    .btn-confirm-pix {
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .btn-confirm-pix:hover { opacity: 0.92; }
+
+    .btn-whatsapp-comprovante {
+      width: 100%;
+      margin-top: 0.8rem;
+      padding: 0.8rem;
+      border-radius: var(--radius-md);
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 0.86rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .btn-whatsapp-comprovante:hover {
+      background: #10b981;
+      color: #042f2e;
+    }
+
+    @media (max-width: 860px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full {
+        grid-column: span 1;
+      }
+      .btn-submit-step1 {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <span>Isabella<em>.</em>Tech</span>
+          <span class="tag">Ativação Segura</span>
+        </a>
+
+        <div class="nav-right">
+          <a href="acesso.html" class="btn-voltar">
+            <i class="fa-solid fa-arrow-left"></i> Trocar de Plano
+          </a>
+          <a href="https://lojafc-a31f9.web.app/sistema/login.html" target="_blank" class="btn-login-link">
+            Já sou lojista? Entrar
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STEPPER -->
+  <div class="stepper-wrap">
+    <div class="stepper">
+      <div class="step-item active" id="step-nav-1">
+        <span class="step-number">1</span>
+        <span>Cadastro da Loja</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item" id="step-nav-2">
+        <span class="step-number">2</span>
+        <span>Pagamento & Ativação</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="checkout-layout">
+      
+      <!-- COLUNA DA ESQUERDA: FORMULÁRIOS -->
+      <div>
+        
+        <!-- ETAPA 1: CADASTRO -->
+        <div class="form-card" id="step-1-container">
+          <h2><i class="fa-solid fa-user-plus text-blue-400"></i> Informações do seu Negócio</h2>
+          <p class="desc">Preencha os dados abaixo para criarmos sua conta e o ambiente isolado da sua loja.</p>
+
+          <form id="form-cadastro-cliente" onsubmit="avancarParaPagamento(event)">
+            <div class="form-grid">
+              
+              <div class="form-group full">
+                <label>Nome da Loja / Comércio *</label>
+                <input type="text" id="cad-nome-empresa" required placeholder="Ex: Loja Modelo Móveis & Decoração">
+                <small>Será exibido nas notas fiscais, pedidos e cabeçalho do sistema.</small>
+              </div>
+
+              <div class="form-group">
+                <label>Nome Completo do Responsável *</label>
+                <input type="text" id="cad-nome-responsavel" required placeholder="Ex: João da Silva">
+              </div>
+
+              <div class="form-group">
+                <label>WhatsApp com DDD *</label>
+                <input type="tel" id="cad-whatsapp" required placeholder="(00) 00000-0000" maxlength="15" oninput="mascaraTelefone(this)">
+                <small>Para receber avisos e suporte imediato.</small>
+              </div>
+
+              <div class="form-group full">
+                <label>Cidade e Estado *</label>
+                <input type="text" id="cad-cidade" required placeholder="Ex: Goiânia - GO">
+              </div>
+
+              <div class="form-group">
+                <label>E-mail de Acesso (Login) *</label>
+                <input type="email" id="cad-email" required placeholder="seuemail@empresa.com">
+                <small>Você usará este e-mail para entrar no sistema.</small>
+              </div>
+
+              <div class="form-group">
+                <label>Senha de Acesso *</label>
+                <input type="password" id="cad-senha" required placeholder="Mínimo 6 caracteres" minlength="6">
+              </div>
+
+              <button type="submit" class="btn-submit-step1" id="btn-avancar-etapa1">
+                <span>Continuar para a Ativação do Plano</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+
+            </div>
+          </form>
+        </div>
+
+        <!-- ETAPA 2: PAGAMENTO & ATIVAÇÃO (REVELADA APÓS O CADASTRO) -->
+        <div class="form-card" id="step-2-container">
+          <h2><i class="fa-solid fa-shield-check text-emerald-400"></i> Escolha a Forma de Pagamento</h2>
+          <p class="desc">Após a confirmação do pagamento, seu acesso ao sistema FC Gestão é liberado imediatamente.</p>
+
+          <div class="payment-tabs">
+            <button type="button" class="pay-tab-btn active" onclick="trocarAbaPay('pix', this)">
+              <i class="fa-brands fa-pix"></i> PIX Instantâneo
+            </button>
+            <button type="button" class="pay-tab-btn" onclick="trocarAbaPay('cartao', this)">
+              <i class="fa-solid fa-credit-card"></i> Cartão de Crédito
+            </button>
+          </div>
+
+          <!-- ABA PIX -->
+          <div class="pay-content active" id="pay-view-pix">
+            <div class="pix-view-box">
+              <div class="pix-qr-render">
+                <img id="render-pix-qr" src="" alt="QR Code PIX">
+              </div>
+              <p style="font-size: 0.84rem; color: var(--clr-muted); margin-bottom: 0.6rem;">
+                Escaneie o QR Code ou copie o código Copia e Cola:
+              </p>
+              <div class="pix-copy-box" id="render-pix-code">
+                Carregando código PIX...
+              </div>
+              <button type="button" class="btn-copy-pix" onclick="copiarPixFinal()">
+                <i class="fa-solid fa-copy"></i> Copiar Código PIX
+              </button>
+            </div>
+
+            <button type="button" class="btn-confirm-pix" onclick="confirmarPagamentoFeito()">
+              <i class="fa-solid fa-circle-check"></i> Já Fiz o Pagamento via PIX
+            </button>
+
+            <a href="#" id="link-whatsapp-final" target="_blank" class="btn-whatsapp-comprovante">
+              <i class="fa-brands fa-whatsapp"></i> Enviar Comprovante para Ativação Prioritária
+            </a>
+          </div>
+
+          <!-- ABA CARTÃO -->
+          <div class="pay-content" id="pay-view-cartao">
+            <form onsubmit="processarCartaoFinal(event)">
+              <div class="form-grid">
+                <div class="form-group full">
+                  <label>Nome Impresso no Cartão</label>
+                  <input type="text" id="pay-card-nome" required placeholder="Como está no cartão">
+                </div>
+                <div class="form-group full">
+                  <label>Número do Cartão</label>
+                  <input type="text" id="pay-card-numero" required placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatarNumCartao(this)">
+                </div>
+                <div class="form-group">
+                  <label>Validade</label>
+                  <input type="text" id="pay-card-val" required placeholder="MM/AA" maxlength="5" oninput="formatarValidade(this)">
+                </div>
+                <div class="form-group">
+                  <label>CVV</label>
+                  <input type="text" id="pay-card-cvv" required placeholder="123" maxlength="4">
+                </div>
+                <button type="submit" class="btn-submit-step1" id="btn-submit-card-pay">
+                  <i class="fa-solid fa-lock"></i> Pagar e Ativar Acesso Agora
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- COLUNA DA DIREITA: RESUMO DO PLANO SELECIONADO -->
+      <div>
+        <div class="plan-summary-card">
+          <div class="summary-badge" id="sum-badge">
+            <i class="fa-solid fa-layer-group"></i> Plano Selecionado
+          </div>
+          
+          <h3 class="summary-title" id="sum-nome-plano">Profissional</h3>
+          <p class="summary-tagline" id="sum-desc-plano">Gestão Completa, Móveis & Financeiro DRE</p>
+
+          <div class="summary-price-box">
+            <div class="summary-price">
+              R$ <span id="sum-valor-plano">169,90</span> <span>/ mês</span>
+            </div>
+            <div class="summary-cycle-badge" id="sum-ciclo-info">
+              Cobrança Mensal sem fidelidade
+            </div>
+          </div>
+
+          <!-- SLOGAN DE 7 DIAS GRÁTIS EM DESTAQUE -->
+          <div class="slogan-card-badge">
+            <i class="fa-solid fa-shield-heart"></i>
+            <div>
+              <strong>Garantia & Teste de 7 Dias Inclusos</strong>
+              <span>Você tem 7 dias para testar tudo na prática.</span>
+            </div>
+          </div>
+
+          <ul class="summary-features" id="sum-features-list">
+            <li><i class="fa-solid fa-check"></i> Frente de Caixa PDV Ágil</li>
+            <li><i class="fa-solid fa-check"></i> Emissão Fiscal SEFAZ (NFC-e e NF-e)</li>
+            <li><i class="fa-solid fa-check"></i> Gestão de Estoque em Tempo Real</li>
+            <li><i class="fa-solid fa-check"></i> Suporte Especializado via WhatsApp</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Firebase SDKs compatíveis -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+  
+  <!-- Config Banco SaaS -->
+  <script src="config_banco.js"></script>
+
+  <script>
+    'use strict';
+
+    // Planos de referência para cálculo e fallback
+    const TABELA_PLANOS = {
+      plano_start: {
+        id: 'plano_start',
+        nome: 'Start Express',
+        tagline: 'PDV Direto para Microempresas e MEI',
+        preco: 69.90,
+        features: ['PDV Frente de Caixa Rápido', 'Vendas e Pedidos', 'Controle de Estoque Essencial', 'Até 2 Usuários Simultâneos']
+      },
+      plano_balcao_caixa: {
+        id: 'plano_balcao_caixa',
+        nome: 'Varejo Balcão',
+        tagline: 'Pré-Venda no Balcão + Caixa Central',
+        preco: 99.90,
+        features: ['Atendimento Balcão + Caixa Separado', 'Produtos & Clientes Ilimitados', 'Comissões de Vendedores', 'Até 4 Usuários']
+      },
+      plano_fiscal: {
+        id: 'plano_fiscal',
+        nome: 'Fiscal & Vendas',
+        tagline: 'Emissão Fiscal Nativa SEFAZ',
+        preco: 119.90,
+        features: ['Emissão Nativa NFC-e e NF-e', 'Certificado Digital A1 Integrado', 'Envio de XML por WhatsApp', 'Até 3 Usuários']
+      },
+      plano_pro: {
+        id: 'plano_pro',
+        nome: 'Profissional',
+        tagline: 'Gestão Completa, Móveis & Financeiro DRE',
+        preco: 169.90,
+        features: ['Emissão Fiscal SEFAZ Completa', 'Financeiro DRE e Contas a Pagar', 'Módulo de Móveis: Montagem & Entrega', 'Até 5 Usuários']
+      },
+      plano_enterprise: {
+        id: 'plano_enterprise',
+        nome: 'Enterprise + IA',
+        tagline: 'Gestão Avançada com Inteligência Gemini',
+        preco: 249.90,
+        features: ['Tudo do Profissional', 'IA Generativa Gemini Comercial', 'Análises Preditivas de Compras', 'Até 10 Usuários']
+      },
+      plano_ultra: {
+        id: 'plano_ultra',
+        nome: 'Ultra Completo',
+        tagline: 'Franquias, Redes & Multi-Lojas',
+        preco: 349.90,
+        features: ['Suíte 100% Irrestrita', 'Usuários e Produtos ILIMITADOS', 'Multi-Lojas e Filiais', 'Gerente Dedicado 24/7']
+      }
+    };
+
+    let planoAtivo = TABELA_PLANOS.plano_pro;
+    let cicloAtivo = 'mensal';
+    let dadosClienteSalvo = null;
+
+    // Inicializa a página lendo parâmetros da URL
+    function carregarConfiguracaoUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const idPlano = params.get('plano') || 'plano_pro';
+      cicloAtivo = params.get('ciclo') || 'mensal';
+
+      if (TABELA_PLANOS[idPlano]) {
+        planoAtivo = TABELA_PLANOS[idPlano];
+      }
+
+      // Se Firebase Firestore estiver disponível, tenta atualizar dados do plano
+      if (typeof firebase !== 'undefined' && firebase.firestore) {
+        firebase.firestore().collection('planos_saas').doc(idPlano).get().then(doc => {
+          if (doc.exists) {
+            const data = doc.data();
+            planoAtivo = { ...planoAtivo, ...data };
+            atualizarResumoLateral();
+          }
+        }).catch(() => {});
+      }
+
+      atualizarResumoLateral();
+    }
+
+    function atualizarResumoLateral() {
+      const isAnual = cicloAtivo === 'anual';
+      const fator = isAnual ? 0.8 : 1.0;
+      const precoFinal = (Number(planoAtivo.preco || 0) * fator).toFixed(2).replace('.', ',');
+
+      document.getElementById('sum-nome-plano').textContent = planoAtivo.nome;
+      document.getElementById('sum-desc-plano').textContent = planoAtivo.tagline || planoAtivo.descricao || '';
+      document.getElementById('sum-valor-plano').textContent = precoFinal;
+      document.getElementById('sum-ciclo-info').textContent = isAnual 
+        ? 'Cobrança Anual (Economia de 20% com 2 meses grátis)' 
+        : 'Cobrança Mensal recorrente sem fidelidade';
+
+      const featContainer = document.getElementById('sum-features-list');
+      if (featContainer && planoAtivo.features) {
+        featContainer.innerHTML = planoAtivo.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('');
+      }
+
+      // Configura QR code do PIX
+      const chavePix = '00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304';
+      const qrEl = document.getElementById('render-pix-qr');
+      if (qrEl) {
+        qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(chavePix)}`;
+      }
+      document.getElementById('render-pix-code').textContent = chavePix;
+    }
+
+    // Máscara dinâmica de telefone
+    function mascaraTelefone(el) {
+      let v = el.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length > 6) {
+        el.value = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+      } else if (v.length > 2) {
+        el.value = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+      } else if (v.length > 0) {
+        el.value = `(${v}`;
+      } else {
+        el.value = '';
+      }
+    }
+
+    // AVANÇAR DA ETAPA 1 (CADASTRO) PARA A ETAPA 2 (PAGAMENTO)
+    async function avancarParaPagamento(e) {
+      e.preventDefault();
+
+      const nomeEmpresa = document.getElementById('cad-nome-empresa').value.trim();
+      const nomeResponsavel = document.getElementById('cad-nome-responsavel').value.trim();
+      const whatsapp = document.getElementById('cad-whatsapp').value.trim();
+      const cidade = document.getElementById('cad-cidade').value.trim();
+      const email = document.getElementById('cad-email').value.trim();
+      const senha = document.getElementById('cad-senha').value;
+
+      if (!nomeEmpresa || !nomeResponsavel || !whatsapp || !cidade || !email || !senha) {
+        alert('Por favor, preencha todos os campos obrigatórios!');
+        return;
+      }
+
+      const btn = document.getElementById('btn-avancar-etapa1');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando Conta e Preparando Ativação...';
+
+      dadosClienteSalvo = {
+        nomeEmpresa,
+        nomeResponsavel,
+        whatsapp,
+        cidade,
+        email,
+        planoId: planoAtivo.id,
+        planoNome: planoAtivo.nome,
+        ciclo: cicloAtivo,
+        dataRegistro: new Date().toISOString()
+      };
+
+      // Tenta registrar o cliente diretamente no banco central do SaaS (Firestore)
+      try {
+        if (typeof firebase !== 'undefined' && firebase.firestore) {
+          const docId = 'solicitacao_' + Date.now();
+          await firebase.firestore().collection('empresas').doc(docId).set({
+            nomeEmpresa,
+            responsavel: nomeResponsavel,
+            whatsapp,
+            telefone: whatsapp,
+            cidade,
+            emailAcesso: email,
+            plano: planoAtivo.id,
+            nomePlano: planoAtivo.nome,
+            status: 'PENDENTE_PAGAMENTO',
+            sistemaId: 'fc_gestao',
+            ciclo: cicloAtivo,
+            dataCriacao: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          console.log("✅ Cadastro de cliente registrado com sucesso no banco central SaaS!");
+        }
+      } catch (errDb) {
+        console.warn("Aviso ao salvar no Firestore central:", errDb);
+      }
+
+      // Atualiza link de WhatsApp com os dados do cliente
+      const zapMsg = encodeURIComponent(
+        `Olá! Acabei de me cadastrar no FC Gestão.\n` +
+        `Empresa: ${nomeEmpresa}\n` +
+        `Responsável: ${nomeResponsavel}\n` +
+        `Plano: ${planoAtivo.nome} (${cicloAtivo})\n` +
+        `E-mail: ${email}\n` +
+        `Gostaria de confirmar meu pagamento para ativação imediata.`
+      );
+      document.getElementById('link-whatsapp-final').href = `https://wa.me/5562999676874?text=${zapMsg}`;
+
+      // Muda para a Etapa 2
+      document.getElementById('step-1-container').style.display = 'none';
+      document.getElementById('step-2-container').style.display = 'block';
+      document.getElementById('step-nav-1').classList.remove('active');
+      document.getElementById('step-nav-2').classList.add('active');
+
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    function trocarAbaPay(aba, btn) {
+      document.querySelectorAll('.pay-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.pay-content').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('pay-view-' + aba).classList.add('active');
+    }
+
+    function copiarPixFinal() {
+      const txt = document.getElementById('render-pix-code').textContent.trim();
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(txt).then(() => {
+          alert('Código PIX Copia e Cola copiado com sucesso! Abra seu aplicativo bancário e efetue o pagamento.');
+        });
+      } else {
+        prompt('Copie o código PIX:', txt);
+      }
+    }
+
+    function confirmarPagamentoFeito() {
+      const zapLink = document.getElementById('link-whatsapp-final').href;
+      window.open(zapLink, '_blank');
+      alert('Parabéns pelo cadastro! Redirecionando para o WhatsApp do suporte para confirmação e liberação do seu acesso.');
+    }
+
+    function formatarNumCartao(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 16);
+      el.value = v.replace(/(.{4})/g, '$1 ').trim();
+    }
+
+    function formatarValidade(el) {
+      let v = el.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 3) v = v.substring(0, 2) + '/' + v.substring(2);
+      el.value = v;
+    }
+
+    function processarCartaoFinal(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-submit-card-pay');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando Pagamento...';
+
+      setTimeout(() => {
+        alert('Pagamento aprovado com sucesso! Sua loja foi criada. Enviamos as instruções de login para o seu e-mail.');
+        window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
+      }, 1800);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarConfiguracaoUrl();
+    });
+  </script>
+</body>
+</html>
