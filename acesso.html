@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Planos & Acesso · FC Gestão | Isabella Tecnologia</title>
-  <link rel="icon" type="image/png" href="https://lojafc-a31f9.web.app/icons/favicon.png">
+  <title>Planos & Acesso · FC Gestão | Primas Tecnologia</title>
+  <link rel="icon" type="image/png" href="icone_primas.png">
+  <link rel="apple-touch-icon" href="icone_primas.png">
 
   <!-- Fontes & Ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +15,7 @@
 
   <style>
     /* ============================================================
-       DESIGN TOKENS - ISABELLA TECNOLOGIA (DARK TECH THEME)
+       DESIGN TOKENS - PRIMAS TECNOLOGIA (DARK TECH THEME)
     ============================================================ */
     :root {
       --clr-bg:          #080c14;
@@ -99,28 +100,20 @@
     }
 
     .nav-logo {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
-    .nav-logo em {
-      color: var(--clr-accent);
-      font-style: normal;
+    .nav-logo:hover {
+      transform: scale(1.03);
+      opacity: 0.95;
     }
-    .nav-logo .badge-system {
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.2rem 0.6rem;
-      background: rgba(99, 179, 237, 0.12);
-      border: 1px solid rgba(99, 179, 237, 0.25);
-      border-radius: var(--radius-xl);
-      color: var(--clr-accent);
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+      display: block;
     }
 
     .nav-actions {
@@ -926,9 +919,8 @@
   <header class="navbar">
     <div class="container">
       <div class="nav-inner">
-        <a href="index.html" class="nav-logo">
-          <span>Isabella<em>.</em>Tech</span>
-          <span class="badge-system">SaaS Central</span>
+        <a href="index.html" class="nav-logo" title="Primas Tecnologia - Início">
+          <img src="logo_primas.png" alt="Primas Tecnologia">
         </a>
 
         <div class="nav-actions">
@@ -1103,13 +1095,13 @@
         <div class="pix-box">
           <div class="pix-qr-simulado">
             <!-- QR code gerado para pagamento imediato -->
-            <img id="pix-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304" alt="QR Code PIX">
+            <img id="pix-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920PRIMAS%20TECNOLOGIA6009GOIANIA62070503***6304" alt="QR Code PIX">
           </div>
           <p style="font-size: 0.82rem; color: var(--clr-muted);">
             Escaneie o código com seu app bancário ou copie o código Copia e Cola abaixo:
           </p>
           <div class="pix-chave-container" id="pix-copia-cola-text">
-            00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304
+            00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920PRIMAS%20TECNOLOGIA6009GOIANIA62070503***6304
           </div>
           <button class="btn-copiar-pix" onclick="copiarPixChave()">
             <i class="fa-solid fa-copy"></i> Copiar Código PIX
@@ -1133,10 +1125,6 @@
           <div class="campo-form">
             <label>Nome no Cartão</label>
             <input type="text" id="card-nome" required placeholder="Como está impresso no cartão">
-          </div>
-          <div class="campo-form">
-            <label>Número do Cartão</label>
-            <input type="text" id="card-numero" required placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatarNumCartao(this)">
           </div>
           <div class="campo-duo">
             <div class="campo-form">
@@ -1165,7 +1153,7 @@
   ============================================================ -->
   <footer class="site-footer">
     <div class="container">
-      <p>© 2026 <strong>Isabella Tecnologia</strong> & <strong>FC Gestão</strong>. Todos os direitos reservados.</p>
+      <p>© 2026 <strong>Primas Tecnologia</strong> & <strong>FC Gestão</strong>. Todos os direitos reservados.</p>
       <p style="margin-top: 0.4rem; font-size: 0.78rem;">
         Plataforma em conformidade com as diretrizes SEFAZ e segurança em nuvem.
       </p>
@@ -1553,7 +1541,7 @@
         `${plano.usuarios || 'Usuários ilimitados'} · ${plano.produtos || 'Produtos ilimitados'} · Ativação Imediata`;
 
       // Atualiza QR code e link do PIX dinamicamente
-      const pixPayload = `00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304`;
+      const pixPayload = `00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920PRIMAS%20TECNOLOGIA6009GOIANIA62070503***6304`;
       const qrEl = document.getElementById('pix-qr-img');
       if (qrEl) {
         qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(pixPayload)}`;

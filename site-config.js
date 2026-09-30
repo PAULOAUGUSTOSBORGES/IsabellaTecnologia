@@ -1,6 +1,6 @@
 /**
  * ====================================================================
- * ARQUIVO DE CONFIGURAÇÃO - ISABELLA TECNOLOGIA
+ * ARQUIVO DE CONFIGURAÇÃO - PRIMAS TECNOLOGIA
  * ====================================================================
  * 
  * Aqui você pode alterar TODAS as informações do site sem precisar mexer no código HTML!
@@ -19,8 +19,9 @@ const SITE_CONFIG = {
   // 1. DADOS DA EMPRESA E CONTATOS PRINCIPAIS
   // ------------------------------------------------------------------
   empresa: {
-    nome: "Isabella",
-    destaqueNome: "Tech", // Exibido no logo como: Isabella.Tech
+    nome: "Primas",
+    destaqueNome: "Tech", // Exibido no logo como: Primas.Tech
+    logoUrl: "logo_primas.png", // Arquivo oficial da logo
 
     // E-mail de contacto (usado no botão de e-mail e links)
     email: "pauloaugusto.silvaborges@gmail.com",
@@ -33,7 +34,7 @@ const SITE_CONFIG = {
     whatsappNumero: "5562999676874",
 
     // Mensagem padrão que a pessoa enviará quando clicar no botão do WhatsApp
-    whatsappMensagem: "Olá! Gostaria de solicitar um orçamento para o meu projeto com a empressa Isabella Tecnologia.",
+    whatsappMensagem: "Olá! Gostaria de solicitar um orçamento para o meu projeto com a empresa Primas Tecnologia.",
 
     // Informações de atendimento
     localizacao: "Brasil · Portugal · Remoto",

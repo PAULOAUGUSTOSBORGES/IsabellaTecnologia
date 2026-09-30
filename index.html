@@ -3,10 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Isabella Tecnologia · Sistemas &amp; Marketing</title>
+  <title>Primas Tecnologia · Sistemas &amp; Marketing</title>
+  <link rel="icon" type="image/png" href="icone_primas.png">
+  <link rel="apple-touch-icon" href="icone_primas.png">
+
+  <!-- SEO & OpenGraph -->
+  <meta name="description" content="Primas Tecnologia · Software House & Marketing de Alta Performance. ERPs modulares, PDV com NF-e, Dashboards em tempo real e inteligência artificial." />
+  <meta name="keywords" content="Primas Tecnologia, ERP, PDV, sistema para loja, software house, marketing digital, Goiânia, FC Gestão" />
+  <meta name="author" content="Primas Tecnologia" />
+  <meta property="og:title" content="Primas Tecnologia · Sistemas &amp; Marketing" />
+  <meta property="og:description" content="Desenvolvemos ERPs modulares, PDVs com emissão fiscal e campanhas de marketing com IA." />
+  <meta property="og:image" content="logo_primas.png" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
 
   <!-- ARQUIVO DE CONFIGURAÇÃO EXTERNO E BANCO SAAS -->
-  <script src="site-config.js?v=2"></script>
+  <script src="site-config.js?v=3"></script>
   <script src="config_banco.js"></script>
 
   <style>
@@ -75,9 +87,9 @@
     /* NAV */
     .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.25rem 0; transition: background var(--tm), padding var(--tm); }
     .nav.scrolled { background: rgba(8,12,20,.88); backdrop-filter: blur(16px); padding: .85rem 0; border-bottom: 1px solid var(--clr-border); }
-    .nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-    .nav__logo { font-size: 1.2rem; font-weight: var(--fw-bold); letter-spacing: -.02em; }
-    .nav__logo em { color: var(--clr-accent); font-style: normal; }
+    .nav__logo { display: inline-flex; align-items: center; text-decoration: none; transition: transform var(--tf), opacity var(--tf); }
+    .nav__logo:hover { transform: scale(1.03); opacity: 0.95; }
+    .nav__logo img { height: 44px; width: auto; object-fit: contain; display: block; }
     .nav__links { display: flex; gap: 2rem; align-items: center; }
     .nav__links a { font-size: .875rem; font-weight: var(--fw-semi); color: var(--clr-muted); transition: color var(--tf); position: relative; }
     .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1.5px; background: var(--clr-accent); transform: scaleX(0); transform-origin: left; transition: transform var(--tm); }
@@ -257,11 +269,39 @@
     .contact-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.1rem; background: var(--clr-card); border: 1px solid var(--clr-border); border-radius: var(--radius-xl); font-size: .85rem; color: var(--clr-muted); transition: border-color var(--tf), color var(--tf), transform var(--tf); cursor: pointer; }
     .contact-chip:hover { border-color: var(--clr-accent); color: var(--clr-text); transform: translateY(-3px); }
 
+    .video-sound-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
+      background: rgba(13,19,33,0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--clr-border-glow, rgba(99,179,237,0.4));
+      color: #fff;
+      border-radius: var(--radius-xl);
+      padding: .45rem .9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .78rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      transition: transform var(--tf), background var(--tf), border-color var(--tf);
+    }
+    .video-sound-btn:hover {
+      transform: scale(1.05);
+      background: rgba(99,179,237,0.3);
+      border-color: var(--clr-accent);
+    }
+    .video-sound-btn i, .video-sound-btn span.icon { font-size: 1rem; }
+
     /* FOOTER */
-    .footer { background: var(--clr-bg); border-top: 1px solid var(--clr-border); padding: 2rem 0; }
-    .footer__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .footer__logo { font-size: 1rem; font-weight: var(--fw-bold); }
-    .footer__logo em { color: var(--clr-accent); font-style: normal; }
+    .footer { background: var(--clr-bg); border-top: 1px solid var(--clr-border); padding: 2.5rem 0; }
+    .footer__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer__logo { display: inline-flex; align-items: center; text-decoration: none; transition: transform var(--tf), opacity var(--tf); }
+    .footer__logo:hover { transform: scale(1.03); opacity: 0.95; }
+    .footer__logo img { height: 36px; width: auto; object-fit: contain; display: block; }
     .footer__copy { font-size: .8rem; color: var(--clr-muted); }
     .footer__links { display: flex; gap: 1.5rem; }
     .footer__links a { font-size: .8rem; color: var(--clr-muted); transition: color var(--tf); }
@@ -293,7 +333,9 @@
 <nav class="nav" id="nav">
   <div class="container">
     <div class="nav__inner">
-      <a href="#hero" class="nav__logo" id="navLogo">Isabella<em>.</em>Tech</a>
+      <a href="#hero" class="nav__logo" id="navLogo" title="Primas Tecnologia - Início">
+        <img src="logo_primas.png" alt="Primas Tecnologia">
+      </a>
       <ul class="nav__links" id="navLinks">
         <li><a href="#sistemas">Sistemas</a></li>
         <li><a href="acesso.html?sistema=fc_gestao">Planos SaaS</a></li>
@@ -490,8 +532,10 @@
 <footer class="footer">
   <div class="container">
     <div class="footer__inner">
-      <div class="footer__logo" id="footerLogo">Isabella<em>.</em>Tech</div>
-      <div class="footer__copy" id="footerCopy">&copy; 2025 Isabella Tecnologia. Todos os direitos reservados.</div>
+      <a href="#hero" class="footer__logo" id="footerLogo" title="Primas Tecnologia - Início">
+        <img src="logo_primas.png" alt="Primas Tecnologia">
+      </a>
+      <div class="footer__copy" id="footerCopy">&copy; 2026 Primas Tecnologia. Todos os direitos reservados.</div>
       <ul class="footer__links" id="footerLinks">
         <li><a href="#sistemas">Sistemas</a></li>
         <li><a href="acesso.html?sistema=fc_gestao">Planos FC Gestão</a></li>
@@ -515,11 +559,11 @@ function applySiteConfig() {
 
   // --- Empresa & Navegação ---
   if (cfg.empresa) {
-    const logoHtml = `${cfg.empresa.nome}<em>.</em>${cfg.empresa.destaqueNome || 'Tech'}`;
     const navLogo = document.getElementById('navLogo');
     const footerLogo = document.getElementById('footerLogo');
-    if (navLogo) navLogo.innerHTML = logoHtml;
-    if (footerLogo) footerLogo.innerHTML = logoHtml;
+    const logoSrc = cfg.empresa.logoUrl || 'logo_primas.png';
+    if (navLogo) navLogo.innerHTML = `<img src="${logoSrc}" alt="${cfg.empresa.nome} Tecnologia" style="height:44px;width:auto;object-fit:contain;display:block;">`;
+    if (footerLogo) footerLogo.innerHTML = `<img src="${logoSrc}" alt="${cfg.empresa.nome} Tecnologia" style="height:36px;width:auto;object-fit:contain;display:block;">`;
 
     const footerCopy = document.getElementById('footerCopy');
     if (footerCopy) {
@@ -759,8 +803,42 @@ function applySiteConfig() {
               playsinline
               style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; z-index:2; background:#000;">
             </video>
+            <button class="video-sound-btn" id="btnSomVideo" onclick="toggleSomVideo(event)" title="Clique para Ativar ou Desativar Som">
+              <span class="icon" id="iconeSom">🔇</span> <span id="textoSom">Ativar Som</span>
+            </button>
             ${labelHtml}
           `;
+
+          // Controle de Áudio Interativo (contorna restrições de autoplay de navegadores)
+          window.toggleSomVideo = function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            const vid = document.getElementById('actualVideo');
+            const icone = document.getElementById('iconeSom');
+            const texto = document.getElementById('textoSom');
+            if (!vid) return;
+
+            if (vid.muted) {
+              vid.muted = false;
+              vid.volume = 1.0;
+              vid.play().catch(() => {});
+              if (icone) icone.textContent = '🔊';
+              if (texto) texto.textContent = 'Som Ativo';
+            } else {
+              vid.muted = true;
+              if (icone) icone.textContent = '🔇';
+              if (texto) texto.textContent = 'Ativar Som';
+            }
+          };
+
+          // Também permite desmutar clicando em qualquer ponto do card do vídeo
+          const vidInst = document.getElementById('actualVideo');
+          if (vidInst) {
+            vidInst.addEventListener('click', function() {
+              if (vidInst.muted) {
+                window.toggleSomVideo();
+              }
+            });
+          }
         } else {
           // Fallback / Modo Demonstração Padrão (Sem vídeo real configurado)
           const vLabel = document.getElementById('videoLabel');
@@ -785,7 +863,7 @@ function applySiteConfig() {
 
     const ctaActions = document.getElementById('ctaActions');
     if (ctaActions && cfg.empresa) {
-      const email = cfg.empresa.email || 'contato@isabellatecnologia.com';
+      const email = cfg.empresa.email || 'contato@primastecnologia.com';
       const zapNum = cfg.empresa.whatsappNumero || '';
       const zapMsg = encodeURIComponent(cfg.empresa.whatsappMensagem || 'Olá!');
       const waLink = zapNum ? `https://wa.me/${zapNum}?text=${zapMsg}` : '#contato';

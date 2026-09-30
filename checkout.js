@@ -1,6 +1,6 @@
 // ================================================================
 // checkout.js — Lógica Client-Side de Checkout
-// Isabella Tecnologia · Sistema de Assinaturas SaaS
+// Primas Tecnologia · Sistema de Assinaturas SaaS
 //
 // INSTRUÇÕES PARA CONFIGURAR:
 //   1. Substitua SEU_TOKEN_PUBLIC_AQUI pelo token público do

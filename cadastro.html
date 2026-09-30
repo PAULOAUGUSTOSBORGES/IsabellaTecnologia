@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro & Ativação de Plano · FC Gestão | Isabella Tecnologia</title>
-  <link rel="icon" type="image/png" href="https://lojafc-a31f9.web.app/icons/favicon.png">
+  <title>Cadastro & Ativação de Plano · FC Gestão | Primas Tecnologia</title>
+  <link rel="icon" type="image/png" href="icone_primas.png">
+  <link rel="apple-touch-icon" href="icone_primas.png">
 
   <!-- Fontes & Ícones -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,22 +85,20 @@
       justify-content: space-between;
     }
     .nav-logo {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #fff;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      text-decoration: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
     }
-    .nav-logo em { color: var(--clr-accent); font-style: normal; }
-    .nav-logo span.tag {
-      font-size: 0.7rem;
-      padding: 0.15rem 0.6rem;
-      background: rgba(99, 179, 237, 0.12);
-      border: 1px solid rgba(99, 179, 237, 0.3);
-      border-radius: var(--radius-xl);
-      color: var(--clr-accent);
-      font-weight: 700;
+    .nav-logo:hover {
+      transform: scale(1.03);
+      opacity: 0.95;
+    }
+    .nav-logo img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
     }
     .nav-right {
       display: flex;
@@ -528,9 +527,8 @@
   <header class="navbar">
     <div class="container">
       <div class="nav-inner">
-        <a href="index.html" class="nav-logo">
-          <span>Isabella<em>.</em>Tech</span>
-          <span class="tag">Ativação Segura</span>
+        <a href="index.html" class="nav-logo" title="Primas Tecnologia - Início">
+          <img src="logo_primas.png" alt="Primas Tecnologia">
         </a>
 
         <div class="nav-right">
@@ -706,12 +704,12 @@
             </div>
           </div>
 
-          <!-- SLOGAN DE 7 DIAS GRÁTIS EM DESTAQUE -->
+          <!-- SLOGAN DE 7 DIAS DE GARANTIA E DEVOLUÇÃO DO INVESTIMENTO -->
           <div class="slogan-card-badge">
             <i class="fa-solid fa-shield-heart"></i>
             <div>
-              <strong>Garantia & Teste de 7 Dias Inclusos</strong>
-              <span>Você tem 7 dias para testar tudo na prática.</span>
+              <strong>7 Dias de Garantia · Devolução do Investimento</strong>
+              <span>Se não ficar satisfeito em 7 dias, devolvemos 100% do seu investimento.</span>
             </div>
           </div>
 
@@ -734,6 +732,10 @@
   
   <!-- Config Banco SaaS -->
   <script src="config_banco.js"></script>
+
+  <!-- Mercado Pago (Mercado Livre) SDK v2 e Configuração -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  <script src="mercadopago_config.js"></script>
 
   <script>
     'use strict';
@@ -830,7 +832,7 @@
       }
 
       // Configura QR code do PIX
-      const chavePix = '00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920ISABELLA%20TECNOLOGIA6009GOIANIA62070503***6304';
+      const chavePix = '00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920PRIMAS%20TECNOLOGIA6009GOIANIA62070503***6304';
       const qrEl = document.getElementById('render-pix-qr');
       if (qrEl) {
         qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(chavePix)}`;
@@ -964,14 +966,57 @@
       el.value = v;
     }
 
-    function processarCartaoFinal(e) {
+    async function processarCartaoFinal(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-submit-card-pay');
       btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando Pagamento...';
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando Pagamento Seguro...';
 
+      // Se Mercado Pago estiver ativado com chave real
+      if (window.MERCADO_PAGO_CONFIG && window.MERCADO_PAGO_CONFIG.ativo && window.MERCADO_PAGO_CONFIG.publicKey.startsWith('APP_USR')) {
+        try {
+          const mp = new MercadoPago(window.MERCADO_PAGO_CONFIG.publicKey);
+          const num = document.getElementById('pay-card-num').value.replace(/\s+/g, '');
+          const nome = document.getElementById('pay-card-name').value;
+          const val = document.getElementById('pay-card-val').value.split('/');
+          const cvv = document.getElementById('pay-card-cvv').value;
+
+          const cardToken = await mp.createCardToken({
+            cardNumber: num,
+            cardholderName: nome,
+            cardExpirationMonth: val[0],
+            cardExpirationYear: '20' + val[1],
+            securityCode: cvv
+          });
+
+          // Se tiver endpoint configurado, envia para a Cloud Function
+          if (window.MERCADO_PAGO_CONFIG.apiUrl) {
+            const resp = await fetch(window.MERCADO_PAGO_CONFIG.apiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                tipo: 'cartao',
+                cardToken: cardToken.id,
+                emailPagador: document.getElementById('step-email').value,
+                nomePlano: planoAtivo.nome,
+                valorCentavos: Math.round(Number(document.getElementById('sum-valor-plano').textContent.replace(',', '.')) * 100)
+              })
+            });
+            const dados = await resp.json();
+            if (dados.aprovado) {
+              alert('Pagamento aprovado via Mercado Pago! Sua loja foi ativada com sucesso.');
+              window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn('Processamento Mercado Pago em contingência:', err);
+        }
+      }
+
+      // Fallback seguro de ativação
       setTimeout(() => {
-        alert('Pagamento aprovado com sucesso! Sua loja foi criada. Enviamos as instruções de login para o seu e-mail.');
+        alert('Pagamento recebido para conferência! Sua loja foi registrada com sucesso. Enviamos as instruções de login para o seu e-mail.');
         window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
       }, 1800);
     }

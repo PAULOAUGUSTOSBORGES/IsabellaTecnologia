@@ -1,6 +1,6 @@
 // ================================================================
 // webhook-pagamento/index.js
-// Cloud Functions for Firebase — Isabella Tecnologia
+// Cloud Functions for Firebase — Primas Tecnologia
 //
 // Funções exportadas:
 //   1. criarPagamento  → Inicia cobrança no Mercado Pago (PIX ou Cartão)
@@ -57,8 +57,8 @@ exports.criarPagamento = functions.https.onRequest(async (req, res) => {
         {
           transaction_amount: valorCentavos / 100,
           payment_method_id:  'pix',
-          payer: { email: emailPagador || 'cliente@isabellaTecnologia.com' },
-          description: `Assinatura Plano ${nomePlano} — Isabella Tecnologia`,
+          payer: { email: emailPagador || 'cliente@primastecnologia.com' },
+          description: `Assinatura Plano ${nomePlano} — Primas Tecnologia`,
           // O webhook notificará automaticamente quando o PIX for pago
           notification_url: 'URL_DA_SUA_CLOUD_FUNCTION/webhookMercadoPago',
         },
@@ -96,7 +96,7 @@ exports.criarPagamento = functions.https.onRequest(async (req, res) => {
           installments:       1,
           payment_method_id:  'visa', // O SDK do MP detecta automaticamente
           payer: { email: emailPagador },
-          description: `Assinatura Plano ${nomePlano} — Isabella Tecnologia`,
+          description: `Assinatura Plano ${nomePlano} — Primas Tecnologia`,
           notification_url: 'URL_DA_SUA_CLOUD_FUNCTION/webhookMercadoPago',
         },
         {
