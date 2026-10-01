@@ -13,7 +13,7 @@
 // ── CONFIGURAÇÃO (editar aqui) ──────────────────────────────────
 const CHECKOUT_CONFIG = {
   // Token PÚBLICO do Mercado Pago (começa com APP_USR-...)
-  mercadoPagoPublicKey: 'APP_USR-4ba9c308-52b4-45bb-93cd-e89978a699b8',
+  mercadoPagoPublicKey: 'APP_USR-8bb88320-79d8-44b6-86f4-d7d0da57d9e1',
 
   // URL da sua Cloud Function que inicia o pagamento
   urlCriarPagamento: 'https://us-central1-lojafc-a31f9.cloudfunctions.net/criarPagamento',

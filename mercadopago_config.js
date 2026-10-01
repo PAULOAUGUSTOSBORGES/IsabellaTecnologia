@@ -12,10 +12,10 @@
 // ==========================================================================
 
 const MERCADO_PAGO_CONFIG = {
-    // Chave Publica do Mercado Pago (Frontend)
-    publicKey: "APP_USR-4ba9c308-52b4-45bb-93cd-e89978a699b8",
+    // Chave Publica do Mercado Pago (Frontend - Produção)
+    publicKey: "APP_USR-8bb88320-79d8-44b6-86f4-d7d0da57d9e1",
 
-    // URL do seu servidor ou Cloud Function para criar o PIX / Cobranca
+    // URL da Cloud Function para criar a cobrança
     apiUrl: "https://us-central1-lojafc-a31f9.cloudfunctions.net/criarPagamento",
     urlVerificarPix: "https://us-central1-lojafc-a31f9.cloudfunctions.net/verificarPix",
 
