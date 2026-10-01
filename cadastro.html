@@ -757,7 +757,7 @@
       <div class="step-divider"></div>
       <div class="step-item" id="step-nav-2">
         <span class="step-number">2</span>
-        <span>Pagamento & Ativação</span>
+        <span>Pagamento Seguro no Mercado Pago</span>
       </div>
     </div>
   </div>
@@ -810,16 +810,16 @@
               </div>
 
               <button type="submit" class="btn-submit-step1" id="btn-avancar-etapa1">
-                <span>Continuar para a Ativação do Plano</span>
-                <i class="fa-solid fa-arrow-right"></i>
+                <span>Finalizar Cadastro e Pagar no Mercado Pago</span>
+                <i class="fa-solid fa-lock"></i>
               </button>
 
             </div>
           </form>
         </div>
 
-        <!-- ETAPA 2: PAGAMENTO & ATIVAÇÃO (REVELADA APÓS O CADASTRO) -->
-        <div class="form-card" id="step-2-container">
+        <!-- ETAPA 2: OCULTA (PAGAMENTO É FEITO DIRETAMENTE NO MERCADO PAGO) -->
+        <div class="form-card" id="step-2-container" style="display: none !important;">
           <h2><i class="fa-solid fa-shield-check text-emerald-400"></i> Escolha a Forma de Pagamento</h2>
           <p class="desc">Após a confirmação do pagamento, seu acesso ao sistema FC Gestão é liberado imediatamente.</p>
 
@@ -1214,18 +1214,42 @@
         `E-mail: ${email}\n` +
         `Gostaria de confirmar meu pagamento para ativação imediata.`
       );
-      document.getElementById('link-whatsapp-final').href = `https://wa.me/5562999676874?text=${zapMsg}`;
+      const linkZap = document.getElementById('link-whatsapp-final');
+      if (linkZap) linkZap.href = `https://wa.me/5562999676874?text=${zapMsg}`;
 
-      // Muda para a Etapa 2
-      document.getElementById('step-1-container').style.display = 'none';
-      document.getElementById('step-2-container').style.display = 'block';
-      document.getElementById('step-nav-1').classList.remove('active');
-      document.getElementById('step-nav-2').classList.add('active');
+      // Redireciona DIRETAMENTE para o Checkout do Mercado Pago (SEM passar por tela intermediária)
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Abrindo Mercado Pago Seguro...';
 
-      window.scrollTo({ top: 120, behavior: 'smooth' });
+      const valorTxt = document.getElementById('sum-valor-plano')?.textContent || '0';
+      const valorCentavos = Math.round(Number(valorTxt.replace('.', '').replace(',', '.')) * 100);
 
-      // Gera automaticamente o PIX dinâmico do Mercado Pago
-      gerarPixMercadoPagoDinamico();
+      try {
+        const resp = await fetch(window.MERCADO_PAGO_CONFIG.apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            valorCentavos: valorCentavos,
+            emailPagador: email,
+            senha: senha,
+            nomePlano: planoAtivo.nome
+          })
+        });
+
+        const dados = await resp.json();
+        if (dados && dados.initPoint) {
+          btn.innerHTML = '<i class="fa-solid fa-lock"></i> Redirecionando para o Mercado Pago...';
+          window.location.href = dados.initPoint;
+        } else {
+          alert('Erro ao conectar ao Mercado Pago: ' + (dados?.erro || 'Tente novamente.'));
+          btn.disabled = false;
+          btn.innerHTML = '<span>Finalizar Cadastro e Pagar no Mercado Pago</span> <i class="fa-solid fa-lock"></i>';
+        }
+      } catch (err) {
+        console.error('Erro de conexão com Mercado Pago:', err);
+        alert('Erro ao conectar com o serviço de pagamento. Verifique sua conexão e tente novamente.');
+        btn.disabled = false;
+        btn.innerHTML = '<span>Finalizar Cadastro e Pagar no Mercado Pago</span> <i class="fa-solid fa-lock"></i>';
+      }
     }
 
     let idPagamentoPixAtivo = null;
