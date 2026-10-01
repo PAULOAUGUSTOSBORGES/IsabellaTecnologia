@@ -1231,7 +1231,7 @@
     let idPagamentoPixAtivo = null;
     let timerMonitoramentoPix = null;
 
-    // GERA O PIX DINÂMICO REAL NO MERCADO PAGO
+    // Gera preferência no Mercado Pago e redireciona para o checkout deles
     async function gerarPixMercadoPagoDinamico() {
       const email = document.getElementById('cad-email')?.value.trim() || 'cliente@primastecnologia.com';
       const valorTxt = document.getElementById('sum-valor-plano')?.textContent || '0';
@@ -1239,10 +1239,14 @@
 
       const codeBox = document.getElementById('render-pix-code');
       const qrImg = document.getElementById('render-pix-qr');
-      if (codeBox) codeBox.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando QR Code PIX oficial no Mercado Pago...';
+      const btnPix = document.querySelector('.btn-confirm-pix');
+
+      if (codeBox) codeBox.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparando pagamento no Mercado Pago...';
+      if (qrImg) qrImg.style.display = 'none';
+      if (btnPix) btnPix.disabled = true;
 
       if (!window.MERCADO_PAGO_CONFIG || !window.MERCADO_PAGO_CONFIG.ativo || !window.MERCADO_PAGO_CONFIG.apiUrl) {
-        ativarPixContingencia();
+        if (codeBox) codeBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Configuração de pagamento indisponível.';
         return;
       }
 
@@ -1251,43 +1255,28 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            tipo: 'pix',
             valorCentavos: valorCentavos,
             emailPagador: email,
             nomePlano: planoAtivo.nome
           })
         });
 
-        if (!resp.ok) {
-          throw new Error('Servidor retornou status ' + resp.status);
-        }
-
         const dados = await resp.json();
-        if (dados && dados.pixCopiaCola) {
-          idPagamentoPixAtivo = dados.pagamentoId;
-          codeBox.textContent = dados.pixCopiaCola;
-          if (qrImg) {
-            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(dados.pixCopiaCola)}`;
-          }
-
-          // Inicia verificação automática a cada 4 segundos
-          iniciarMonitoramentoPix(dados.pagamentoId, email);
+        if (dados && dados.initPoint) {
+          if (codeBox) codeBox.innerHTML = '<i class="fa-solid fa-check-circle" style="color:#22c55e"></i> Redirecionando para o Mercado Pago...';
+          window.location.href = dados.initPoint;
         } else {
-          ativarPixContingencia();
+          if (codeBox) codeBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Erro ao gerar link de pagamento. Tente novamente.';
+          if (btnPix) { btnPix.disabled = false; }
         }
       } catch (err) {
-        console.warn('Conexão Mercado Pago em contingência segura:', err);
-        ativarPixContingencia();
+        console.error('Erro ao gerar pagamento:', err);
+        if (codeBox) codeBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Erro de conexão. Tente novamente.';
+        if (btnPix) { btnPix.disabled = false; }
       }
     }
 
-    function ativarPixContingencia() {
-      const codeBox = document.getElementById('render-pix-code');
-      const qrImg = document.getElementById('render-pix-qr');
-      const chavePixPadrao = '00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920PRIMAS%20TECNOLOGIA6009GOIANIA62070503***6304';
-      if (codeBox) codeBox.textContent = chavePixPadrao;
-      if (qrImg) qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(chavePixPadrao)}`;
-    }
+
 
     // ATUALIZAÇÃO EM TEMPO REAL DO CARTÃO VIRTUAL INTERATIVO
     function atualizarPreviewNumero(el) {
@@ -1443,92 +1432,52 @@
       }
     }
 
+
     async function processarCartaoFinal(e) {
       e.preventDefault();
       const btn = document.getElementById('btn-submit-card-pay');
       btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando no Mercado Pago...';
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparando pagamento seguro...';
 
-      // Se Mercado Pago estiver ativado com chave real
-      if (window.MERCADO_PAGO_CONFIG && window.MERCADO_PAGO_CONFIG.ativo && window.MERCADO_PAGO_CONFIG.publicKey.startsWith('APP_USR')) {
-        try {
-          const mp = new MercadoPago(window.MERCADO_PAGO_CONFIG.publicKey);
-          const num = document.getElementById('pay-card-numero').value.replace(/\s+/g, '');
-          const nome = document.getElementById('pay-card-nome').value.trim();
-          const cpf = (document.getElementById('pay-card-cpf')?.value || '').replace(/\D/g, '') || '19119119100';
-          const val = document.getElementById('pay-card-val').value.split('/');
-          const cvv = document.getElementById('pay-card-cvv').value.trim();
-          const email = document.getElementById('cad-email').value.trim();
-          const valorTxt = document.getElementById('sum-valor-plano').textContent;
-          const valorCentavos = Math.round(Number(valorTxt.replace('.', '').replace(',', '.')) * 100);
+      const email = document.getElementById('cad-email')?.value.trim() || 'cliente@primastecnologia.com';
+      const valorTxt = document.getElementById('sum-valor-plano')?.textContent || '0';
+      const valorCentavos = Math.round(Number(valorTxt.replace('.', '').replace(',', '.')) * 100);
 
-          let cardTokenId = null;
-          try {
-            const cardToken = await mp.createCardToken({
-              cardNumber: num,
-              cardholderName: nome,
-              cardExpirationMonth: val[0],
-              cardExpirationYear: '20' + val[1],
-              securityCode: cvv,
-              identificationType: 'CPF',
-              identificationNumber: cpf
-            });
-            if (cardToken && cardToken.id) {
-              cardTokenId = cardToken.id;
-            }
-          } catch (tokenErr) {
-            console.warn('[MercadoPago] Tokenização transparente com aviso:', tokenErr);
-          }
-
-          // Envia para a Cloud Function com segurança
-          const resp = await fetch(window.MERCADO_PAGO_CONFIG.apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              tipo: cardTokenId ? 'cartao' : 'assinatura',
-              cardToken: cardTokenId,
-              emailPagador: email,
-              nomePlano: planoAtivo.nome,
-              valorCentavos: valorCentavos
-            })
-          });
-
-          const dados = await resp.json();
-
-          // Se há initPoint (checkout do MP) — redireciona direto, sem alertas
-          if (dados && dados.initPoint) {
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Redirecionando para o Mercado Pago...';
-            window.location.href = dados.initPoint;
-            return;
-          }
-
-          // Pagamento aprovado direto (cartão tokenizado com sucesso)
-          if (dados && dados.aprovado) {
-            alert('🎉 Pagamento aprovado! Sua conta foi ativada com sucesso.');
-            window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
-            return;
-          }
-
-          // Erro real de pagamento
-          const msgErro = dados?.mensagem || dados?.erro || 'Erro ao processar. Tente novamente ou use PIX.';
-          alert(msgErro);
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-lock"></i> Tentar Novamente';
-        } catch (err) {
-          console.error('Erro no processamento do cartão:', err);
-          alert('Não foi possível processar o cartão no momento. Por favor, confira os dados ou utilize o PIX.');
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-lock"></i> Tentar Novamente';
-          return;
-        }
+      if (!window.MERCADO_PAGO_CONFIG || !window.MERCADO_PAGO_CONFIG.ativo || !window.MERCADO_PAGO_CONFIG.apiUrl) {
+        alert('Configuração de pagamento indisponível. Tente a aba PIX.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lock"></i> Pagar com Cartão';
+        return;
       }
 
-      // Fallback
-      setTimeout(() => {
-        alert('Cadastro realizado! Instruções de login enviadas para o seu e-mail.');
-        window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
-      }, 1500);
+      try {
+        const resp = await fetch(window.MERCADO_PAGO_CONFIG.apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            valorCentavos: valorCentavos,
+            emailPagador: email,
+            nomePlano: planoAtivo.nome
+          })
+        });
+
+        const dados = await resp.json();
+        if (dados && dados.initPoint) {
+          btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Redirecionando para o Mercado Pago...';
+          window.location.href = dados.initPoint;
+        } else {
+          alert(dados?.erro || 'Erro ao gerar link de pagamento. Tente novamente.');
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-lock"></i> Tentar Novamente';
+        }
+      } catch (err) {
+        console.error('Erro ao processar pagamento:', err);
+        alert('Erro de conexão. Verifique sua internet e tente novamente.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-lock"></i> Tentar Novamente';
+      }
     }
+
 
     document.addEventListener('DOMContentLoaded', () => {
       carregarConfiguracaoUrl();
