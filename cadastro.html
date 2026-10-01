@@ -1494,23 +1494,26 @@
           });
 
           const dados = await resp.json();
-          if (dados && dados.aprovado) {
-            if (dados.initPoint) {
-              window.location.href = dados.initPoint;
-              return;
-            }
-            alert('🎉 Pagamento aprovado no Mercado Pago! Sua conta foi ativada com sucesso.');
-            window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
-            return;
-          } else if (dados && dados.initPoint) {
+
+          // Se há initPoint (checkout do MP) — redireciona direto, sem alertas
+          if (dados && dados.initPoint) {
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Redirecionando para o Mercado Pago...';
             window.location.href = dados.initPoint;
             return;
-          } else {
-            alert(dados.mensagem || 'Cartão não autorizado pelo Mercado Pago. Redirecionando para ativação segura...');
-            btn.disabled = false;
-            btn.innerHTML = '<i class="fa-solid fa-lock"></i> Tentar Novamente';
+          }
+
+          // Pagamento aprovado direto (cartão tokenizado com sucesso)
+          if (dados && dados.aprovado) {
+            alert('🎉 Pagamento aprovado! Sua conta foi ativada com sucesso.');
+            window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
             return;
           }
+
+          // Erro real de pagamento
+          const msgErro = dados?.mensagem || dados?.erro || 'Erro ao processar. Tente novamente ou use PIX.';
+          alert(msgErro);
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-lock"></i> Tentar Novamente';
         } catch (err) {
           console.error('Erro no processamento do cartão:', err);
           alert('Não foi possível processar o cartão no momento. Por favor, confira os dados ou utilize o PIX.');
