@@ -85,12 +85,13 @@
     }
 
     /* NAV */
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.25rem 0; transition: background var(--tm), padding var(--tm); }
-    .nav.scrolled { background: rgba(8,12,20,.88); backdrop-filter: blur(16px); padding: .85rem 0; border-bottom: 1px solid var(--clr-border); }
-    .nav__logo { display: inline-flex; align-items: center; text-decoration: none; transition: transform var(--tf), opacity var(--tf); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 0; transition: background var(--tm), padding var(--tm); }
+    .nav.scrolled { background: rgba(8,12,20,.92); backdrop-filter: blur(16px); padding: .75rem 0; border-bottom: 1px solid var(--clr-border); }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; width: 100%; }
+    .nav__logo { display: inline-flex; align-items: center; text-decoration: none; transition: transform var(--tf), opacity var(--tf); flex-shrink: 0; }
     .nav__logo:hover { transform: scale(1.03); opacity: 0.95; }
-    .nav__logo img { height: 44px; width: auto; object-fit: contain; display: block; }
-    .nav__links { display: flex; gap: 2rem; align-items: center; }
+    .nav__logo img { height: 38px; width: auto; object-fit: contain; display: block; }
+    .nav__links { display: flex; gap: 2rem; align-items: center; margin: 0; padding: 0; list-style: none; }
     .nav__links a { font-size: .875rem; font-weight: var(--fw-semi); color: var(--clr-muted); transition: color var(--tf); position: relative; }
     .nav__links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1.5px; background: var(--clr-accent); transform: scaleX(0); transform-origin: left; transition: transform var(--tm); }
     .nav__links a:hover { color: var(--clr-text); }
@@ -135,7 +136,7 @@
     /* ==============================
        HERO
     ============================== */
-    #hero { background: var(--clr-bg); }
+    #hero { background: var(--clr-bg); padding-top: clamp(6.5rem, 14vh, 9rem); }
     .hero__grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(99,179,237,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(99,179,237,.03) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
     .hero__orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: orb 12s ease-in-out infinite alternate; }
     .hero__orb--1 { width: 600px; height: 600px; top: -200px; right: -150px; background: radial-gradient(circle, rgba(99,179,237,.15), transparent 70%); animation-duration: 14s; }
@@ -678,12 +679,12 @@ function applySiteConfig() {
         ` : '';
         const linkAcessoHtml = p.linkAcesso ? `
           <div class="p-card__action">
-            <a href="${p.linkAcesso}" target="_blank" rel="noopener noreferrer" class="p-card__btn" onclick="event.stopPropagation();">
+            <a href="${p.linkAcesso}" class="p-card__btn" onclick="event.stopPropagation();">
               ${p.textoBotaoAcesso || 'Acessar Sistema'} ↗
             </a>
           </div>
         ` : '';
-        const cardClickAttr = p.linkAcesso ? `data-link="${p.linkAcesso}" onclick="window.open('${p.linkAcesso}', '_blank')"` : '';
+        const cardClickAttr = p.linkAcesso ? `data-link="${p.linkAcesso}" onclick="window.location.href='${p.linkAcesso}'"` : '';
         return `
           <div class="p-card ${spanClass} anim-fade-up ${delayClass}" ${cardClickAttr}>
             <span class="p-card__tag">${p.tag}</span>
