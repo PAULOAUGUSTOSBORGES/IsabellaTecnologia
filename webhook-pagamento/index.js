@@ -23,8 +23,8 @@ const db   = admin.firestore();
 const auth = admin.auth();
 
 // ── Token secreto do Mercado Pago (SERVER-SIDE — nunca exposto ao cliente) ─
-// Obtido via: firebase functions:config:get
-const MP_TOKEN = functions.config().mercadopago?.token || 'SEU_TOKEN_SECRETO_AQUI';
+// Obtido via: firebase functions:config:get ou fallback direto para produção
+const MP_TOKEN = process.env.MERCADOPAGO_TOKEN || functions.config().mercadopago?.token || 'APP_USR-413999599254354-093013-a40e774b9a2e412dd44185483865af54-208400622';
 const MP_BASE  = 'https://api.mercadopago.com';
 
 

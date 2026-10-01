@@ -1,4 +1,4 @@
-﻿// ==========================================================================
+// ==========================================================================
 // MERCADOPAGO_CONFIG.JS - PRIMAS TECNOLOGIA
 // Integracao Oficial de Recebimentos via API Mercado Pago (Mercado Livre)
 // ==========================================================================
@@ -13,16 +13,14 @@
 
 const MERCADO_PAGO_CONFIG = {
     // Chave Publica do Mercado Pago (Frontend)
-    // Cole aqui sua Public Key de Producao ou Teste (Sandbox)
-    publicKey: "APP_USR-COLE_SUA_PUBLIC_KEY_AQUI",
+    publicKey: "APP_USR-4ba9c308-52b4-45bb-93cd-e89978a699b8",
 
     // URL do seu servidor ou Cloud Function para criar o PIX / Cobranca
-    // Exemplo: https://us-central1-fcgestao-testes.cloudfunctions.net/criarPagamento
-    apiUrl: "",
+    apiUrl: "https://us-central1-lojafc-a31f9.cloudfunctions.net/criarPagamento",
+    urlVerificarPix: "https://us-central1-lojafc-a31f9.cloudfunctions.net/verificarPix",
 
     // Ativacao do modo automatico
-    // Se false ou se publicKey for a padrao, o sistema usa o PIX direto da Primas Tecnologia
-    ativo: false
+    ativo: true
 };
 
 window.MERCADO_PAGO_CONFIG = MERCADO_PAGO_CONFIG;

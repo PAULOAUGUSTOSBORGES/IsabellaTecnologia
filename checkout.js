@@ -13,15 +13,13 @@
 // ── CONFIGURAÇÃO (editar aqui) ──────────────────────────────────
 const CHECKOUT_CONFIG = {
   // Token PÚBLICO do Mercado Pago (começa com APP_USR-...)
-  // Obtenha em: https://www.mercadopago.com.br/developers/panel
-  mercadoPagoPublicKey: 'SEU_TOKEN_PUBLIC_AQUI',
+  mercadoPagoPublicKey: 'APP_USR-4ba9c308-52b4-45bb-93cd-e89978a699b8',
 
   // URL da sua Cloud Function que inicia o pagamento
-  // Exemplo: 'https://us-central1-SEU_PROJETO.cloudfunctions.net/criarPagamento'
-  urlCriarPagamento: 'URL_DA_SUA_CLOUD_FUNCTION/criarPagamento',
+  urlCriarPagamento: 'https://us-central1-lojafc-a31f9.cloudfunctions.net/criarPagamento',
 
   // URL da Cloud Function que verifica o status do PIX
-  urlVerificarPix: 'URL_DA_SUA_CLOUD_FUNCTION/verificarPix',
+  urlVerificarPix: 'https://us-central1-lojafc-a31f9.cloudfunctions.net/verificarPix',
 };
 
 
