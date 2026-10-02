@@ -136,7 +136,8 @@ async function processarPagamentoCartao({ nome, numero, val, cvv, email, plano }
       cardToken:       cardToken.id,
       emailPagador:    email,
       nomePlano:       plano.nome,
-      valorCentavos:   plano.valorCentavos,
+      urlSucesso:      window.location.origin + '/acesso.html',
+      urlFalha:        window.location.href,
     }),
   });
 
