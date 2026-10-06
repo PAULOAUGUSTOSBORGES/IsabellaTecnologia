@@ -102,7 +102,8 @@ const SITE_CONFIG = {
     projetos: [
       {
         tag: "⚡ ERP & PDV Comercial",
-        icone: "🏪",
+        icone: '<img src="icone_fc_gestao.png" alt="FC Gestão" style="width: 52px; height: 52px; border-radius: 14px; object-fit: contain; box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45); display: inline-block;">',
+        logoImg: "icone_fc_gestao.png",
         titulo: "FC Gestão · ERP, PDV & Emissor Fiscal",
         descricao: "A solução completa para varejo, comércio e lojas de móveis: frente de caixa PDV ágil, controle de showroom e estoque, pedidos sob medida, fluxo de montagem e entrega, comissões de vendedores e emissão fiscal nativa SEFAZ (NFC-e/NF-e). Planos flexíveis do MEI à grande rede.",
         tecnologias: ["PDV Frente de Caixa", "Emissão Fiscal SEFAZ", "Showroom & Móveis", "Financeiro DRE", "Multi-lojas", "IA Gemini"],
@@ -257,7 +258,7 @@ const SITE_CONFIG = {
       { texto: "Planos SaaS", link: "acesso.html?sistema=fc_gestao" },
       { texto: "Marketing", link: "#marketing" }
     ],
-    botaoCta: { texto: "Fale Connosco ↗", link: "#contato" }
+    botaoCta: { texto: "Fale Conosco ↗", link: "#contato" }
   },
 
   rodape: {

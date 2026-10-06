@@ -24,6 +24,7 @@ const SISTEMAS_SAAS_CONFIG = {
         cadastroUrl: "https://lojafc-a31f9.web.app/sistema/login.html?tab=cadastro",
         sistemaUrl: "https://lojafc-a31f9.web.app/sistema/index.html",
         icone: "fa-layer-group",
+        logoUrl: "icone_fc_gestao.png",
         corDestaque: "#3b82f6"
     }
 };
