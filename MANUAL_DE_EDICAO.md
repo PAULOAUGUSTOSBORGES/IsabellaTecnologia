@@ -1,4 +1,4 @@
-# 📘 Manual de Edição do Site — Isabella Tecnologia
+# 📘 Manual de Edição do Site — Primas Tecnologia
 
 Este guia explica como alterar qualquer informação do seu site de forma simples, rápida e sem necessidade de mexer em códigos complicados de HTML ou CSS.
 
@@ -30,11 +30,11 @@ Procure a seção `empresa` no início do `site-config.js`:
 
 ```javascript
 empresa: {
-  nome: "Isabella",
+  nome: "Primas",
   destaqueNome: "Tech",
   
   // Seu e-mail de contato:
-  email: "seuemail@isabellatecnologia.com",
+  email: "seuemail@primastecnologia.com",
   
   // Telefone visível:
   telefone: "+55 (11) 99999-9999",
@@ -166,7 +166,7 @@ videoCard: {
 ```javascript
 videoCard: {
   badgeFlutuante: "✨ Powered by AI",
-  tituloJanela: "Apresentação Isabella Tech",
+  tituloJanela: "Apresentação Primas Tech",
   tituloCampanha: "Nosso Portfólio em Vídeo",
   detalhesCampanha: "Campanha Oficial",
   tags: ["✦ Produção IA", "📐 Full HD", "🌐 YouTube"],
