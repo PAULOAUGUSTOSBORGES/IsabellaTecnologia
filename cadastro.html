@@ -721,6 +721,18 @@
             <li><i class="fa-solid fa-check"></i> Suporte Especializado via WhatsApp</li>
           </ul>
         </div>
+
+        <!-- AVISO FISCAL TRANSPARENTE: SEFAZ & NFS-E -->
+        <div style="margin-top: 1rem; background: rgba(17, 24, 39, 0.7); border: 1px solid var(--clr-border); border-radius: var(--radius-md); padding: 1rem; font-size: 0.78rem; color: var(--clr-muted); line-height: 1.5; backdrop-filter: blur(10px);">
+          <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
+            <i class="fa-solid fa-circle-info" style="color: var(--clr-accent); font-size: 1rem; margin-top: 0.15rem; flex-shrink: 0;"></i>
+            <div>
+              <strong style="color: #fff; font-size: 0.82rem; display: block; margin-bottom: 0.25rem;">Regras de Emissão Fiscal (NFC-e, NF-e & NFS-e)</strong>
+              <p style="margin-bottom: 0.3rem;"><strong style="color: var(--clr-accent);">• SEFAZ (Varejo/Mercadorias):</strong> NFC-e, NF-e comercial e devoluções operam direto com a SEFAZ em todo o território nacional.</p>
+              <p><strong style="color: var(--clr-accent2);">• NFS-e (Serviços):</strong> Conexão via Web Service homologada para empresas de <strong>Goiânia/GO</strong>. Demais municípios geram o <strong>RPS Oficial / Espelho Fiscal</strong> para escrituração na prefeitura local.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -760,9 +772,11 @@
       plano_fiscal: {
         id: 'plano_fiscal',
         nome: 'Fiscal & Vendas',
-        tagline: 'Emissão Fiscal Nativa SEFAZ',
-        preco: 119.90,
-        features: ['Emissão Nativa NFC-e e NF-e', 'Certificado Digital A1 Integrado', 'Envio de XML por WhatsApp', 'Até 3 Usuários']
+        tagline: 'Emissão Fiscal Nativa SEFAZ & NFS-e*',
+        preco: 139.99,
+        modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'caixa', 'suporte'],
+        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
+        features: ['Emissão Nativa NFC-e, NF-e e NFS-e*', 'NF-e de Devolução & Estorno', 'Certificado Digital A1 Integrado', 'Até 3 Usuários']
       },
       plano_pro: {
         id: 'plano_pro',
@@ -920,6 +934,8 @@
             emailAcesso: email,
             plano: planoAtivo.id,
             nomePlano: planoAtivo.nome,
+            modulosLiberados: planoAtivo.modulos || ['pdv', 'vendas', 'fiscal', 'estoque', 'caixa', 'suporte'],
+            notasPermitidas: planoAtivo.notasPermitidas || ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
             status: 'PENDENTE_PAGAMENTO',
             sistemaId: 'fc_gestao',
             ciclo: cicloAtivo,

@@ -1031,6 +1031,24 @@
           <p style="margin-top: 1rem; font-weight: 600;">Consultando planos atualizados no banco central do SaaS...</p>
         </div>
       </div>
+
+      <!-- BOX INFORMATIVO FISCAL: PRODUTO VS SERVIÇO (NFS-E) -->
+      <div style="margin-top: 2rem; background: rgba(17, 24, 39, 0.75); border: 1px solid var(--clr-border); border-radius: 16px; padding: 1.5rem; display: flex; gap: 1.25rem; align-items: flex-start; backdrop-filter: blur(12px);">
+        <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(99, 179, 237, 0.15); border: 1px solid rgba(99, 179, 237, 0.3); color: var(--clr-accent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
+          <i class="fa-solid fa-circle-info"></i>
+        </div>
+        <div style="font-size: 0.85rem; color: var(--clr-muted); line-height: 1.6;">
+          <h4 style="color: var(--clr-text-white); font-size: 0.95rem; font-weight: 800; margin-bottom: 0.4rem;">
+            📌 Informação Importante sobre a Emissão Fiscal (NFC-e, NF-e, Devolução & NFS-e)
+          </h4>
+          <p style="margin-bottom: 0.4rem;">
+            <strong style="color: var(--clr-accent);">• NFC-e e NF-e (Mercadorias & Varejo) + NF-e de Devolução:</strong> Operação direta com a <strong>SEFAZ</strong> válida para empresas em todo o território nacional, sem cobrança de taxas por nota emitida.
+          </p>
+          <p>
+            <strong style="color: var(--clr-accent2);">• NFS-e (Notas de Serviços):</strong> Como a NFS-e é de competência municipal, nossa integração direta via Web Service (sem intermediários terceiros) está homologada para empresas de <strong>Goiânia/GO (SEFIN)</strong>. Para empresas de outros municípios, o sistema gera o <strong>RPS Oficial / Espelho Fiscal Municipal</strong> para escrituração contábil e importação no portal da sua prefeitura local, ou sob projeto de viabilidade técnica.
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- ============================================================
@@ -1225,17 +1243,19 @@
         id: 'plano_fiscal',
         sistemaId: 'fc_gestao',
         nome: 'Fiscal & Vendas',
-        tagline: 'Emissão Fiscal Nativa SEFAZ',
-        preco: 119.90,
+        tagline: 'Emissão Fiscal Nativa SEFAZ & NFS-e',
+        preco: 139.99,
         ciclo: 'mensal',
         usuarios: 'Até 3 Usuários',
         limiteUsuarios: 3,
         produtos: 'Produtos Ilimitados',
         modeloPDV: 'ambos',
-        descricao: 'Segurança fiscal total: emissão de NFC-e e NF-e diretamente na SEFAZ sem taxas extras por nota emitida.',
+        descricao: 'Segurança fiscal total: emissão de NFC-e, NF-e, Devoluções e NFS-e sem taxas extras por nota emitida.',
         modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'caixa', 'suporte'],
+        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
         features: [
-          'Emissão Nativa NFC-e e NF-e (SEFAZ)',
+          'Emissão Nativa NFC-e, NF-e e NFS-e* (SEFAZ & Goiânia)',
+          'NF-e de Venda, Devolução & Estorno',
           'Certificado Digital A1 Integrado',
           'PDV Direto ou Pré-Venda Balcão',
           'Envio de XML e DANFE por WhatsApp/Email',
@@ -1258,8 +1278,9 @@
         modeloPDV: 'ambos',
         descricao: 'O equilíbrio perfeito mais escolhido: gestão financeira profunda, compras XML, montagem & entrega e catálogo online.',
         modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'financeiro', 'caixa', 'compras', 'relatorios', 'agenda', 'site', 'suporte'],
+        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
         features: [
-          'Tudo do Plano Fiscal & Vendas',
+          'Tudo do Plano Fiscal (NFC-e, NF-e, Devolução & NFS-e*)',
           'Financeiro Completo: DRE, Contas a Pagar/Receber',
           'Entrada de Notas por XML de Fornecedor',
           'Módulo de Móveis: Montagem & Entrega',
@@ -1377,16 +1398,32 @@
         // Se houver planos do banco que não tenham features detalhadas, mescla com os padrões preservando 100% dos dados do banco
         listaPlanosAtual = planosCarregados.map(p => {
           const padrao = PLANOS_PADRAO_FC_GESTAO.find(x => x.id === p.id) || {};
+          let feats = p.features ? [...p.features] : (padrao.features ? [...padrao.features] : [
+            'PDV Frente de Caixa',
+            'Gestão de Estoque',
+            'Relatórios de Vendas',
+            'Suporte Especializado'
+          ]);
+
+          const temFiscal = (p.modulos || padrao.modulos || []).includes('fiscal');
+          if (temFiscal) {
+            feats = feats.map(f => {
+              if (f.includes('NFC-e e NF-e (SEFAZ)')) {
+                return 'Emissão Nativa NFC-e, NF-e e NFS-e* (SEFAZ & Goiânia)';
+              }
+              return f;
+            });
+            if (!feats.some(f => f.includes('NFS-e') || f.includes('NF-e'))) {
+              feats.unshift('Emissão Nativa NFC-e, NF-e e NFS-e* (SEFAZ & Goiânia)');
+            }
+          }
+
           return {
             ...padrao,
             ...p,
             preco: Number(p.preco !== undefined ? p.preco : (padrao.preco || 0)),
-            features: p.features || padrao.features || [
-              'PDV Frente de Caixa',
-              'Gestão de Estoque',
-              'Relatórios de Vendas',
-              'Suporte Especializado'
-            ]
+            features: feats,
+            notasPermitidas: p.notasPermitidas || padrao.notasPermitidas || (temFiscal ? ['nfce', 'nfe', 'nfe_devolucao', 'nfse'] : [])
           };
         });
 
