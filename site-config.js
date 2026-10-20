@@ -94,71 +94,100 @@ const SITE_CONFIG = {
     titulo: `Soluções <span class="gradient-text">enterprise-grade</span><br>feitas para crescer.`,
     subtitulo: "Arquitecturas modulares, interfaces intuitivas e integrações que funcionam — mesmo quando o negócio exige escalabilidade instantânea.",
 
-    // LISTA DE PROJETOS DO PORTFÓLIO
-    // tamanho pode ser:
-    //   'wide'  -> Cartão largo (ocupa 8 colunas, perfeito para destaque)
-    //   'tall'  -> Cartão alto vertical (ocupa 4 colunas)
-    //   'third' -> Cartão padrão de 1/3 (ocupa 4 colunas)
+    // ------------------------------------------------------------------
+    // A. PROJETOS REAIS EM PRODUÇÃO (Em Grande Destaque no Catálogo)
+    // ------------------------------------------------------------------
     projetos: [
       {
         tag: "⚡ ERP & PDV Comercial",
+        statusBadge: "● No Ar · SaaS Ativo",
         icone: '<img src="icone_fc_gestao.png" alt="FC Gestão" style="width: 52px; height: 52px; border-radius: 14px; object-fit: contain; box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45); display: inline-block;">',
         logoImg: "icone_fc_gestao.png",
         titulo: "FC Gestão · ERP, PDV & Emissor Fiscal",
         descricao: "A solução completa para varejo, comércio e lojas de móveis: frente de caixa PDV ágil, controle de showroom e estoque, pedidos sob medida, fluxo de montagem e entrega, comissões de vendedores e emissão fiscal nativa SEFAZ (NFC-e/NF-e). Planos flexíveis do MEI à grande rede.",
         tecnologias: ["PDV Frente de Caixa", "Emissão Fiscal SEFAZ", "Showroom & Móveis", "Financeiro DRE", "Multi-lojas", "IA Gemini"],
-        tamanho: "wide",
+        tamanho: "featured",
         mostrarBarrasPreview: true,
-        // Link direto para a página de planos e acesso do sistema:
-        linkAcesso: "acesso.html?sistema=fc_gestao",
-        textoBotaoAcesso: "Ver Planos & Acessar"
+        linkAcesso: "landing.html",
+        textoBotaoAcesso: "Conhecer FC Gestão"
       },
       {
-        tag: "📊 Analytics",
-        icone: "📈",
-        titulo: "Dashboards Interativos",
-        descricao: "Visualização de dados em tempo real com filtros avançados, drill-down por período e exportação PDF/Excel.",
-        tecnologias: ["Chart.js", "D3.js", "REST API"],
-        tamanho: "tall",
-        mostrarBarrasPreview: false
+        tag: "🔍 Inteligência Fiscal & Compliance",
+        statusBadge: "● Online · Ferramenta Ativa",
+        icone: "🏢",
+        titulo: "Consulta Avançada de CNPJ · Receita Federal",
+        descricao: "Plataforma de inteligência cadastral e diagnóstico fiscal em tempo real. Consulta automática à base pública oficial: quadro societário (QSA), capital social, CNAEs primário e secundários, situação cadastral, inscrições estaduais e explorador dinâmico de dados da API pública.",
+        tecnologias: ["API Pública CNPJ.ws", "Diagnóstico Cadastral", "QSA & Sócios", "CNAE & Fiscal", "JSON Explorer"],
+        tamanho: "featured",
+        mostrarBarrasPreview: true,
+        linkAcesso: "consulta-cnpj.html",
+        textoBotaoAcesso: "Acessar Consulta CNPJ"
       },
       {
-        tag: "🏭 ERP Modular",
-        icone: "⚙️",
-        titulo: "Sistema de Gestão Empresarial (ERP)",
-        descricao: "Plataforma modular com gestão de stock, financeiro, RH e CRM integrados. Dashboards em tempo real com WebSockets, permissões granulares por perfil e exportação avançada em múltiplos formatos.",
-        tecnologias: ["Node.js", "PostgreSQL", "WebSocket", "Docker", "Redis"],
-        tamanho: "wide",
-        mostrarBarrasPreview: true
-      },
-      {
-        tag: "🛒 E-commerce",
+        tag: "👗 E-commerce & Alta Moda",
+        statusBadge: "● Na Nuvem · E-commerce Ativo",
         icone: "🛍️",
-        titulo: "Loja B2B Multi-Tenancy",
-        descricao: "Gestão de catálogo, preços por segmento, checkout customizável e integração com gateways de pagamento.",
-        tecnologias: ["Multi-tenant", "Stripe", "PWA"],
-        tamanho: "third",
-        mostrarBarrasPreview: false
-      },
-      {
-        tag: "🔗 Integração",
-        icone: "🔄",
-        titulo: "API Gateway & Integrações",
-        descricao: "Middleware de integração entre sistemas legados, ERPs externos e plataformas de terceiros via REST, GraphQL e SOAP.",
-        tecnologias: ["GraphQL", "Kafka", "OAuth 2.0"],
-        tamanho: "third",
-        mostrarBarrasPreview: false
-      },
-      {
-        tag: "📱 Mobile-First",
-        icone: "📲",
-        titulo: "Interfaces Responsivas",
-        descricao: "Design system consistente com componentes reutilizáveis, acessibilidade WCAG 2.1 e performance Core Web Vitals.",
-        tecnologias: ["WCAG 2.1", "PWA", "CSS Grid"],
-        tamanho: "third",
-        mostrarBarrasPreview: false
-      },
+        titulo: "Lumière · Loja de Roupas & Alta Moda",
+        descricao: "Molde comercial e e-commerce de alta conversão para marcas de moda, vestuário e confecção: vitrine visual interativa, checkout via WhatsApp, sacola de compras inteligente, catálogo lookbook em PDF e painel de personalização da loja na nuvem.",
+        tecnologias: ["E-commerce", "Catálogo Lookbook", "Checkout WhatsApp", "Painel da Loja", "Nuvem Firebase"],
+        tamanho: "featured",
+        mostrarBarrasPreview: true,
+        linkAcesso: "https://loja-de-roupa-a00b6.web.app",
+        textoBotaoAcesso: "Ver Loja na Nuvem"
+      }
+    ],
 
+    // ------------------------------------------------------------------
+    // B. TIPOS DE SITES E SISTEMAS QUE DESENVOLVEMOS (Legendas & Especialidades)
+    // ------------------------------------------------------------------
+    secaoTipos: {
+      badge: "Especialidades & Tipos de Soluções",
+      titulo: `Tipos de Sites & Sistemas que <span class="gradient-green">Desenvolvemos.</span>`,
+      subtitulo: "Além dos nossos sistemas já publicados e no ar, projetamos e construímos qualquer tipo de aplicação digital personalizada para sua empresa:"
+    },
+    tiposDeSistemas: [
+      {
+        icone: "📊",
+        tag: "Analytics & BI",
+        titulo: "Dashboards Interativos & Analytics",
+        descricao: "Visualização de dados em tempo real com filtros avançados, KPIs dinâmicos, drill-down por período e exportação de relatórios em PDF/Excel.",
+        tecnologias: ["Chart.js", "D3.js", "REST API", "Power BI / Dashboards"]
+      },
+      {
+        icone: "⚙️",
+        tag: "Gestão Corporativa",
+        titulo: "Sistemas de Gestão & ERP Modular",
+        descricao: "Plataformas modulares com controle de estoque, faturamento, DRE, contas a pagar/receber, permissões por perfil e regras sob medida.",
+        tecnologias: ["Node.js", "PostgreSQL", "WebSocket", "Docker"]
+      },
+      {
+        icone: "🛍️",
+        tag: "Comércio Digital",
+        titulo: "Lojas Virtuais & E-commerces",
+        descricao: "Vitrines online de alta conversão, gestão de catálogo, preços por segmento, sacola de compras, checkout customizável e vendas pelo WhatsApp.",
+        tecnologias: ["Multi-tenant", "Stripe / PIX", "PWA", "Lookbook"]
+      },
+      {
+        icone: "🔄",
+        tag: "Comunicação & Dados",
+        titulo: "API Gateway & Integrações",
+        descricao: "Middleware e conexões seguras entre sistemas legados, gateways de pagamento, emissão fiscal SEFAZ, Receita Federal e serviços de terceiros.",
+        tecnologias: ["GraphQL", "Kafka", "OAuth 2.0", "SEFAZ / Receita"]
+      },
+      {
+        icone: "📱",
+        tag: "Experiência Mobile",
+        titulo: "Interfaces Responsivas & Mobile-First",
+        descricao: "Design system moderno e consistente com componentes reutilizáveis, acessibilidade WCAG 2.1 e performance máxima em celulares e desktops.",
+        tecnologias: ["WCAG 2.1", "PWA", "Mobile-First", "CSS Grid"]
+      },
+      {
+        icone: "🤖",
+        tag: "IA & Automação",
+        titulo: "Agentes Cognitivos & Automações com IA",
+        descricao: "Automatização inteligente de processos internos, triagem de leads, atendimento inteligente via WhatsApp integrado a ERPs e fluxos IA.",
+        tecnologias: ["IA Gemini", "Python", "FastAPI", "Chatbots"]
+      }
     ]
   },
 
@@ -256,6 +285,8 @@ const SITE_CONFIG = {
     links: [
       { texto: "Sistemas", link: "#sistemas" },
       { texto: "Planos SaaS", link: "acesso.html?sistema=fc_gestao" },
+      { texto: "Consulta CNPJ", link: "consulta-cnpj.html" },
+      { texto: "Loja de Roupas", link: "https://loja-de-roupa-a00b6.web.app" },
       { texto: "Marketing", link: "#marketing" }
     ],
     botaoCta: { texto: "Fale Conosco ↗", link: "#contato" }
@@ -266,6 +297,8 @@ const SITE_CONFIG = {
     links: [
       { texto: "Sistemas", link: "#sistemas" },
       { texto: "Planos FC Gestão", link: "acesso.html?sistema=fc_gestao" },
+      { texto: "Consulta CNPJ", link: "consulta-cnpj.html" },
+      { texto: "Loja de Roupas (Nuvem)", link: "https://loja-de-roupa-a00b6.web.app" },
       { texto: "Marketing", link: "#marketing" },
       { texto: "Contacto", link: "#contato" }
     ]

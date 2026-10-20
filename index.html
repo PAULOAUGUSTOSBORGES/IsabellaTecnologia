@@ -22,8 +22,8 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- ARQUIVO DE CONFIGURAÇÃO EXTERNO E BANCO SAAS -->
-  <script src="site-config.js?v=3"></script>
-  <script src="config_banco.js"></script>
+  <script src="site-config.js?v=20261015160543"></script>
+  <script src="config_banco.js?v=20261015160543"></script>
 
   <style>
     /* ==============================
@@ -880,6 +880,146 @@
       grid-column: span 4;
     }
 
+    /* DESTAQUE PARA PROJETOS REAIS (Grandes Destaques) */
+    .p-card--featured {
+      grid-column: span 4;
+      border: 1px solid rgba(99, 179, 237, 0.35);
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.95), rgba(13, 19, 33, 0.98));
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 179, 237, 0.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .p-card--featured:hover {
+      border-color: var(--clr-accent);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(99, 179, 237, 0.3);
+      transform: translateY(-8px) scale(1.015);
+    }
+
+    @media (max-width: 992px) {
+      .p-card--featured {
+        grid-column: span 12 !important;
+      }
+    }
+
+    .p-card__topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .p-card__topline .p-card__tag {
+      margin-bottom: 0;
+    }
+
+    .p-card__live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      font-weight: var(--fw-bold);
+      color: #68d391;
+      background: rgba(104, 211, 145, 0.12);
+      border: 1px solid rgba(104, 211, 145, 0.28);
+      border-radius: var(--radius-xl);
+      padding: 0.25rem 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pulse-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #68d391;
+      box-shadow: 0 0 8px #68d391;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* SEÇÃO DE LEGENDAS: TIPOS DE SITES E SISTEMAS */
+    .tipos-sistemas-block {
+      margin-top: clamp(3.5rem, 7vh, 5.5rem);
+      padding-top: clamp(2.5rem, 5vh, 4rem);
+      border-top: 1px solid rgba(99, 179, 237, 0.14);
+    }
+
+    .tipos-sistemas__header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .tipos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .tipo-card {
+      background: rgba(17, 24, 39, 0.65);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform var(--tf), border-color var(--tf), box-shadow var(--tf);
+    }
+
+    .tipo-card:hover {
+      border-color: rgba(99, 179, 237, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 179, 237, 0.08);
+    }
+
+    .tipo-card__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tipo-card__icon {
+      font-size: 1.9rem;
+      display: inline-block;
+    }
+
+    .tipo-card__tag {
+      font-size: 0.68rem;
+      font-weight: var(--fw-semi);
+      color: var(--clr-accent);
+      background: rgba(99, 179, 237, 0.1);
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-xl);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tipo-card__title {
+      font-size: 1.15rem;
+      font-weight: var(--fw-bold);
+      color: var(--clr-white);
+      margin-bottom: 0.5rem;
+    }
+
+    .tipo-card__desc {
+      font-size: 0.86rem;
+      color: var(--clr-muted);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .tipo-card__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
     .p-card__tag {
       display: inline-flex;
       align-items: center;
@@ -1463,7 +1603,9 @@
         </a>
         <ul class="nav__links" id="navLinks">
           <li><a href="#sistemas">Sistemas</a></li>
-          <li><a href="acesso.html?sistema=fc_gestao">Planos SaaS</a></li>
+          <li><a href="landing.html">FC Gestão</a></li>
+          <li><a href="consulta-cnpj.html">Consulta CNPJ</a></li>
+          <li><a href="https://loja-de-roupa-a00b6.web.app" target="_blank" rel="noopener noreferrer">Loja de Roupas</a></li>
           <li><a href="#marketing">Marketing</a></li>
           <li><a href="#contato" class="nav__cta" id="navCta">Fale Conosco &#8599;</a></li>
         </ul>
@@ -1568,22 +1710,42 @@
     </div>
   </section>
 
-  <!-- SISTEMAS -->
+  <!-- SISTEMAS & PROJETOS REAIS -->
   <section class="section" id="sistemas">
     <div class="container">
       <div class="section__header">
-        <div class="label anim-fade-in" id="sistemasBadge" style="margin-bottom:.75rem">Portf&#243;lio de Sistemas</div>
+        <div class="label anim-fade-in" id="sistemasBadge" style="margin-bottom:.75rem">Sistemas no Ar &middot; Projetos Reais</div>
         <div class="divider anim-scale-in delay-1"></div>
         <h2 class="headline-lg section__headline anim-fade-up delay-2" id="sistemasTitle">
-          Solu&#231;&#245;es <span class="gradient-text">enterprise-grade</span><br>feitas para crescer.
+          Sistemas Reais em <span class="gradient-text">Destaque.</span>
         </h2>
         <p class="body-lg section__sub anim-fade-up delay-3" id="sistemasSub">
-          Arquitecturas modulares, interfaces intuitivas e integra&#231;&#245;es que funcionam &#8212;
-          mesmo quando o neg&#243;cio exige escalabilidade instant&#226;nea.
+          Conheça nossas plataformas e ferramentas em produção na nuvem &mdash; prontas para uso imediato.
         </p>
       </div>
+
+      <!-- Grid dos Projetos Reais em Grande Destaque -->
       <div class="portfolio-grid" id="portfolioGrid">
-        <!-- Injetado dinamicamente via site-config.js -->
+        <!-- Injetado dinamicamente via site-config.js (FC Gestão, Consulta CNPJ, Loja de Roupas Lumière) -->
+      </div>
+
+      <!-- SEÇÃO TIPOS DE SITES & SISTEMAS (Legendas & Especialidades) -->
+      <div class="tipos-sistemas-block" id="tiposSistemasBlock">
+        <div class="tipos-sistemas__header anim-fade-up">
+          <div class="label" id="tiposBadge">Especialidades &amp; Tipos de Soluções</div>
+          <div class="divider" style="margin:.75rem auto 1.25rem auto;"></div>
+          <h3 class="headline-md" id="tiposTitle" style="font-size:clamp(1.5rem, 3vw, 2.3rem); font-weight:var(--fw-bold); margin-bottom:.75rem;">
+            Tipos de Sites &amp; Sistemas que <span class="gradient-green">Desenvolvemos.</span>
+          </h3>
+          <p class="body-lg section__sub" id="tiposSub">
+            Além dos nossos sistemas já publicados, projetamos e construímos qualquer tipo de aplicação web ou corporativa sob medida para sua empresa.
+          </p>
+        </div>
+
+        <!-- Grade de Legendas dos Tipos de Sistemas -->
+        <div class="tipos-grid" id="tiposGrid">
+          <!-- Injetado dinamicamente via site-config.js -->
+        </div>
       </div>
     </div>
   </section>
@@ -1677,6 +1839,8 @@
         <ul class="footer__links" id="footerLinks">
           <li><a href="#sistemas">Sistemas</a></li>
           <li><a href="acesso.html?sistema=fc_gestao">Planos FC Gestão</a></li>
+          <li><a href="consulta-cnpj.html">Consulta CNPJ</a></li>
+          <li><a href="https://loja-de-roupa-a00b6.web.app" target="_blank" rel="noopener noreferrer">Loja de Roupas (Nuvem)</a></li>
           <li><a href="#marketing">Marketing</a></li>
           <li><a href="#contato">Contacto</a></li>
         </ul>
@@ -1714,7 +1878,10 @@
         const navLinks = document.getElementById('navLinks');
         if (navLinks) {
           const ctaBtn = cfg.navegacao.botaoCta ? `<li><a href="${cfg.navegacao.botaoCta.link}" class="nav__cta" id="navCta">${cfg.navegacao.botaoCta.texto}</a></li>` : '';
-          navLinks.innerHTML = cfg.navegacao.links.map(l => `<li><a href="${l.link}">${l.texto}</a></li>`).join('') + ctaBtn;
+          navLinks.innerHTML = cfg.navegacao.links.map(l => {
+            const ext = l.link.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
+            return `<li><a href="${l.link}"${ext}>${l.texto}</a></li>`;
+          }).join('') + ctaBtn;
         }
       }
 
@@ -1722,7 +1889,10 @@
       if (cfg.rodape && Array.isArray(cfg.rodape.links)) {
         const footerLinks = document.getElementById('footerLinks');
         if (footerLinks) {
-          footerLinks.innerHTML = cfg.rodape.links.map(l => `<li><a href="${l.link}">${l.texto}</a></li>`).join('');
+          footerLinks.innerHTML = cfg.rodape.links.map(l => {
+            const ext = l.link.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : '';
+            return `<li><a href="${l.link}"${ext}>${l.texto}</a></li>`;
+          }).join('');
         }
       }
 
@@ -1787,7 +1957,7 @@
         }
       }
 
-      // --- Portfólio de Sistemas ---
+      // --- Portfólio de Sistemas & Projetos Reais ---
       if (cfg.sistemas) {
         const sBadge = document.getElementById('sistemasBadge');
         if (sBadge && cfg.sistemas.badge) sBadge.textContent = cfg.sistemas.badge;
@@ -1798,10 +1968,12 @@
         const sSub = document.getElementById('sistemasSub');
         if (sSub && cfg.sistemas.subtitulo) sSub.textContent = cfg.sistemas.subtitulo;
 
+        // 1. PROJETOS REAIS EM GRANDE DESTAQUE
         const portfolioGrid = document.getElementById('portfolioGrid');
-        if (portfolioGrid && Array.isArray(cfg.sistemas.projetos)) {
-          portfolioGrid.innerHTML = cfg.sistemas.projetos.map((p, i) => {
-            const spanClass = p.tamanho === 'wide' ? 'p-card--wide' : (p.tamanho === 'tall' ? 'p-card--tall' : 'p-card--third');
+        const listaProjetos = cfg.sistemas.projetos || cfg.sistemas.projetosReais;
+        if (portfolioGrid && Array.isArray(listaProjetos)) {
+          portfolioGrid.innerHTML = listaProjetos.map((p, i) => {
+            const spanClass = p.tamanho === 'featured' ? 'p-card--featured' : (p.tamanho === 'wide' ? 'p-card--wide' : (p.tamanho === 'tall' ? 'p-card--tall' : 'p-card--third'));
             const delayClass = `delay-${(i % 5) + 1}`;
             const chipsHtml = (p.tecnologias || []).map(t => `<span class="chip">${t}</span>`).join('');
             const previewHtml = p.mostrarBarrasPreview ? `
@@ -1814,17 +1986,23 @@
             </div>
           </div>
         ` : '';
+            const isExternal = p.linkAcesso && p.linkAcesso.startsWith('http');
+            const targetAttr = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
             const linkAcessoHtml = p.linkAcesso ? `
           <div class="p-card__action">
-            <a href="${p.linkAcesso}" class="p-card__btn" onclick="event.stopPropagation();">
+            <a href="${p.linkAcesso}" class="p-card__btn" ${targetAttr} onclick="event.stopPropagation();">
               ${p.textoBotaoAcesso || 'Acessar Sistema'} ↗
             </a>
           </div>
         ` : '';
-            const cardClickAttr = p.linkAcesso ? `data-link="${p.linkAcesso}" onclick="window.location.href='${p.linkAcesso}'"` : '';
+            const cardClickAttr = p.linkAcesso ? `data-link="${p.linkAcesso}" onclick="${isExternal ? `window.open('${p.linkAcesso}', '_blank')` : `window.location.href='${p.linkAcesso}'`}"` : '';
+            const liveBadgeHtml = p.statusBadge ? `<span class="p-card__live-badge"><span class="pulse-dot"></span> ${p.statusBadge}</span>` : `<span class="p-card__live-badge"><span class="pulse-dot"></span> NO AR</span>`;
             return `
           <div class="p-card ${spanClass} anim-fade-up ${delayClass}" ${cardClickAttr}>
-            <span class="p-card__tag">${p.tag}</span>
+            <div class="p-card__topline">
+              <span class="p-card__tag">${p.tag}</span>
+              ${liveBadgeHtml}
+            </div>
             <span class="p-card__icon">${p.logoImg ? `<img src="${p.logoImg}" alt="${p.titulo}" style="width: 52px; height: 52px; border-radius: 14px; object-fit: contain; box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45); display: inline-block;">` : p.icone}</span>
             <div class="p-card__title">${p.titulo}</div>
             <p class="p-card__desc">${p.descricao}</p>
@@ -1833,6 +2011,37 @@
             ${previewHtml}
           </div>
         `;
+          }).join('');
+        }
+
+        // 2. TIPOS DE SITES & SISTEMAS (LEGENDAS & ESPECIALIDADES)
+        if (cfg.sistemas.secaoTipos) {
+          const st = cfg.sistemas.secaoTipos;
+          const tBadge = document.getElementById('tiposBadge');
+          if (tBadge && st.badge) tBadge.textContent = st.badge;
+          const tTitle = document.getElementById('tiposTitle');
+          if (tTitle && st.titulo) tTitle.innerHTML = st.titulo;
+          const tSub = document.getElementById('tiposSub');
+          if (tSub && st.subtitulo) tSub.textContent = st.subtitulo;
+        }
+
+        const tiposGrid = document.getElementById('tiposGrid');
+        if (tiposGrid && Array.isArray(cfg.sistemas.tiposDeSistemas)) {
+          tiposGrid.innerHTML = cfg.sistemas.tiposDeSistemas.map((t, idx) => {
+            const chips = (t.tecnologias || []).map(c => `<span class="chip">${c}</span>`).join('');
+            return `
+              <div class="tipo-card anim-fade-up delay-${(idx % 4) + 1}">
+                <div>
+                  <div class="tipo-card__top">
+                    <span class="tipo-card__icon">${t.icone}</span>
+                    <span class="tipo-card__tag">${t.tag}</span>
+                  </div>
+                  <div class="tipo-card__title">${t.titulo}</div>
+                  <p class="tipo-card__desc">${t.descricao}</p>
+                </div>
+                <div class="tipo-card__chips">${chips}</div>
+              </div>
+            `;
           }).join('');
         }
       }

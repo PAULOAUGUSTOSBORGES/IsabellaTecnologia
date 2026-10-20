@@ -927,13 +927,13 @@
           <a href="index.html" class="btn-nav-site">
             <i class="fa-solid fa-arrow-left"></i> Voltar ao Site
           </a>
-          <!-- LINK OFICIAL E CORRIGIDO PARA O LOGIN DO FC GESTÃO -->
-          <a href="https://lojafc-a31f9.web.app/sistema/login.html" 
-             class="btn-nav-login"
-             id="btn-login-header"
-             title="Ir para a tela oficial de login">
-            <i class="fa-solid fa-right-to-bracket"></i> Acessar Sistema (Login)
+          <a href="consulta-cnpj.html" class="btn-nav-site" title="Consulta Pública Avançada de CNPJ">
+            <i class="fa-solid fa-building"></i> Consulta CNPJ
           </a>
+          <a href="https://loja-de-roupa-a00b6.web.app" target="_blank" rel="noopener noreferrer" class="btn-nav-site" title="Lumière - Loja de Roupas na Nuvem">
+            <i class="fa-solid fa-shirt"></i> Loja de Roupas
+          </a>
+          <!-- Acesso direto removido conforme arquitetura multi-sistemas Primas.Tech -->
         </div>
       </div>
     </div>
@@ -991,15 +991,15 @@
                 <i class="fa-solid fa-bolt"></i>
               </div>
               <div class="triagem-info">
-                <h3>Quer Contratar ou Ativar?</h3>
-                <p>Escolha seu plano abaixo, cadastre sua loja e ative com <strong>7 dias de garantia de devolução do investimento</strong>.</p>
+                <h3>Quer Começar com 7 Dias Grátis?</h3>
+                <p>Escolha seu plano abaixo, cadastre sua loja e comece a usar com <strong>7 dias de teste 100% gratuito sem cartão de crédito</strong>.</p>
               </div>
             </div>
           </div>
           <a href="#grade-planos-container" 
              class="triagem-btn gradient"
              id="btn-triagem-trial">
-            <i class="fa-solid fa-arrow-down"></i> Ver Planos & Ativar
+            <i class="fa-solid fa-rocket"></i> Ver Planos & Testar Grátis
           </a>
         </div>
       </div>
@@ -1032,20 +1032,20 @@
         </div>
       </div>
 
-      <!-- BOX INFORMATIVO FISCAL: PRODUTO VS SERVIÇO (NFS-E) -->
+      <!-- BOX INFORMATIVO FISCAL: SEFAZ (NFC-E & NF-E) -->
       <div style="margin-top: 2rem; background: rgba(17, 24, 39, 0.75); border: 1px solid var(--clr-border); border-radius: 16px; padding: 1.5rem; display: flex; gap: 1.25rem; align-items: flex-start; backdrop-filter: blur(12px);">
         <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(99, 179, 237, 0.15); border: 1px solid rgba(99, 179, 237, 0.3); color: var(--clr-accent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
           <i class="fa-solid fa-circle-info"></i>
         </div>
         <div style="font-size: 0.85rem; color: var(--clr-muted); line-height: 1.6;">
           <h4 style="color: var(--clr-text-white); font-size: 0.95rem; font-weight: 800; margin-bottom: 0.4rem;">
-            📌 Informação Importante sobre a Emissão Fiscal (NFC-e, NF-e, Devolução & NFS-e)
+            📌 Informação Importante sobre a Emissão Fiscal (NFC-e, NF-e & Devolução)
           </h4>
           <p style="margin-bottom: 0.4rem;">
             <strong style="color: var(--clr-accent);">• NFC-e e NF-e (Mercadorias & Varejo) + NF-e de Devolução:</strong> Operação direta com a <strong>SEFAZ</strong> válida para empresas em todo o território nacional, sem cobrança de taxas por nota emitida.
           </p>
           <p>
-            <strong style="color: var(--clr-accent2);">• NFS-e (Notas de Serviços):</strong> Como a NFS-e é de competência municipal, nossa integração direta via Web Service (sem intermediários terceiros) está homologada para empresas de <strong>Goiânia/GO (SEFIN)</strong>. Para empresas de outros municípios, o sistema gera o <strong>RPS Oficial / Espelho Fiscal Municipal</strong> para escrituração contábil e importação no portal da sua prefeitura local, ou sob projeto de viabilidade técnica.
+            <strong style="color: var(--clr-accent2);">• Emissão Nativa com Certificado A1:</strong> Transmissão direta e segura com os servidores da SEFAZ, garantindo conformidade fiscal e envio automático do XML/DANFE ao cliente.
           </p>
         </div>
       </div>
@@ -1141,6 +1141,10 @@
             <label>Nome no Cartão</label>
             <input type="text" id="card-nome" required placeholder="Como está impresso no cartão">
           </div>
+          <div class="campo-form">
+            <label>Número do Cartão</label>
+            <input type="text" id="card-numero" required placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatarNumCartao(this)">
+          </div>
           <div class="campo-duo">
             <div class="campo-form">
               <label>Validade</label>
@@ -1180,7 +1184,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
   
   <!-- Configuração do Banco SaaS Master Central -->
-  <script src="config_banco.js"></script>
+  <script src="config_banco.js?v=20261015160543"></script>
 
   <!-- Lógica da Página de Planos e Sincronização -->
   <script>
@@ -1243,18 +1247,18 @@
         id: 'plano_fiscal',
         sistemaId: 'fc_gestao',
         nome: 'Fiscal & Vendas',
-        tagline: 'Emissão Fiscal Nativa SEFAZ & NFS-e',
+        tagline: 'Emissão Fiscal Nativa SEFAZ (NFC-e e NF-e)',
         preco: 139.99,
         ciclo: 'mensal',
         usuarios: 'Até 3 Usuários',
         limiteUsuarios: 3,
         produtos: 'Produtos Ilimitados',
         modeloPDV: 'ambos',
-        descricao: 'Segurança fiscal total: emissão de NFC-e, NF-e, Devoluções e NFS-e sem taxas extras por nota emitida.',
+        descricao: 'Segurança fiscal total: emissão de NFC-e, NF-e e Devoluções sem taxas extras por nota emitida.',
         modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'caixa', 'suporte'],
-        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
+        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao'],
         features: [
-          'Emissão Nativa NFC-e, NF-e e NFS-e* (SEFAZ & Goiânia)',
+          'Emissão Nativa NFC-e e NF-e (SEFAZ)',
           'NF-e de Venda, Devolução & Estorno',
           'Certificado Digital A1 Integrado',
           'PDV Direto ou Pré-Venda Balcão',
@@ -1270,23 +1274,23 @@
         sistemaId: 'fc_gestao',
         nome: 'Profissional',
         tagline: 'Gestão Completa, Móveis & Financeiro DRE',
-        preco: 169.90,
+        preco: 199.99,
         ciclo: 'mensal',
-        usuarios: 'Até 5 Usuários',
-        limiteUsuarios: 5,
+        usuarios: 'Até 6 Usuários',
+        limiteUsuarios: 6,
         produtos: 'Produtos Ilimitados',
         modeloPDV: 'ambos',
         descricao: 'O equilíbrio perfeito mais escolhido: gestão financeira profunda, compras XML, montagem & entrega e catálogo online.',
         modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'financeiro', 'caixa', 'compras', 'relatorios', 'agenda', 'site', 'suporte'],
-        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
+        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao'],
         features: [
-          'Tudo do Plano Fiscal (NFC-e, NF-e, Devolução & NFS-e*)',
+          'Tudo do Plano Fiscal (NFC-e, NF-e e Devolução)',
           'Financeiro Completo: DRE, Contas a Pagar/Receber',
           'Entrada de Notas por XML de Fornecedor',
           'Módulo de Móveis: Montagem & Entrega',
           'Tabelas de Preço Múltiplas & Orçamentos',
           'Catálogo Online de Produtos Integrado',
-          'Até 5 Usuários com Permissões por Perfil',
+          'Até 6 Usuários com Permissões por Perfil',
           'Suporte Prioritário'
         ],
         destaque: true,
@@ -1322,7 +1326,7 @@
         sistemaId: 'fc_gestao',
         nome: 'Ultra Completo',
         tagline: 'Franquias, Redes & Multi-Lojas',
-        preco: 349.90,
+        preco: 310.99,
         ciclo: 'mensal',
         usuarios: 'Usuários Ilimitados',
         limiteUsuarios: 999999,
@@ -1366,7 +1370,9 @@
 
         // Verifica se o Firebase Firestore está disponível
         if (typeof firebase !== 'undefined' && firebase.firestore) {
-          const snap = await firebase.firestore().collection('planos_saas').get();
+          const appSaas = (firebase.apps && firebase.apps.find(a => a.name === 'saasCentral')) || null;
+          const dbSaaS = appSaas ? appSaas.firestore() : firebase.firestore();
+          const snap = await dbSaaS.collection('planos_saas').get();
           
           if (!snap.empty) {
             planosCarregados = snap.docs.map(doc => ({
@@ -1405,25 +1411,33 @@
             'Suporte Especializado'
           ]);
 
+          // Limpa qualquer menção de NFS-e vinda do banco ou de layouts antigos
+          feats = feats.map(f => {
+            return f.replace(/,?\s*(?:e\s*)?NFS-e\*?/gi, '')
+                    .replace(/\s*\(SEFAZ & Goiânia\)/gi, ' (SEFAZ)')
+                    .replace(/\s*&\s*NFS-e\*?/gi, '')
+                    .replace(/\s{2,}/g, ' ')
+                    .trim();
+          }).filter(f => f.length > 0);
+
           const temFiscal = (p.modulos || padrao.modulos || []).includes('fiscal');
           if (temFiscal) {
-            feats = feats.map(f => {
-              if (f.includes('NFC-e e NF-e (SEFAZ)')) {
-                return 'Emissão Nativa NFC-e, NF-e e NFS-e* (SEFAZ & Goiânia)';
-              }
-              return f;
-            });
-            if (!feats.some(f => f.includes('NFS-e') || f.includes('NF-e'))) {
-              feats.unshift('Emissão Nativa NFC-e, NF-e e NFS-e* (SEFAZ & Goiânia)');
+            if (!feats.some(f => f.includes('NF-e') || f.includes('NFC-e'))) {
+              feats.unshift('Emissão Nativa NFC-e e NF-e (SEFAZ)');
             }
           }
+
+          const notasBrutas = p.notasPermitidas || padrao.notasPermitidas || (temFiscal ? ['nfce', 'nfe', 'nfe_devolucao'] : []);
+          const notasLimpas = (Array.isArray(notasBrutas) ? notasBrutas : ['nfce', 'nfe', 'nfe_devolucao']).filter(n => n !== 'nfse');
 
           return {
             ...padrao,
             ...p,
             preco: Number(p.preco !== undefined ? p.preco : (padrao.preco || 0)),
+            tagline: (p.tagline || padrao.tagline || '').replace(/&?\s*NFS-e\*?/gi, '').replace(/\s{2,}/g, ' ').trim(),
+            descricao: (p.descricao || padrao.descricao || '').replace(/,?\s*(?:e\s*)?NFS-e\*?/gi, '').replace(/\s{2,}/g, ' ').trim(),
             features: feats,
-            notasPermitidas: p.notasPermitidas || padrao.notasPermitidas || (temFiscal ? ['nfce', 'nfe', 'nfe_devolucao', 'nfse'] : [])
+            notasPermitidas: notasLimpas
           };
         });
 
@@ -1517,18 +1531,18 @@
             <div class="plan-actions">
               <!-- SLOGAN DE GARANTIA DE DEVOLUÇÃO DO INVESTIMENTO -->
               <div class="plan-slogan-label">
-                <i class="fa-solid fa-shield-heart"></i> ${sloganGarantia}
+                <i class="fa-solid fa-gift text-emerald-400"></i> 7 Dias de Teste Grátis · Sem Cartão
               </div>
 
               <!-- BOTAO PRINCIPAL: ATIVAR PLANO AGORA (DIRECIONA PARA A PAGINA DE CADASTRO cadastro.html) -->
               <a href="cadastro.html?plano=${encodeURIComponent(p.id)}&ciclo=${cicloAtual}" 
                  class="btn-plan-primary-activation" 
                  title="Cadastrar e Ativar ${p.nome}">
-                <i class="fa-solid fa-bolt"></i> Ativar Plano Agora
+                <i class="fa-solid fa-rocket"></i> Testar 7 Dias Grátis
               </a>
 
               <small class="plan-activation-note">
-                <i class="fa-solid fa-lock text-slate-400"></i> Cadastro do negócio antes do pagamento
+                <i class="fa-solid fa-check text-emerald-400"></i> Acesso imediato · Sem cartão de crédito
               </small>
             </div>
           </div>
@@ -1634,6 +1648,13 @@
 
     function processarCartaoForm(e) {
       e.preventDefault();
+      const numInput = document.getElementById('card-numero');
+      const num = (numInput ? numInput.value : '').replace(/\s+/g, '');
+      if (num.length < 13) {
+        alert('Por favor, informe um número de cartão de crédito válido.');
+        if (numInput) numInput.focus();
+        return;
+      }
       const btn = document.getElementById('btn-submit-cartao');
       btn.disabled = true;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando Assinatura...';

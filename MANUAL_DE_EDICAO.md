@@ -55,26 +55,25 @@ empresa: {
 
 ---
 
-### 2. Adicionar ou Alterar Projetos no Portfólio de Sistemas
+### 2. Projetos Reais em Destaque & Tipos de Sistemas
 
-Procure a seção `sistemas.projetos`. Para adicionar um novo projeto, copie o modelo abaixo e cole dentro da lista `projetos: [ ... ]`, lembrando de colocar uma vírgula `,` antes:
+No arquivo `site-config.js`, a área de sistemas agora é dividida em duas partes bem organizadas:
 
-```javascript
-{
-  tag: "🤖 Inteligência Artificial",
-  icone: "🧠",
-  titulo: "Agentes Cognitivos & Atendimento IA",
-  descricao: "Automatização inteligente de processos internos e atendimento via WhatsApp integrado a ERPs.",
-  tecnologias: ["Python", "FastAPI", "OpenAI", "PostgreSQL"],
-  tamanho: "third", // 'wide' (largo), 'tall' (alto) ou 'third' (1/3)
-  mostrarBarrasPreview: false
-},
-```
+#### A. Projetos Reais em Grande Destaque (`sistemas.projetos`):
+Aqui ficam os seus **sistemas de verdade**, com botão de acesso e selo de "NO AR":
+- **FC Gestão · ERP, PDV & Emissor Fiscal** (com link para a página de planos)
+- **Consulta Avançada de CNPJ** (ferramenta com consulta da Receita Federal em tempo real)
+- **Lumière · Loja de Roupas & Alta Moda** (e-commerce real na nuvem Firebase)
 
-#### Opções de Tamanho do Cartão:
-- `"wide"`: Ocupa 8 colunas da grade (ideal para projetos de maior destaque, com gráfico).
-- `"tall"`: Ocupa 4 colunas com altura vertical estendida.
-- `"third"`: Ocupa 4 colunas (tamanho padrão de 1/3 da linha).
+Você pode adicionar ou editar qualquer projeto real colocando `tamanho: "featured"`, o `linkAcesso` e o `statusBadge`.
+
+#### B. Tipos de Sites & Sistemas que Desenvolvemos (`sistemas.tiposDeSistemas`):
+Aqui ficam as **legendas e especialidades técnicas** (Dashboards, ERPs Modulares, Lojas Virtuais, Integrações de APIs, Interfaces Responsivas e IA). Cada item possui:
+- `icone`: emoji ou ícone (ex: `"📊"`, `"⚙️"`, `"🛍️"`, `"🔄"`)
+- `tag`: rótulo superior (ex: `"Analytics & BI"`)
+- `titulo`: nome da especialidade
+- `descricao`: legenda explicativa do que você constrói
+- `tecnologias`: lista de palavras-chave/tecnologias em destaque
 
 ---
 
@@ -182,3 +181,56 @@ videoCard: {
 }
 ```
 3. Salve o arquivo e aperte **F5** no seu navegador! O player do YouTube/Vimeo se ajustará perfeitamente com bordas arredondadas e controles nativos.
+
+---
+
+## 🔍 Módulo de Consulta Avançada de CNPJ
+
+O site agora conta com o módulo interativo de **Consulta Avançada de CNPJ**:
+- **Arquivo da Página:** `consulta-cnpj.html` (pode ser aberto diretamente com duplo clique ou pelo link do catálogo).
+- **Código Fonte TSX:** `consulta_avan_ada_de_cnpj.tsx`
+- **Script da Aplicação:** `consulta-cnpj.js` (gerado automaticamente via `node build-cnpj.js`).
+- **No Catálogo:** O card está registrado em `site-config.js` na seção `sistemas.projetos`, com link direto para `consulta-cnpj.html`.
+
+---
+
+## 👗 Lumière — Loja de Roupas & Alta Moda (Nuvem)
+
+O catálogo de sistemas inclui o e-commerce de vestuário **Lumière**:
+- **Link Oficial na Nuvem:** [https://loja-de-roupa-a00b6.web.app](https://loja-de-roupa-a00b6.web.app)
+- **Painel Administrativo da Loja:** [https://loja-de-roupa-a00b6.web.app/admin](https://loja-de-roupa-a00b6.web.app/admin) (senha: `admin123`)
+- **No Catálogo:** Configurado no `site-config.js` com o botão **"Ver Loja na Nuvem"** que abre diretamente a loja online em uma nova aba.
+
+---
+
+## 🚀 Publicação Online Individual (Arquivos .BAT)
+
+Assim como no FC Gestão, agora você possui **arquivos executáveis `.bat` individuais** que compilam e lançam as atualizações para a nuvem Firebase com **apenas 2 cliques**:
+
+### 📁 1. Arquivos Dentro de Cada Pasta:
+- **Primas Tecnologia:** Na pasta `PrimasTecnologia`, clique duas vezes em:
+  `PUBLICAR_NA_NUVEM.bat`
+  *(Compila o projeto, renova o cache e publica em `https://primas-tecnologia.web.app`)*
+- **Consulta CNPJ:** Na pasta `PrimasTecnologia`, clique duas vezes em:
+  `PUBLICAR_CONSULTA_CNPJ.bat`
+  *(Compila o arquivo TSX da Consulta e envia para `https://primas-tecnologia.web.app/consulta-cnpj.html`)*
+- **Loja de Móveis (FC Gestão):** Na pasta `FC-Gest-o`, clique duas vezes em:
+  `PUBLICAR_NA_NUVEM.bat`
+  *(Atualiza e publica o ERP & PDV em `https://lojafc-a31f9.web.app`)*
+- **Loja de Roupa (Lumière):** Na pasta `site de loja de roupa`, clique duas vezes em:
+  `PUBLICAR_NA_NUVEM.bat`
+  *(Publica o e-commerce em `https://loja-de-roupa-a00b6.web.app`)*
+
+---
+
+### 🌟 2. Central de Lançadores Rápidos (Pasta Raiz `site sistema`):
+Diretamente na pasta `g:\VERSOES DO SISTEMA\site sistema\`, você encontra os atalhos diretos sem precisar entrar nas pastas:
+1. `PUBLICAR_1_PRIMAS_TECNOLOGIA.bat`
+2. `PUBLICAR_2_CONSULTA_CNPJ.bat`
+3. `PUBLICAR_3_LOJA_MOVEIS_FC_GESTAO.bat`
+4. `PUBLICAR_4_LOJA_DE_ROUPA.bat`
+5. `CENTRAL_PUBLICADOR_NUVEM.bat` *(Menu interativo que permite escolher qual atualizar ou publicar todos de uma vez)*
+
+
+
+

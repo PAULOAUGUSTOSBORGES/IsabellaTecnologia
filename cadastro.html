@@ -519,6 +519,126 @@
         grid-column: span 1;
       }
     }
+  
+    /* NOVO SELETOR DE CICLO NO CADASTRO */
+    .cad-cycle-switcher {
+      display: flex;
+      background: rgba(13, 19, 33, 0.95);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      padding: 3px;
+      margin-bottom: 1.25rem;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .cad-cycle-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--clr-muted);
+      padding: 0.55rem 0.8rem;
+      border-radius: var(--radius-xl);
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .cad-cycle-btn.active {
+      background: linear-gradient(135deg, #2563eb, #6366f1);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(99, 102, 241, 0.4);
+    }
+    .cad-badge-desc {
+      font-size: 0.68rem;
+      font-weight: 900;
+      padding: 0.15rem 0.45rem;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .cad-cycle-btn.active .cad-badge-desc {
+      background: #042f2e;
+      color: #34d399;
+      border-color: #10b981;
+    }
+
+    /* BOTAO PRINCIPAL: 7 DIAS GRÁTIS */
+    .btn-iniciar-trial {
+      grid-column: span 2;
+      margin-top: 1rem;
+      padding: 1.15rem;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1.05rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+    .btn-iniciar-trial:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(16, 185, 129, 0.55);
+      background: linear-gradient(135deg, #059669, #047857);
+    }
+
+    /* BOTAO SECUNDARIO: PAGAR/ATIVAR AGORA */
+    .btn-pagar-direto {
+      grid-column: span 2;
+      padding: 0.85rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--clr-muted);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-pagar-direto:hover {
+      background: rgba(99, 179, 237, 0.1);
+      border-color: var(--clr-accent);
+      color: #fff;
+    }
+
+    /* BOTAO MERCADO PAGO NA ETAPA 2 */
+    .btn-mp-checkout-step2 {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 1.1rem;
+      background: #009ee3;
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 18px rgba(0, 158, 227, 0.4);
+      transition: all 0.2s;
+    }
+    .btn-mp-checkout-step2:hover {
+      background: #0082ba;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0, 158, 227, 0.55);
+    }
+
   </style>
 </head>
 <body>
@@ -548,12 +668,12 @@
     <div class="stepper">
       <div class="step-item active" id="step-nav-1">
         <span class="step-number">1</span>
-        <span>Cadastro da Loja</span>
+        <span>Cadastro da Loja (7 Dias Grátis)</span>
       </div>
       <div class="step-divider"></div>
       <div class="step-item" id="step-nav-2">
         <span class="step-number">2</span>
-        <span>Pagamento & Ativação</span>
+        <span>Pagamento & Ativação (Opcional)</span>
       </div>
     </div>
   </div>
@@ -605,9 +725,25 @@
                 <input type="password" id="cad-senha" required placeholder="Mínimo 6 caracteres" minlength="6">
               </div>
 
-              <button type="submit" class="btn-submit-step1" id="btn-avancar-etapa1">
-                <span>Continuar para a Ativação do Plano</span>
-                <i class="fa-solid fa-arrow-right"></i>
+              <!-- BOTAO PRINCIPAL: INICIAR TESTE GRATIS DE 7 DIAS (SEM CARTAO) -->
+              <button type="button" onclick="iniciarTesteGratuito(event)" class="btn-iniciar-trial" id="btn-iniciar-trial">
+                <i class="fa-solid fa-rocket text-amber-300"></i>
+                <span>Iniciar Teste Grátis de 7 Dias (Acesso Imediato)</span>
+              </button>
+              <small style="grid-column: span 2; text-align: center; color: #34d399; font-size: 0.8rem; font-weight: 700; margin-top: -0.4rem;">
+                <i class="fa-solid fa-check"></i> Teste 100% Gratuito · Não precisa de cartão de crédito
+              </small>
+
+              <div style="grid-column: span 2; display: flex; align-items: center; margin: 0.6rem 0;">
+                <div style="flex: 1; border-top: 1px solid var(--clr-border);"></div>
+                <span style="padding: 0 0.8rem; font-size: 0.72rem; color: var(--clr-subtle); text-transform: uppercase; font-weight: 800;">ou se preferir</span>
+                <div style="flex: 1; border-top: 1px solid var(--clr-border);"></div>
+              </div>
+
+              <!-- BOTAO SECUNDARIO: PAGAR AGORA COM DESCONTO -->
+              <button type="button" onclick="avancarParaPagamento(event)" class="btn-pagar-direto" id="btn-avancar-etapa1">
+                <i class="fa-solid fa-bolt text-amber-400"></i>
+                <span id="label-desc-btn-pay">Prefiro Pagar / Ativar com Desconto Agora →</span>
               </button>
 
             </div>
@@ -644,6 +780,11 @@
                 <i class="fa-solid fa-copy"></i> Copiar Código PIX
               </button>
             </div>
+
+                        <!-- BOTAO OFICIAL CHECKOUT PRO MERCADO PAGO -->
+            <button type="button" class="btn-mp-checkout-step2" onclick="iniciarCheckoutMercadoPagoCadastro()">
+              <i class="fa-solid fa-bolt text-amber-300"></i> Pagar Online com Mercado Pago
+            </button>
 
             <button type="button" class="btn-confirm-pix" onclick="confirmarPagamentoFeito()">
               <i class="fa-solid fa-circle-check"></i> Já Fiz o Pagamento via PIX
@@ -696,21 +837,34 @@
           <h3 class="summary-title" id="sum-nome-plano">Profissional</h3>
           <p class="summary-tagline" id="sum-desc-plano">Gestão Completa, Móveis & Financeiro DRE</p>
 
+          <!-- SELETOR DE CICLO: MENSAL VS ANUAL COM 20% OFF -->
+          <div class="cad-cycle-switcher">
+            <button type="button" class="cad-cycle-btn active" id="cad-btn-mensal" onclick="mudarCicloCadastro('mensal')">
+              Mensal
+            </button>
+            <button type="button" class="cad-cycle-btn" id="cad-btn-anual" onclick="mudarCicloCadastro('anual')">
+              Anual <span class="cad-badge-desc">-20% OFF</span>
+            </button>
+          </div>
+
           <div class="summary-price-box">
             <div class="summary-price">
-              R$ <span id="sum-valor-plano">169,90</span> <span>/ mês</span>
+              R$ <span id="sum-valor-plano">199,99</span> <span>/ mês</span>
             </div>
             <div class="summary-cycle-badge" id="sum-ciclo-info">
-              Cobrança Mensal sem fidelidade
+              Cobrança Mensal recorrente sem fidelidade
+            </div>
+            <div id="sum-anual-economia" style="display: none; margin-top: 0.4rem; font-size: 0.72rem; color: #34d399; font-weight: 800;">
+              <i class="fa-solid fa-tag"></i> 20% OFF aplicado · Cobrado anualmente
             </div>
           </div>
 
-          <!-- SLOGAN DE 7 DIAS DE GARANTIA E DEVOLUÇÃO DO INVESTIMENTO -->
-          <div class="slogan-card-badge">
-            <i class="fa-solid fa-shield-heart"></i>
+          <!-- SLOGAN DE 7 DIAS DE TESTE GRATIS SEM CARTAO -->
+          <div class="slogan-card-badge" style="background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.4);">
+            <i class="fa-solid fa-gift text-emerald-400"></i>
             <div>
-              <strong>7 Dias de Garantia · Devolução do Investimento</strong>
-              <span>Se não ficar satisfeito em 7 dias, devolvemos 100% do seu investimento.</span>
+              <strong style="color: #34d399;">7 Dias de Teste Grátis · Sem Cartão</strong>
+              <span>Acesso imediato a todos os módulos do sistema. Só pague se aprovar!</span>
             </div>
           </div>
 
@@ -722,14 +876,14 @@
           </ul>
         </div>
 
-        <!-- AVISO FISCAL TRANSPARENTE: SEFAZ & NFS-E -->
+        <!-- AVISO FISCAL TRANSPARENTE: SEFAZ -->
         <div style="margin-top: 1rem; background: rgba(17, 24, 39, 0.7); border: 1px solid var(--clr-border); border-radius: var(--radius-md); padding: 1rem; font-size: 0.78rem; color: var(--clr-muted); line-height: 1.5; backdrop-filter: blur(10px);">
           <div style="display: flex; gap: 0.6rem; align-items: flex-start;">
             <i class="fa-solid fa-circle-info" style="color: var(--clr-accent); font-size: 1rem; margin-top: 0.15rem; flex-shrink: 0;"></i>
             <div>
-              <strong style="color: #fff; font-size: 0.82rem; display: block; margin-bottom: 0.25rem;">Regras de Emissão Fiscal (NFC-e, NF-e & NFS-e)</strong>
+              <strong style="color: #fff; font-size: 0.82rem; display: block; margin-bottom: 0.25rem;">Regras de Emissão Fiscal SEFAZ (NFC-e & NF-e)</strong>
               <p style="margin-bottom: 0.3rem;"><strong style="color: var(--clr-accent);">• SEFAZ (Varejo/Mercadorias):</strong> NFC-e, NF-e comercial e devoluções operam direto com a SEFAZ em todo o território nacional.</p>
-              <p><strong style="color: var(--clr-accent2);">• NFS-e (Serviços):</strong> Conexão via Web Service homologada para empresas de <strong>Goiânia/GO</strong>. Demais municípios geram o <strong>RPS Oficial / Espelho Fiscal</strong> para escrituração na prefeitura local.</p>
+              <p><strong style="color: var(--clr-accent2);">• Certificado A1 Integrado:</strong> Emissão ágil sem intermediários e sem taxas por nota emitida.</p>
             </div>
           </div>
         </div>
@@ -744,60 +898,67 @@
   <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
   
   <!-- Config Banco SaaS -->
-  <script src="config_banco.js"></script>
+  <script src="config_banco.js?v=20261015160543"></script>
 
   <!-- Mercado Pago (Mercado Livre) SDK v2 e Configuração -->
   <script src="https://sdk.mercadopago.com/js/v2"></script>
-  <script src="mercadopago_config.js"></script>
+  <script src="mercadopago_config.js?v=20261015160543"></script>
 
   <script>
     'use strict';
 
-    // Planos de referência para cálculo e fallback
+    // Catálogo oficial de planos rigorosamente sincronizado com o SaaS Central (fcgestao-testes)
     const TABELA_PLANOS = {
       plano_start: {
         id: 'plano_start',
+        chave: 'START',
         nome: 'Start Express',
         tagline: 'PDV Direto para Microempresas e MEI',
         preco: 69.90,
-        features: ['PDV Frente de Caixa Rápido', 'Vendas e Pedidos', 'Controle de Estoque Essencial', 'Até 2 Usuários Simultâneos']
+        features: ['Frente de Caixa (PDV Direto) Rápido', 'Controle de Vendas & Estoque', 'Cadastro de Produtos (Até 500)', 'Até 2 Usuários Simultâneos']
       },
       plano_balcao_caixa: {
         id: 'plano_balcao_caixa',
+        chave: 'VAREJO_BALCAO',
         nome: 'Varejo Balcão',
-        tagline: 'Pré-Venda no Balcão + Caixa Central',
+        tagline: 'Pré-Venda no Balcão + Caixa Central Separado',
         preco: 99.90,
-        features: ['Atendimento Balcão + Caixa Separado', 'Produtos & Clientes Ilimitados', 'Comissões de Vendedores', 'Até 4 Usuários']
+        features: ['Tudo do Start Express', 'Pré-Venda no Balcão + Caixa Central', 'Até 4 Usuários (Vendedores + Caixa)', 'Produtos & Clientes Ilimitados', 'Comissões de Vendedores']
       },
       plano_fiscal: {
         id: 'plano_fiscal',
+        chave: 'FISCAL',
         nome: 'Fiscal & Vendas',
-        tagline: 'Emissão Fiscal Nativa SEFAZ & NFS-e*',
+        tagline: 'Emissão Fiscal Nativa SEFAZ (NFC-e e NF-e)',
         preco: 139.99,
         modulos: ['pdv', 'vendas', 'fiscal', 'estoque', 'caixa', 'suporte'],
-        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
-        features: ['Emissão Nativa NFC-e, NF-e e NFS-e*', 'NF-e de Devolução & Estorno', 'Certificado Digital A1 Integrado', 'Até 3 Usuários']
+        notasPermitidas: ['nfce', 'nfe', 'nfe_devolucao'],
+        features: ['Tudo do Varejo Balcão', 'Emissor Fiscal Próprio SEFAZ (NFC-e e NF-e)', 'Emissão Ilimitada sem Custos Extras', 'Importação de XML de Fornecedor', 'Certificado Digital A1 Integrado', 'Até 3 Usuários']
       },
       plano_pro: {
         id: 'plano_pro',
+        chave: 'PRO',
         nome: 'Profissional',
         tagline: 'Gestão Completa, Móveis & Financeiro DRE',
-        preco: 169.90,
-        features: ['Emissão Fiscal SEFAZ Completa', 'Financeiro DRE e Contas a Pagar', 'Módulo de Móveis: Montagem & Entrega', 'Até 5 Usuários']
+        preco: 199.99,
+        destaque: true,
+        features: ['Tudo do Fiscal & Vendas', 'Financeiro Completo: DRE, Contas a Pagar/Receber', 'Entrada de Notas por XML de Fornecedor', 'Módulo de Móveis: Montagem & Entrega', 'Catálogo Online de Produtos Integrado', 'Até 6 Usuários']
       },
       plano_enterprise: {
         id: 'plano_enterprise',
-        nome: 'Enterprise + IA',
-        tagline: 'Gestão Avançada com Inteligência Gemini',
+        chave: 'ENTERPRISE',
+        nome: 'Enterprise + IA Gemini',
+        tagline: 'Gestão Avançada com Inteligência Gemini Comercial',
         preco: 249.90,
-        features: ['Tudo do Profissional', 'IA Generativa Gemini Comercial', 'Análises Preditivas de Compras', 'Até 10 Usuários']
+        features: ['Tudo do Plano Profissional', 'Inteligência Artificial Gemini Comercial', 'Análises Preditivas de Giro e Compras', 'Até 10 Usuários Simultâneos', 'Múltiplos Caixas e Frente de Loja']
       },
       plano_ultra: {
         id: 'plano_ultra',
+        chave: 'ULTRA',
         nome: 'Ultra Completo',
-        tagline: 'Franquias, Redes & Multi-Lojas',
-        preco: 349.90,
-        features: ['Suíte 100% Irrestrita', 'Usuários e Produtos ILIMITADOS', 'Multi-Lojas e Filiais', 'Gerente Dedicado 24/7']
+        tagline: 'A Suíte Total para Grandes Lojas e Redes',
+        preco: 310.99,
+        features: ['Suíte 100% Irrestrita e Sem Limites', 'Emissão Nativa NFC-e e NF-e (SEFAZ)', 'Usuários e Produtos ILIMITADOS', 'Multi-Lojas e Filiais Centralizadas', 'IA Gemini Ilimitada para Toda a Equipe', 'Gerente de Conta Dedicado 24/7']
       }
     };
 
@@ -805,22 +966,54 @@
     let cicloAtivo = 'mensal';
     let dadosClienteSalvo = null;
 
+    // Alternador interativo de ciclo no cadastro (Mensal vs Anual -20% OFF)
+    function mudarCicloCadastro(novoCiclo) {
+      cicloAtivo = novoCiclo;
+      const btnM = document.getElementById('cad-btn-mensal');
+      const btnA = document.getElementById('cad-btn-anual');
+      if (novoCiclo === 'anual') {
+        if (btnA) btnA.className = 'cad-cycle-btn active';
+        if (btnM) btnM.className = 'cad-cycle-btn';
+      } else {
+        if (btnM) btnM.className = 'cad-cycle-btn active';
+        if (btnA) btnA.className = 'cad-cycle-btn';
+      }
+      atualizarResumoLateral();
+    }
+    window.mudarCicloCadastro = mudarCicloCadastro;
+
     // Inicializa a página lendo parâmetros da URL
     function carregarConfiguracaoUrl() {
       const params = new URLSearchParams(window.location.search);
       const idPlano = params.get('plano') || 'plano_pro';
-      cicloAtivo = params.get('ciclo') || 'mensal';
+      const cicloParam = params.get('ciclo') || 'mensal';
 
+      // Suporta alias curto ou completo
       if (TABELA_PLANOS[idPlano]) {
         planoAtivo = TABELA_PLANOS[idPlano];
+      } else {
+        const idMapeado = 'plano_' + idPlano.replace('plano_', '');
+        if (TABELA_PLANOS[idMapeado]) {
+          planoAtivo = TABELA_PLANOS[idMapeado];
+        }
       }
 
-      // Se Firebase Firestore estiver disponível, tenta atualizar dados do plano
+      if (cicloParam === 'anual') {
+        mudarCicloCadastro('anual');
+      } else {
+        mudarCicloCadastro('mensal');
+      }
+
+      // Sincroniza dinamicamente com o SaaS Central se o Firestore estiver conectado
       if (typeof firebase !== 'undefined' && firebase.firestore) {
-        firebase.firestore().collection('planos_saas').doc(idPlano).get().then(doc => {
+        const appSaas = (firebase.apps && firebase.apps.find(a => a.name === 'saasCentral')) || null;
+        const dbSaaS = appSaas ? appSaas.firestore() : firebase.firestore();
+        dbSaaS.collection('planos_saas').doc(planoAtivo.id).get().then(doc => {
           if (doc.exists) {
             const data = doc.data();
-            planoAtivo = { ...planoAtivo, ...data };
+            if (data.preco) planoAtivo.preco = Number(data.preco);
+            if (data.nome) planoAtivo.nome = data.nome;
+            if (data.descricao) planoAtivo.tagline = data.descricao;
             atualizarResumoLateral();
           }
         }).catch(() => {});
@@ -831,28 +1024,44 @@
 
     function atualizarResumoLateral() {
       const isAnual = cicloAtivo === 'anual';
-      const fator = isAnual ? 0.8 : 1.0;
-      const precoFinal = (Number(planoAtivo.preco || 0) * fator).toFixed(2).replace('.', ',');
+      const precoBase = Number(planoAtivo.preco || 0);
+      const precoMensalEquiv = isAnual ? (precoBase * 0.8) : precoBase;
+      const precoAnualTotal = precoMensalEquiv * 12;
 
       document.getElementById('sum-nome-plano').textContent = planoAtivo.nome;
       document.getElementById('sum-desc-plano').textContent = planoAtivo.tagline || planoAtivo.descricao || '';
-      document.getElementById('sum-valor-plano').textContent = precoFinal;
-      document.getElementById('sum-ciclo-info').textContent = isAnual 
-        ? 'Cobrança Anual (Economia de 20% com 2 meses grátis)' 
-        : 'Cobrança Mensal recorrente sem fidelidade';
+      document.getElementById('sum-valor-plano').textContent = precoMensalEquiv.toFixed(2).replace('.', ',');
+      
+      const cicloInfoEl = document.getElementById('sum-ciclo-info');
+      const economiaEl = document.getElementById('sum-anual-economia');
+      const labelPayBtn = document.getElementById('label-desc-btn-pay');
+
+      if (isAnual) {
+        if (cicloInfoEl) cicloInfoEl.textContent = 'Cobrança Anual (Total de R$ ' + precoAnualTotal.toFixed(2).replace('.', ',') + ' /ano)';
+        if (economiaEl) {
+          economiaEl.style.display = 'block';
+          economiaEl.innerHTML = '<i class="fa-solid fa-tag"></i> 20% OFF aplicado · Economia de R$ ' + ((precoBase * 12) - precoAnualTotal).toFixed(2).replace('.', ',') + ' /ano';
+        }
+        if (labelPayBtn) labelPayBtn.textContent = 'Pagar Anual com 20% OFF (R$ ' + precoAnualTotal.toFixed(2).replace('.', ',') + ') →';
+      } else {
+        if (cicloInfoEl) cicloInfoEl.textContent = 'Cobrança Mensal recorrente sem fidelidade';
+        if (economiaEl) economiaEl.style.display = 'none';
+        if (labelPayBtn) labelPayBtn.textContent = 'Prefiro Pagar / Ativar com Desconto Agora →';
+      }
 
       const featContainer = document.getElementById('sum-features-list');
       if (featContainer && planoAtivo.features) {
-        featContainer.innerHTML = planoAtivo.features.map(f => `<li><i class="fa-solid fa-check"></i> ${f}</li>`).join('');
+        featContainer.innerHTML = planoAtivo.features.map(f => '<li><i class="fa-solid fa-check text-emerald-400"></i> ' + f + '</li>').join('');
       }
 
       // Configura QR code do PIX
       const chavePix = '00020126580014br.gov.bcb.pix0136pauloaugusto.silvaborges@gmail.com5204000053039865802BR5920PRIMAS%20TECNOLOGIA6009GOIANIA62070503***6304';
       const qrEl = document.getElementById('render-pix-qr');
       if (qrEl) {
-        qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(chavePix)}`;
+        qrEl.src = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(chavePix);
       }
-      document.getElementById('render-pix-code').textContent = chavePix;
+      const codeEl = document.getElementById('render-pix-code');
+      if (codeEl) codeEl.textContent = chavePix;
     }
 
     // Máscara dinâmica de telefone
@@ -860,19 +1069,203 @@
       let v = el.value.replace(/\D/g, '');
       if (v.length > 11) v = v.slice(0, 11);
       if (v.length > 6) {
-        el.value = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+        el.value = '(' + v.slice(0, 2) + ') ' + v.slice(2, 7) + '-' + v.slice(7);
       } else if (v.length > 2) {
-        el.value = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+        el.value = '(' + v.slice(0, 2) + ') ' + v.slice(2);
       } else if (v.length > 0) {
-        el.value = `(${v}`;
+        el.value = '(' + v;
       } else {
         el.value = '';
       }
     }
 
-    // AVANÇAR DA ETAPA 1 (CADASTRO) PARA A ETAPA 2 (PAGAMENTO)
+    // =========================================================================
+    // INICIAR TESTE GRATUITO DE 7 DIAS (SEM CARTÃO / SEM PAGAMENTO PRÉVIO)
+    // =========================================================================
+    async function iniciarTesteGratuito(e) {
+      if (e) e.preventDefault();
+
+      const form = document.getElementById('form-cadastro-cliente');
+      if (form && !form.reportValidity()) {
+        return;
+      }
+
+      const nomeEmpresa = document.getElementById('cad-nome-empresa').value.trim();
+      const nomeResponsavel = document.getElementById('cad-nome-responsavel').value.trim();
+      const whatsapp = document.getElementById('cad-whatsapp').value.trim();
+      const cidade = document.getElementById('cad-cidade').value.trim();
+      const email = document.getElementById('cad-email').value.trim().toLowerCase();
+      const senha = document.getElementById('cad-senha').value;
+
+      if (!nomeEmpresa || !nomeResponsavel || !whatsapp || !cidade || !email || !senha) {
+        alert('Por favor, preencha todos os campos do formulário para iniciar seu teste gratuito!');
+        return;
+      }
+      if (senha.length < 6) {
+        alert('A senha deve conter no mínimo 6 caracteres.');
+        const passEl = document.getElementById('cad-senha');
+        if (passEl) passEl.focus();
+        return;
+      }
+
+      const btn = document.getElementById('btn-iniciar-trial');
+      const txtBtnOriginal = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Criando sua loja e ativando 7 dias...';
+      }
+
+      const agora = new Date();
+      const venc7Dias = new Date(agora.getTime() + (7 * 24 * 60 * 60 * 1000));
+      venc7Dias.setHours(23, 59, 59, 999);
+      const vencStr = venc7Dias.toISOString().split('T')[0];
+
+      try {
+        // 1. Criar usuário no Firebase Authentication (no banco oficial lojafc-a31f9)
+        let userCredential = null;
+        try {
+          userCredential = await firebase.auth().createUserWithEmailAndPassword(email, senha);
+        } catch (authErr) {
+          if (authErr.code === 'auth/email-already-in-use') {
+            try {
+              userCredential = await firebase.auth().signInWithEmailAndPassword(email, senha);
+            } catch (loginErr) {
+              throw new Error('Este e-mail já está cadastrado. Por favor, entre com a sua senha.');
+            }
+          } else {
+            throw authErr;
+          }
+        }
+
+        const user = userCredential ? userCredential.user : firebase.auth().currentUser;
+        if (!user) throw new Error('Não foi possível autenticar o usuário criado.');
+
+        const empresaId = 'emp_' + user.uid.substring(0, 10);
+        const db = firebase.firestore();
+        const batch = db.batch();
+
+        // 2. Documento da Empresa (Multi-tenant) com 7 dias de Trial Grátis no Firestore do ERP
+        const empRef = db.collection('empresas').doc(empresaId);
+        batch.set(empRef, {
+          donoUid: user.uid,
+          nomeEmpresa: nomeEmpresa,
+          nome: nomeEmpresa,
+          responsavel: nomeResponsavel,
+          whatsapp: whatsapp,
+          telefone: whatsapp,
+          cidade: cidade,
+          emailAcesso: email,
+          status: 'TRIAL',
+          plano: planoAtivo.id,
+          nomePlano: planoAtivo.nome,
+          ciclo: cicloAtivo,
+          pago: false,
+          trialAtivo: true,
+          dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
+          dataVencimento: firebase.firestore.Timestamp.fromDate(venc7Dias),
+          dataVencimentoStr: vencStr,
+          diasRestantes: 7,
+          sistemaId: 'fc_gestao',
+          modulosLiberados: ['pdv', 'vendas', 'produtos', 'clientes', 'fornecedores', 'financeiro', 'caixa', 'compras', 'relatorios', 'suporte']
+        });
+
+        // 3. Mapeamento Global de Usuário
+        const userRef = db.collection('usuarios').doc(user.uid);
+        batch.set(userRef, {
+          email: email,
+          nome: nomeResponsavel,
+          empresaId: empresaId,
+          ativo: true,
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // 4. Configurações Iniciais da Loja
+        const configRef = empRef.collection('configuracoes').doc('config');
+        batch.set(configRef, {
+          empresa: {
+            nome: nomeEmpresa,
+            fantasia: nomeEmpresa,
+            telefone: whatsapp,
+            email: email,
+            cidade: cidade
+          },
+          pdv: { permite_estoque_negativo: false }
+        });
+
+        // 5. Funcionário Admin com Acesso Completo
+        const funcRef = empRef.collection('funcionarios').doc(user.uid);
+        batch.set(funcRef, {
+          nome: nomeResponsavel,
+          email: email,
+          isAdmin: true,
+          perm_gestao: true,
+          perm_fiscal: true,
+          perm_operacao: true,
+          perm_pdv: true,
+          ativo: true,
+          criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Grava atomicamente todas as coleções no lojafc-a31f9
+        await batch.commit();
+
+        // 6. Espelha no SaaS Master (fcgestao-testes) se a conexão secundária estiver ativa
+        try {
+          const appSaas = firebase.apps.find(a => a.name === 'saasCentral');
+          if (appSaas) {
+            const dbSaas = firebase.firestore(appSaas);
+            await dbSaas.collection('leads_saas').doc('trial_' + user.uid).set({
+              empresaId: empresaId,
+              uid: user.uid,
+              nomeEmpresa: nomeEmpresa,
+              responsavel: nomeResponsavel,
+              whatsapp: whatsapp,
+              email: email,
+              cidade: cidade,
+              plano: planoAtivo.id,
+              nomePlano: planoAtivo.nome,
+              ciclo: cicloAtivo,
+              status: 'TRIAL_7_DIAS',
+              origem: 'Portal Primas Tecnologia',
+              dataCriacao: firebase.firestore.FieldValue.serverTimestamp()
+            }).catch(() => {});
+          }
+        } catch(e) {}
+
+        // 7. Configura sessão local
+        localStorage.setItem('fc_empresa_ativa', empresaId);
+        localStorage.setItem('fc_nome_empresa_ativa', nomeEmpresa);
+        localStorage.setItem('fc_sessao_data', agora.toDateString());
+        localStorage.setItem('fc_sessao_uid', user.uid);
+        localStorage.setItem('fc_trial_email', email);
+
+        alert('🎉 Parabéns! Sua loja foi criada e seus 7 Dias de Teste Grátis estão ativos!\nEntrando no sistema...');
+
+        let redirectUrl = 'https://lojafc-a31f9.web.app/sistema/index.html';
+        if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          redirectUrl = '../FC-Gest-o/sistema/index.html';
+        }
+        window.location.href = redirectUrl;
+      } catch (err) {
+        console.error('Erro no cadastro:', err);
+        alert('Atenção: ' + (err.message || 'Ocorreu um erro ao criar a conta. Tente novamente.'));
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = txtBtnOriginal;
+        }
+      }
+    }
+    window.iniciarTesteGratuito = iniciarTesteGratuito;
+
+    // AVANÇAR DA ETAPA 1 (CADASTRO) PARA A ETAPA 2 (PAGAMENTO COM DESCONTO)
     async function avancarParaPagamento(e) {
-      e.preventDefault();
+      if (e) e.preventDefault();
+
+      const form = document.getElementById('form-cadastro-cliente');
+      if (form && !form.reportValidity()) {
+        return;
+      }
 
       const nomeEmpresa = document.getElementById('cad-nome-empresa').value.trim();
       const nomeResponsavel = document.getElementById('cad-nome-responsavel').value.trim();
@@ -888,7 +1281,7 @@
 
       const btn = document.getElementById('btn-avancar-etapa1');
       btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando Conta e Preparando Ativação...';
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando Conta e Preparando Pagamento...';
 
       dadosClienteSalvo = {
         nomeEmpresa,
@@ -902,29 +1295,9 @@
         dataRegistro: new Date().toISOString()
       };
 
-      // Tenta registrar o cliente diretamente no banco central do SaaS (Firestore)
       try {
         if (typeof firebase !== 'undefined' && firebase.firestore) {
           const docId = 'solicitacao_' + Date.now();
-          const leadId = 'lead_' + Date.now();
-
-          // Salva como possível cliente (lead) para o pipeline comercial do fundador
-          await firebase.firestore().collection('leads_saas').doc(leadId).set({
-            nomeEmpresa,
-            responsavel: nomeResponsavel,
-            whatsapp,
-            email,
-            cidade,
-            plano: planoAtivo.id,
-            nomePlano: planoAtivo.nome,
-            ciclo: cicloAtivo,
-            sistemaId: 'fc_gestao',
-            status: 'NOVO',
-            origem: 'Portal de Cadastro (Site)',
-            notas: `Iniciou cadastro no plano ${planoAtivo.nome} (${cicloAtivo}) e seguiu para etapa de pagamento.`,
-            dataCriacao: firebase.firestore.FieldValue.serverTimestamp()
-          }).catch(() => {});
-
           await firebase.firestore().collection('empresas').doc(docId).set({
             nomeEmpresa,
             responsavel: nomeResponsavel,
@@ -934,29 +1307,30 @@
             emailAcesso: email,
             plano: planoAtivo.id,
             nomePlano: planoAtivo.nome,
-            modulosLiberados: planoAtivo.modulos || ['pdv', 'vendas', 'fiscal', 'estoque', 'caixa', 'suporte'],
-            notasPermitidas: planoAtivo.notasPermitidas || ['nfce', 'nfe', 'nfe_devolucao', 'nfse'],
             status: 'PENDENTE_PAGAMENTO',
             sistemaId: 'fc_gestao',
             ciclo: cicloAtivo,
             dataCriacao: firebase.firestore.FieldValue.serverTimestamp()
           });
-          console.log("✅ Cadastro de cliente e lead registrados com sucesso no banco central SaaS!");
         }
       } catch (errDb) {
         console.warn("Aviso ao salvar no Firestore central:", errDb);
       }
 
-      // Atualiza link de WhatsApp com os dados do cliente
+      // Atualiza link de WhatsApp
+      const isAnual = cicloAtivo === 'anual';
+      const precoBase = Number(planoAtivo.preco || 0);
+      const valorCobrado = isAnual ? (precoBase * 0.8 * 12).toFixed(2) : precoBase.toFixed(2);
+
       const zapMsg = encodeURIComponent(
-        `Olá! Acabei de me cadastrar no FC Gestão.\n` +
-        `Empresa: ${nomeEmpresa}\n` +
-        `Responsável: ${nomeResponsavel}\n` +
-        `Plano: ${planoAtivo.nome} (${cicloAtivo})\n` +
-        `E-mail: ${email}\n` +
-        `Gostaria de confirmar meu pagamento para ativação imediata.`
+        'Olá! Acabei de me cadastrar no FC Gestão.\n' +
+        'Empresa: ' + nomeEmpresa + '\n' +
+        'Responsável: ' + nomeResponsavel + '\n' +
+        'Plano: ' + planoAtivo.nome + ' (' + (isAnual ? 'Anual - 20% OFF' : 'Mensal') + ' - R$ ' + valorCobrado.replace('.', ',') + ')\n' +
+        'E-mail: ' + email + '\n' +
+        'Gostaria de confirmar meu pagamento para ativação imediata.'
       );
-      document.getElementById('link-whatsapp-final').href = `https://wa.me/5562999676874?text=${zapMsg}`;
+      document.getElementById('link-whatsapp-final').href = 'https://wa.me/5562999676874?text=' + zapMsg;
 
       // Muda para a Etapa 2
       document.getElementById('step-1-container').style.display = 'none';
@@ -966,6 +1340,38 @@
 
       window.scrollTo({ top: 120, behavior: 'smooth' });
     }
+    window.avancarParaPagamento = avancarParaPagamento;
+
+    // Checkout Oficial Mercado Pago na Etapa 2
+    async function iniciarCheckoutMercadoPagoCadastro() {
+      const isAnual = cicloAtivo === 'anual';
+      const precoBase = Number(planoAtivo.preco || 0);
+      const valorCobrado = isAnual ? (precoBase * 0.8 * 12).toFixed(2) : precoBase.toFixed(2);
+      const tituloPlano = isAnual ? planoAtivo.nome + ' (Anual - 20% OFF)' : planoAtivo.nome;
+
+      try {
+        const resp = await fetch('https://us-central1-lojafc-a31f9.cloudfunctions.net/criarPagamento', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            plano: tituloPlano,
+            valor: Number(valorCobrado),
+            empresaId: (dadosClienteSalvo && dadosClienteSalvo.email) ? 'emp_' + dadosClienteSalvo.email.replace(/[^a-zA-Z0-9]/g, '_') : 'emp_novo_cliente',
+            email: dadosClienteSalvo ? dadosClienteSalvo.email : ''
+          })
+        });
+        const dados = await resp.json();
+        if (dados && dados.initPoint) {
+          window.location.href = dados.initPoint;
+        } else {
+          alert('Redirecionando para pagamento seguro...');
+        }
+      } catch(e) {
+        alert('Abrindo WhatsApp para finalizar o pagamento com nosso consultor...');
+        window.open(document.getElementById('link-whatsapp-final').href, '_blank');
+      }
+    }
+    window.iniciarCheckoutMercadoPagoCadastro = iniciarCheckoutMercadoPagoCadastro;
 
     function trocarAbaPay(aba, btn) {
       document.querySelectorAll('.pay-tab-btn').forEach(b => b.classList.remove('active'));
@@ -1003,58 +1409,8 @@
     }
 
     async function processarCartaoFinal(e) {
-      e.preventDefault();
-      const btn = document.getElementById('btn-submit-card-pay');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando Pagamento Seguro...';
-
-      // Se Mercado Pago estiver ativado com chave real
-      if (window.MERCADO_PAGO_CONFIG && window.MERCADO_PAGO_CONFIG.ativo && window.MERCADO_PAGO_CONFIG.publicKey.startsWith('APP_USR')) {
-        try {
-          const mp = new MercadoPago(window.MERCADO_PAGO_CONFIG.publicKey);
-          const num = document.getElementById('pay-card-num').value.replace(/\s+/g, '');
-          const nome = document.getElementById('pay-card-name').value;
-          const val = document.getElementById('pay-card-val').value.split('/');
-          const cvv = document.getElementById('pay-card-cvv').value;
-
-          const cardToken = await mp.createCardToken({
-            cardNumber: num,
-            cardholderName: nome,
-            cardExpirationMonth: val[0],
-            cardExpirationYear: '20' + val[1],
-            securityCode: cvv
-          });
-
-          // Se tiver endpoint configurado, envia para a Cloud Function
-          if (window.MERCADO_PAGO_CONFIG.apiUrl) {
-            const resp = await fetch(window.MERCADO_PAGO_CONFIG.apiUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                tipo: 'cartao',
-                cardToken: cardToken.id,
-                emailPagador: document.getElementById('step-email').value,
-                nomePlano: planoAtivo.nome,
-                valorCentavos: Math.round(Number(document.getElementById('sum-valor-plano').textContent.replace(',', '.')) * 100)
-              })
-            });
-            const dados = await resp.json();
-            if (dados.aprovado) {
-              alert('Pagamento aprovado via Mercado Pago! Sua loja foi ativada com sucesso.');
-              window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
-              return;
-            }
-          }
-        } catch (err) {
-          console.warn('Processamento Mercado Pago em contingência:', err);
-        }
-      }
-
-      // Fallback seguro de ativação
-      setTimeout(() => {
-        alert('Pagamento recebido para conferência! Sua loja foi registrada com sucesso. Enviamos as instruções de login para o seu e-mail.');
-        window.location.href = 'https://lojafc-a31f9.web.app/sistema/login.html';
-      }, 1800);
+      if (e) e.preventDefault();
+      await iniciarCheckoutMercadoPagoCadastro();
     }
 
     document.addEventListener('DOMContentLoaded', () => {

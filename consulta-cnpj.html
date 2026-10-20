@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulta Pública Avançada de CNPJ | Primas Tecnologia</title>
+  <link rel="icon" type="image/png" href="icone_primas.png">
+  <link rel="apple-touch-icon" href="icone_primas.png">
+
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="Consulta pública e avançada de CNPJ em tempo real. Acesse dados cadastrais completos, Quadro de Sócios e Administradores (QSA), CNAEs, situação cadastral e explorador recursivo de dados da Receita Federal." />
+  <meta name="keywords" content="Consulta CNPJ, Receita Federal, QSA, CNAE, Simples Nacional, MEI, Situação Cadastral, Primas Tecnologia" />
+  <meta name="author" content="Primas Tecnologia" />
+  <meta property="og:title" content="Consulta Pública Avançada de CNPJ | Primas Tecnologia" />
+  <meta property="og:description" content="Explorador completo de dados cadastrais, quadro societário, CNAEs e inscrições estaduais em tempo real." />
+  <meta property="og:image" content="logo_primas.png" />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+          },
+          colors: {
+            primas: {
+              bg: '#080c14',
+              surface: '#0d1321',
+              card: '#111827',
+              accent: '#63b3ed',
+              accent2: '#9f7aea',
+              green: '#10b981'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Arquivo de Configuração Central da Primas Tecnologia -->
+  <script src="site-config.js?v=20261015160543"></script>
+
+  <style>
+    :root {
+      --clr-bg: #080c14;
+      --clr-surface: #0d1321;
+      --clr-card: #111827;
+      --clr-border: rgba(99, 179, 237, 0.14);
+      --clr-accent: #63b3ed;
+      --clr-accent2: #9f7aea;
+      --clr-accent3: #10b981;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080c14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #60a5fa;
+    }
+
+    /* Navbar Glassmorphism */
+    .primas-navbar {
+      background: rgba(8, 12, 20, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .gradient-text-blue {
+      background: linear-gradient(135deg, #63b3ed, #9f7aea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Pulse Dot */
+    .pulse-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseAnimation 2s infinite;
+    }
+
+    @keyframes pulseAnimation {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 flex flex-col min-h-screen">
+
+  <!-- ============================================================
+       NAVBAR SUPERIOR - PRIMAS TECNOLOGIA
+  ============================================================ -->
+  <header class="primas-navbar sticky top-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-4">
+        
+        <!-- Logo e Badges -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <a href="index.html" class="flex items-center gap-2 group transition-transform hover:scale-102" title="Primas Tecnologia - Início">
+            <img src="logo_primas.png" alt="Primas Tecnologia" class="h-9 sm:h-11 w-auto object-contain" />
+          </a>
+          <div class="hidden md:flex items-center gap-2 pl-3 border-l border-slate-700/60">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-400/20">
+              <span class="pulse-dot"></span> Catálogo de Sistemas
+            </span>
+            <span class="text-xs font-medium text-slate-400">/ Módulo CNPJ</span>
+          </div>
+        </div>
+
+        <!-- Links e Ações -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <a href="index.html#sistemas" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors">
+            <i class="fa-solid fa-arrow-left text-xs"></i> Voltar ao Catálogo
+          </a>
+
+          <a href="acesso.html?sistema=fc_gestao" class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors">
+            <i class="fa-solid fa-store text-xs text-blue-400"></i> Planos FC Gestão
+          </a>
+
+          <a href="https://loja-de-roupa-a00b6.web.app" target="_blank" rel="noopener noreferrer" class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-colors">
+            <i class="fa-solid fa-shirt text-xs text-pink-400"></i> Loja de Roupas
+          </a>
+
+          <!-- Botão WhatsApp Integrado com site-config.js -->
+          <a id="btn-whats-nav" 
+             href="https://wa.me/5562999676874?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20as%20soluções%20da%20Primas%20Tecnologia." 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 shadow-md shadow-emerald-950/40 transition-all cursor-pointer">
+            <i class="fa-brands fa-whatsapp text-sm sm:text-base"></i>
+            <span class="hidden sm:inline">Falar com Especialista</span>
+            <span class="sm:hidden">WhatsApp</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       CONTAINER DA APLICAÇÃO REACT (CONSULTA AVANÇADA DE CNPJ)
+  ============================================================ -->
+  <div id="cnpj-app-root" class="flex-1">
+    <!-- Placeholder de Carregamento Elegante (Substituído automaticamente pelo React) -->
+    <div class="min-h-screen bg-slate-100 flex flex-col items-center justify-center p-6 text-center">
+      <div class="w-16 h-16 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-indigo-600 flex items-center justify-center mb-4 animate-bounce">
+        <i class="fa-solid fa-building text-2xl"></i>
+      </div>
+      <h2 class="text-xl font-bold text-slate-800 tracking-tight">Carregando Consulta Avançada de CNPJ...</h2>
+      <p class="text-sm text-slate-500 max-w-sm mt-1">Conectando aos serviços cadastrais e à base oficial da Receita Federal.</p>
+      <div class="mt-4 flex items-center gap-2 text-indigo-600 text-xs font-semibold">
+        <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Inicializando aplicação...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANNER CTA DE INTEGRAÇÃO PERSONALIZADA
+  ============================================================ -->
+  <section class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-t border-indigo-900/40 text-white py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-1.5 text-center md:text-left">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+          🚀 Soluções Enterprise & ERP
+        </span>
+        <h3 class="text-xl sm:text-2xl font-black text-white">
+          Precisa integrar consultas de CNPJ ou automação ao seu sistema?
+        </h3>
+        <p class="text-sm text-slate-300 max-w-2xl">
+          A <strong class="text-white">Primas Tecnologia</strong> desenvolve integrações personalizadas com APIs fiscais, emissão SEFAZ (NFC-e/NF-e), rotinas antifraude e sistemas ERP sob medida para o seu modelo de negócio.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <a id="btn-whats-cta"
+           href="https://wa.me/5562999676874?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20integração%20de%20sistemas%20com%20a%20Primas%20Tecnologia." 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 shadow-lg shadow-indigo-900/50 transition-all cursor-pointer">
+          <i class="fa-brands fa-whatsapp text-lg"></i>
+          <span>Solicitar Projeto / Orçamento</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RODAPÉ OFICIAL - PRIMAS TECNOLOGIA
+  ============================================================ -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 py-8 px-4 sm:px-6 lg:px-8 text-xs">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="index.html" title="Primas Tecnologia">
+          <img src="logo_primas.png" alt="Primas Tecnologia" class="h-8 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity" />
+        </a>
+        <span class="text-slate-500">|</span>
+        <span id="footer-copy-text">© 2026 Primas Tecnologia. Todos os direitos reservados.</span>
+      </div>
+
+      <div class="flex items-center gap-4 flex-wrap justify-center">
+        <a href="index.html#sistemas" class="hover:text-white transition-colors">Portfólio de Sistemas</a>
+        <a href="acesso.html?sistema=fc_gestao" class="hover:text-white transition-colors">Planos FC Gestão</a>
+        <a href="consulta-cnpj.html" class="text-indigo-400 font-semibold hover:underline">Consulta CNPJ</a>
+        <a href="https://loja-de-roupa-a00b6.web.app" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Loja de Roupas (Nuvem)</a>
+        <a href="index.html#marketing" class="hover:text-white transition-colors">Marketing</a>
+        <a href="index.html#contato" class="hover:text-white transition-colors">Contato</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS: REACT, REACT-DOM E APLICAÇÃO CNPJ
+  ============================================================ -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Script Principal da Aplicação CNPJ (Compilado a partir do TSX) -->
+  <script src="consulta-cnpj.js?v=20261015160543"></script>
+
+  <!-- Sincronização Dinâmica com site-config.js -->
+  <script>
+    (function syncWithSiteConfig() {
+      if (typeof SITE_CONFIG === 'undefined') return;
+      const cfg = SITE_CONFIG;
+
+      // Sincroniza links de WhatsApp se configurados no site-config.js
+      if (cfg.empresa && cfg.empresa.whatsappNumero) {
+        const num = cfg.empresa.whatsappNumero;
+        const msg = encodeURIComponent(cfg.empresa.whatsappMensagem || "Olá! Gostaria de saber mais sobre as soluções da Primas Tecnologia.");
+        const waUrl = `https://wa.me/${num}?text=${msg}`;
+
+        const btnNav = document.getElementById('btn-whats-nav');
+        if (btnNav) btnNav.href = waUrl;
+
+        const btnCta = document.getElementById('btn-whats-cta');
+        if (btnCta) btnCta.href = waUrl;
+      }
+
+      // Sincroniza copyright
+      const copyEl = document.getElementById('footer-copy-text');
+      if (copyEl && cfg.empresa) {
+        const ano = cfg.empresa.anoFundacao || new Date().getFullYear();
+        copyEl.textContent = `© ${ano} ${cfg.empresa.nome} Tecnologia. ${(cfg.rodape && cfg.rodape.textoCopyright) || 'Todos os direitos reservados.'}`;
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+[debug] [2026-10-16T11:39:17.971Z] [Firebase Plugin] Activating Firebase extension.
+[debug] [2026-10-16T11:39:53.577Z] [Firebase Plugin] requireAuthWrapper
+[debug] [2026-10-16T11:39:53.591Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-10-16T11:39:53.592Z] > authorizing via signed-in user (pauloaugusto.silvaborges@gmail.com)
+[debug] [2026-10-16T11:39:53.597Z] Checked if tokens are valid: false, expires at: 1792094690440
+[debug] [2026-10-16T11:39:53.597Z] Checked if tokens are valid: false, expires at: 1792094690440
+[debug] [2026-10-16T11:39:53.598Z] > refreshing access token with scopes: []
+[debug] [2026-10-16T11:39:53.601Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-10-16T11:39:53.602Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-16T11:39:53.614Z] [Firebase Plugin] VSCode notification server listening on port 40001
+[debug] [2026-10-16T11:39:54.053Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-10-16T11:39:54.053Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-10-16T11:39:54.089Z] [Firebase Plugin] User found:  pauloaugusto.silvaborges@gmail.com
+[info] [Firebase Plugin] (Core:Project) New user detected, fetching projects
+[debug] [2026-10-16T11:39:54.090Z] Checked if tokens are valid: true, expires at: 1792154393054
+[debug] [2026-10-16T11:39:54.091Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=1000
+[debug] [2026-10-16T11:39:54.914Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2026-10-16T11:39:54.915Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] [Firebase Plugin] Stopping SQL Connect toolkit

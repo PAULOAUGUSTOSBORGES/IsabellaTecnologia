@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "node_modules/**",
+      "build-cnpj.js",
+      "consulta_avan_ada_de_cnpj.tsx",
+      "MANUAL_DE_EDICAO.md",
+      "webhook-pagamento/**"
+    ]
+  }
+}
